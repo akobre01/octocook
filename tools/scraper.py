@@ -102,6 +102,21 @@ def normalize_ingredient(ingredient: str) -> str:
     return text
 
 
+def _safe(fn, default=None):
+    """Call a recipe-scrapers method, returning `default` on ANY exception.
+
+    recipe-scrapers raises a grab-bag of custom exceptions
+    (SchemaOrgException, "Preptime information not found", etc.) plus
+    AttributeError and assorted BeautifulSoup errors when a site's markup
+    doesn't match what the per-site plugin expects. None of those should
+    abort the whole scrape — missing optional fields are common.
+    """
+    try:
+        return fn()
+    except Exception:
+        return default
+
+
 def extract_tags(scraper, json_ld: dict | None) -> list[str]:
     """Derive tags from recipe metadata."""
     tags = set()
@@ -120,60 +135,75 @@ def extract_tags(scraper, json_ld: dict | None) -> list[str]:
                     if isinstance(item, str) and item.strip():
                         tags.add(item.strip().lower())
 
-    # From scraper as fallback
-    try:
-        category = scraper.category()
+    if scraper is not None:
+        category = _safe(scraper.category)
         if category:
             tags.add(category.strip().lower())
-    except (AttributeError, NotImplementedError):
-        pass
-
-    try:
-        cuisine = scraper.cuisine()
+        cuisine = _safe(scraper.cuisine)
         if cuisine:
             tags.add(cuisine.strip().lower())
-    except (AttributeError, NotImplementedError):
-        pass
 
     return sorted(tags)
 
 
 def scrape_recipe(url: str) -> RecipeData:
-    """Scrape a recipe from the given URL and return structured data."""
+    """Scrape a recipe from the given URL and return structured data.
+
+    Strategy: prefer raw JSON-LD from the page (extracted directly so the
+    enrichment pipeline always gets the canonical recipe schema), and fall
+    back to the recipe-scrapers library for sites that don't expose
+    JSON-LD or for filling in optional metadata. Both paths are best-effort
+    — individual field failures or even total scraper failure don't abort
+    the scrape as long as we can produce *some* Recipe object (either from
+    JSON-LD or from the scraper's title/ingredients/instructions).
+    """
     html = fetch_page(url)
-    scraper = scrape_html(html, org_url=url, wild_mode=True)
     json_ld = extract_json_ld_recipe(html)
 
+    # recipe-scrapers raises eagerly on some sites it can't parse. Don't
+    # let that kill the run if we have a usable JSON-LD blob.
+    try:
+        scraper = scrape_html(html, org_url=url, wild_mode=True)
+    except Exception:
+        scraper = None
+
+    if json_ld is None and scraper is None:
+        raise RuntimeError(f"No recipe data found at {url} (no JSON-LD, no scraper).")
+
     # Build JSON-LD Recipe object — use the raw one if available,
-    # otherwise construct a minimal one from scraped fields
+    # otherwise synthesize a minimal one from the scraper.
     if json_ld:
         recipe_obj = json_ld
     else:
         recipe_obj = {
             "@context": "https://schema.org",
             "@type": "Recipe",
-            "name": scraper.title(),
-            "author": scraper.author(),
-            "recipeIngredient": scraper.ingredients(),
-            "recipeInstructions": scraper.instructions(),
+            "name": _safe(scraper.title, ""),
+            "author": _safe(scraper.author, ""),
+            "recipeIngredient": _safe(scraper.ingredients, []) or [],
+            "recipeInstructions": _safe(scraper.instructions, []) or [],
         }
-        try:
-            recipe_obj["prepTime"] = scraper.prep_time()
-        except (AttributeError, NotImplementedError):
-            pass
-        try:
-            recipe_obj["totalTime"] = scraper.total_time()
-        except (AttributeError, NotImplementedError):
-            pass
+        prep = _safe(scraper.prep_time)
+        if prep is not None:
+            recipe_obj["prepTime"] = prep
+        total = _safe(scraper.total_time)
+        if total is not None:
+            recipe_obj["totalTime"] = total
 
-    # Extract individual fields
-    raw_ingredients = scraper.ingredients()
+    # Ingredients for the Notion `Notable Ingredients` tags. Prefer the
+    # scraper's parsed list; fall back to the JSON-LD recipeIngredient.
+    raw_ingredients: list[str] = []
+    if scraper is not None:
+        raw_ingredients = _safe(scraper.ingredients, []) or []
+    if not raw_ingredients and isinstance(json_ld, dict):
+        ld_ings = json_ld.get("recipeIngredient") or []
+        if isinstance(ld_ings, list):
+            raw_ingredients = [str(i) for i in ld_ings if i]
     normalized = []
     for ing in raw_ingredients:
         normed = normalize_ingredient(ing)
         if normed and len(normed) > 1:
             normalized.append(normed)
-    # Deduplicate while preserving order
     seen = set()
     unique_ingredients = []
     for ing in normalized:
@@ -184,7 +214,6 @@ def scrape_recipe(url: str) -> RecipeData:
     # Source site name
     parsed = urlparse(url)
     domain = parsed.netloc.removeprefix("www.")
-    # Prettify common domains
     site_names = {
         "seriouseats.com": "Serious Eats",
         "bonappetit.com": "Bon Appetit",
@@ -201,25 +230,25 @@ def scrape_recipe(url: str) -> RecipeData:
     }
     source_site = site_names.get(domain, domain)
 
-    # Times
-    try:
-        prep = format_duration(scraper.prep_time())
-    except (AttributeError, NotImplementedError):
-        prep = ""
-    try:
-        total = format_duration(scraper.total_time())
-    except (AttributeError, NotImplementedError):
-        total = ""
-
-    # Author
-    author = scraper.author() or ""
+    # Optional metadata: fall through to JSON-LD if the scraper doesn't have it.
+    title = ""
+    author = ""
+    prep_str = ""
+    total_str = ""
+    if scraper is not None:
+        title = _safe(scraper.title, "") or ""
+        author = _safe(scraper.author, "") or ""
+        prep_str = format_duration(_safe(scraper.prep_time))
+        total_str = format_duration(_safe(scraper.total_time))
+    if not title and isinstance(json_ld, dict):
+        title = str(json_ld.get("name") or "")
 
     return RecipeData(
-        title=scraper.title(),
+        title=title,
         author=author,
         url=url,
-        prep_time=prep,
-        total_time=total,
+        prep_time=prep_str,
+        total_time=total_str,
         ingredients=unique_ingredients,
         tags=extract_tags(scraper, json_ld),
         source_site=source_site,
