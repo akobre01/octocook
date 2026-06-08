@@ -4,6 +4,7 @@ export interface RecipeOut {
   icon: string
   found_in: string
   rating: string
+  enriched: boolean
 }
 
 export interface ScheduleStep {

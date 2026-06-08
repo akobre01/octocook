@@ -22,6 +22,7 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
   const [numCooks, setNumCooks] = useState(2)
   const [filter, setFilter] = useState('')
   const [ratingFilter, setRatingFilter] = useState<Set<string>>(new Set())
+  const [showUnenriched, setShowUnenriched] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [needsEnrichment, setNeedsEnrichment] = useState<Unenriched[]>([])
@@ -68,10 +69,13 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
 
   // Ratings present in the data, sorted: stars descending, then other emojis,
   // then "Unrated" last. Each entry carries a count so the chip can show it.
+  // Counts reflect what's currently revealable so chips never claim more
+  // recipes than are actually visible.
   const availableRatings = useMemo(() => {
     if (!recipes) return []
+    const pool = showUnenriched ? recipes : recipes.filter((r) => r.enriched)
     const counts: Record<string, number> = {}
-    for (const r of recipes) counts[r.rating] = (counts[r.rating] ?? 0) + 1
+    for (const r of pool) counts[r.rating] = (counts[r.rating] ?? 0) + 1
     return Object.keys(counts)
       .sort((a, b) => {
         if (a === '' && b !== '') return 1
@@ -82,7 +86,7 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
         return a.localeCompare(b)
       })
       .map((value) => ({ value, count: counts[value] }))
-  }, [recipes])
+  }, [recipes, showUnenriched])
 
   const handleStart = async () => {
     setError(null)
@@ -118,7 +122,7 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
       await enrichRecipe(id)
       setNeedsEnrichment((prev) => prev.filter((r) => r.id !== id))
     } catch (e) {
-      setError(`Enrichment failed: ${String((e as Error).message ?? e)}`)
+      setError(`Prep failed: ${String((e as Error).message ?? e)}`)
     } finally {
       setEnriching((prev) => {
         const next = new Set(prev)
@@ -140,10 +144,18 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
     return <div className="setup"><p>Loading…</p>{error && <p className="error">{error}</p>}</div>
   }
 
-  const filtered = recipes.filter((r) => {
+  const matchesFilters = (r: RecipeOut) => {
     if (ratingFilter.size > 0 && !ratingFilter.has(r.rating)) return false
     if (filter && !r.title.toLowerCase().includes(filter.toLowerCase())) return false
     return true
+  }
+  // How many unenriched recipes are currently being hidden? Counted *after*
+  // search + rating filters so the toggle reflects what's actually missing
+  // from the visible list, not the total catalog.
+  const hiddenUnenrichedCount = recipes.filter((r) => !r.enriched && matchesFilters(r)).length
+  const filtered = recipes.filter((r) => {
+    if (!showUnenriched && !r.enriched) return false
+    return matchesFilters(r)
   })
 
   // Selected recipes, in the order the user picked them (Set preserves insertion order).
@@ -197,7 +209,7 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
             onChange={(e) => setFilter(e.target.value)}
           />
         </div>
-        {availableRatings.length > 0 && (
+        {(availableRatings.length > 0 || hiddenUnenrichedCount > 0 || showUnenriched) && (
           <div className="rating-filters">
             {availableRatings.map(({ value, count }) => {
               const active = ratingFilter.has(value)
@@ -213,6 +225,21 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
                 </button>
               )
             })}
+            {(hiddenUnenrichedCount > 0 || showUnenriched) && (
+              <button
+                type="button"
+                className={showUnenriched ? 'chip active' : 'chip'}
+                onClick={() => setShowUnenriched((v) => !v)}
+                title="Recipes that haven't been prepped yet — Octocook hasn't broken them into structured steps, so it can't schedule them until you prep them."
+              >
+                <span className="chip-label">
+                  {showUnenriched ? 'Hide unprepped' : 'Show unprepped'}
+                </span>
+                {!showUnenriched && hiddenUnenrichedCount > 0 && (
+                  <span className="chip-count">{hiddenUnenrichedCount}</span>
+                )}
+              </button>
+            )}
             {ratingFilter.size > 0 && (
               <button
                 type="button"
@@ -230,15 +257,23 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
           <ul className="recipe-grid">
             {filtered.map((r) => {
               const isSelected = selected.has(r.id)
+              const classes = ['recipe-card']
+              if (isSelected) classes.push('selected')
+              if (!r.enriched) classes.push('unenriched')
               return (
                 <li
                   key={r.id}
-                  className={isSelected ? 'recipe-card selected' : 'recipe-card'}
+                  className={classes.join(' ')}
                   onClick={() => toggle(r.id)}
+                  title={r.enriched ? undefined : 'Not yet prepped — prep before scheduling.'}
                 >
                   <div className="recipe-head">
                     <span className="icon">{r.icon}</span>
-                    {isSelected && <span className="check">✓</span>}
+                    {isSelected ? (
+                      <span className="check">✓</span>
+                    ) : !r.enriched ? (
+                      <span className="needs-enrich" aria-label="needs prep">!</span>
+                    ) : null}
                   </div>
                   <div className="title">{r.title}</div>
                   <div className="meta">
@@ -286,8 +321,8 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
         {needsEnrichment.length > 0 && (
           <div className="enrich-banner">
             <p>
-              <strong>{needsEnrichment.length}</strong> recipe(s) need to be enriched before
-              scheduling. Enrichment uses Claude to break instructions into atomic steps
+              <strong>{needsEnrichment.length}</strong> recipe(s) need to be prepped before
+              scheduling. Prep uses Claude to break instructions into atomic steps
               (~10–30s each).
             </p>
             <ul className="enrich-list">
@@ -301,7 +336,7 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
                       disabled={inFlight}
                       onClick={() => handleEnrich(r.id)}
                     >
-                      {inFlight ? 'Enriching…' : 'Enrich'}
+                      {inFlight ? 'Prepping…' : 'Prep'}
                     </button>
                   </li>
                 )
@@ -313,7 +348,7 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
               disabled={enriching.size > 0}
               onClick={handleEnrichAll}
             >
-              {enriching.size > 0 ? `Enriching ${enriching.size}…` : 'Enrich all'}
+              {enriching.size > 0 ? `Prepping ${enriching.size}…` : 'Prep all'}
             </button>
           </div>
         )}

@@ -30,6 +30,7 @@ from notion_client_wrapper import (  # noqa: E402
     find_recipe_json_ld_block,
     get_client,
     list_recipes,
+    mark_recipe_enriched,
     update_json_ld_block,
 )
 from recipe_enrichment import enrich_recipe as run_enrichment  # noqa: E402
@@ -142,6 +143,7 @@ class RecipeOut(BaseModel):
     icon: str
     found_in: str = ""
     rating: str = ""
+    enriched: bool = False
 
 
 class KitchenOut(BaseModel):
@@ -185,6 +187,7 @@ def get_recipes() -> list[RecipeOut]:
                 icon=r["icon"],
                 found_in=r.get("found_in", ""),
                 rating=r.get("rating", ""),
+                enriched=bool(r.get("enriched", False)),
             )
             for r in list_recipes()
         ]
@@ -349,6 +352,7 @@ def post_enrich_recipe(page_id: str) -> dict:
 
     json_ld["cookSteps"] = cook_steps
     update_json_ld_block(block_id, json_ld)
+    mark_recipe_enriched(page_id)
     return {"title": title, "step_count": len(cook_steps)}
 
 

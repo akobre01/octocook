@@ -285,6 +285,13 @@ def _select_name(prop: dict | None) -> str:
     return sel.get("name", "") or ""
 
 
+def _checkbox_value(prop: dict | None) -> bool:
+    """Extract the boolean from a Notion checkbox property, or False."""
+    if not prop:
+        return False
+    return bool(prop.get("checkbox", False))
+
+
 def list_recipes() -> list[dict]:
     """Return every recipe in the database, lightest payload first.
 
@@ -315,6 +322,7 @@ def list_recipes() -> list[dict]:
             "icon": icon or "🍽️",
             "found_in": _select_name(props.get("Found in")),
             "rating": _select_name(props.get("Rating")),
+            "enriched": _checkbox_value(props.get("Octocook")),
             "page_id": page["id"],
         })
 
@@ -340,6 +348,31 @@ def find_recipe_page(title: str) -> dict:
             "Use a unique title."
         )
     return matches[0]
+
+
+def mark_recipe_enriched(page_id: str, enriched: bool = True) -> None:
+    """Set the `Octocook` checkbox property on a recipe page.
+
+    The property tells `list_recipes` whether the recipe has been processed
+    into structured cookSteps. We set it from every enrichment write path
+    (CLI, bulk script, server endpoint) so the live app can filter the
+    recipe list without making N extra Notion calls.
+
+    Requires an `Octocook` checkbox property to exist on the recipes
+    database. If it's missing we log a warning and continue — the
+    cookSteps write already succeeded, only the visibility flag didn't.
+    """
+    client = get_client()
+    try:
+        client.pages.update(
+            page_id=page_id,
+            properties={"Octocook": {"checkbox": enriched}},
+        )
+    except Exception as e:
+        print(
+            f"  Warning: couldn't set Octocook checkbox on {page_id}: {e}\n"
+            "  Make sure your Notion recipes DB has an 'Octocook' checkbox property.",
+        )
 
 
 def find_recipe_json_ld_block(page_id: str) -> tuple[str, dict]:

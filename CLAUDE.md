@@ -25,7 +25,7 @@ cd web && npm install
 
 `server/app.py` calls `load_dotenv(.../tools/.env)`, so the Notion credentials live in `tools/.env` and are shared with the CLIs.
 
-The Notion integration must be shared with the recipes database, and the database is expected to have these properties: `Name` (title), `Rating` (select), `Link` (url), `Tags` (multi-select), `Active Time` (select), `Total Time` (select), `Notable Ingredients` (multi-select), `Found in` (select), `Referred By` (rich_text). See `notion_client_wrapper.build_properties`.
+The Notion integration must be shared with the recipes database, and the database is expected to have these properties: `Name` (title), `Rating` (select), `Link` (url), `Tags` (multi-select), `Active Time` (select), `Total Time` (select), `Notable Ingredients` (multi-select), `Found in` (select), `Referred By` (rich_text), `Octocook` (checkbox — set true when the recipe has been enriched with `cookSteps`; the live app filters on this so the user only sees schedulable recipes). See `notion_client_wrapper.build_properties` and `notion_client_wrapper.mark_recipe_enriched`.
 
 ## Running the live app
 

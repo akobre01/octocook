@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from notion_client_wrapper import (
     find_recipe_json_ld_block,
     find_recipe_page,
+    mark_recipe_enriched,
     update_json_ld_block,
 )
 from recipe_enrichment import enrich_recipe
@@ -102,6 +103,7 @@ def main():
     json_ld["cookSteps"] = cook_steps
     print("Updating Notion JSON-LD block...")
     update_json_ld_block(block_id, json_ld)
+    mark_recipe_enriched(page["id"])
     print(f"Done! Page: {page['url']}")
 
 
