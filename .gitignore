@@ -19,4 +19,9 @@ venv/
 *.swp
 *~
 
+# One-off review artifacts from scripts/recipe_sync.py (match → review → apply-links).
+# Regenerable from Notion; the Numbers files are local working copies of the CSVs.
+scripts/*.csv
+scripts/*.numbers
+
 # Build artifacts handled per-project (web/ has its own .gitignore)
