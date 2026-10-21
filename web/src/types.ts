@@ -1,3 +1,36 @@
+// ---------- Recipe viewer (offline) ----------
+
+// Mirrors the `cookSteps` schema emitted by tools/recipe_enrichment.py and
+// embedded in each recipe's Notion JSON-LD block.
+export interface CookStep {
+  id: string
+  description: string
+  duration_min: number
+  active: boolean
+  tools: string[]
+  depends_on: string[]
+}
+
+// A bundled, fully-structured recipe the viewer walks linearly.
+export interface Recipe {
+  name: string
+  icon?: string
+  cookSteps: CookStep[]
+}
+
+// The presentational shape the shared StepCard / Timeline render. Both the
+// viewer (from CookStep) and the scheduler's CookView (from ScheduleStep) map
+// onto this so the UI primitives stay backend-agnostic.
+export interface StepView {
+  description: string
+  duration_min: number
+  active: boolean
+  tools: string[]
+  ingredients?: string[]
+  recipeName?: string
+  recipeIcon?: string
+}
+
 export interface RecipeOut {
   id: string
   title: string

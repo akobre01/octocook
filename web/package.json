@@ -13,6 +13,8 @@
     "android:run": "cap run android"
   },
   "dependencies": {
+    "@capacitor-community/keep-awake": "^7.1.0",
+    "@capacitor-community/speech-recognition": "^7.0.1",
     "@capacitor/android": "^7.6.5",
     "@capacitor/core": "^7.6.5",
     "react": "^19.2.6",

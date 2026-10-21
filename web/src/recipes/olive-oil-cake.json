@@ -1,0 +1,15 @@
+{
+  "name": "Olive Oil Cake",
+  "icon": "🍰",
+  "cookSteps": [
+    { "id": "S0", "description": "Preheat oven to 350°F", "duration_min": 12, "active": false, "tools": ["oven"], "depends_on": [] },
+    { "id": "S1", "description": "Grease and flour a cake pan", "duration_min": 3, "active": true, "tools": ["baking_dish"], "depends_on": [] },
+    { "id": "S2", "description": "Whisk flour, baking powder, salt", "duration_min": 2, "active": true, "tools": ["whisk", "mixing_bowl"], "depends_on": [] },
+    { "id": "S3", "description": "Beat eggs and sugar until pale", "duration_min": 5, "active": true, "tools": ["hand_mixer", "mixing_bowl"], "depends_on": [] },
+    { "id": "S4", "description": "Stream in olive oil, then milk and zest", "duration_min": 4, "active": true, "tools": ["hand_mixer", "mixing_bowl"], "depends_on": ["S3"] },
+    { "id": "S5", "description": "Fold dry into wet until just combined", "duration_min": 3, "active": true, "tools": ["spatula", "mixing_bowl"], "depends_on": ["S2", "S4"] },
+    { "id": "S6", "description": "Pour batter into the pan", "duration_min": 2, "active": true, "tools": ["baking_dish"], "depends_on": ["S1", "S5"] },
+    { "id": "S7", "description": "Bake until a tester comes out clean", "duration_min": 45, "active": false, "tools": ["oven", "baking_dish"], "depends_on": ["S0", "S6"] },
+    { "id": "S8", "description": "Cool on a rack before slicing", "duration_min": 20, "active": false, "tools": [], "depends_on": ["S7"] }
+  ]
+}

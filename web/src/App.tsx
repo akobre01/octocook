@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Setup } from './Setup'
 import { CookView } from './CookView'
 import { KitchenManager } from './KitchenManager'
+import { Viewer } from './Viewer'
 import './App.css'
 
-type View = 'setup' | 'kitchens'
+type View = 'setup' | 'kitchens' | 'viewer'
 
 export default function App() {
   const [sessionId, setSessionId] = useState<string | null>(null)
@@ -26,10 +27,14 @@ export default function App() {
       />
     )
   }
+  if (view === 'viewer') {
+    return <Viewer onExit={() => setView('setup')} />
+  }
   return (
     <Setup
       onCreated={setSessionId}
       onManageKitchens={() => setView('kitchens')}
+      onOpenViewer={() => setView('viewer')}
       kitchensVersion={kitchensVersion}
     />
   )

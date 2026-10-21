@@ -1,0 +1,13 @@
+{
+  "name": "Muhammara",
+  "icon": "🌶️",
+  "cookSteps": [
+    { "id": "S0", "description": "Preheat oven to 450°F", "duration_min": 12, "active": false, "tools": ["oven"], "depends_on": [] },
+    { "id": "S1", "description": "Char red peppers on a sheet pan", "duration_min": 20, "active": false, "tools": ["oven", "sheet_pan"], "depends_on": ["S0"] },
+    { "id": "S2", "description": "Toast walnuts in a dry pan", "duration_min": 5, "active": true, "tools": ["saute_pan"], "depends_on": [] },
+    { "id": "S3", "description": "Peel and seed the charred peppers", "duration_min": 6, "active": true, "tools": [], "depends_on": ["S1"] },
+    { "id": "S4", "description": "Blend peppers, walnuts, pomegranate molasses", "duration_min": 4, "active": true, "tools": ["food_processor"], "depends_on": ["S2", "S3"] },
+    { "id": "S5", "description": "Stream in olive oil, season with cumin and salt", "duration_min": 3, "active": true, "tools": ["food_processor"], "depends_on": ["S4"] },
+    { "id": "S6", "description": "Garnish with walnuts and parsley; serve", "duration_min": 3, "active": true, "tools": [], "depends_on": ["S5"] }
+  ]
+}

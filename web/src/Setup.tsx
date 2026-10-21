@@ -11,10 +11,11 @@ interface Unenriched {
 interface Props {
   onCreated: (sessionId: string) => void
   onManageKitchens: () => void
+  onOpenViewer: () => void
   kitchensVersion: number
 }
 
-export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
+export function Setup({ onCreated, onManageKitchens, onOpenViewer, kitchensVersion }: Props) {
   const [recipes, setRecipes] = useState<RecipeOut[] | null>(null)
   const [kitchens, setKitchens] = useState<string[] | null>(null)
   const [selected, setSelected] = useState<Set<string>>(new Set())
@@ -141,7 +142,18 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
   }
 
   if (recipes === null || kitchens === null) {
-    return <div className="setup"><p>Loading…</p>{error && <p className="error">{error}</p>}</div>
+    // The offline recipe viewer must stay reachable even when the backend is
+    // unavailable (e.g. the standalone APK with no server running), so surface
+    // its entry here instead of gating it behind a successful fetch.
+    return (
+      <div className="setup">
+        <p>{error ? 'Scheduler backend unavailable.' : 'Loading…'}</p>
+        {error && <p className="error">{error}</p>}
+        <button type="button" className="link viewer-link" onClick={onOpenViewer}>
+          View a recipe (offline) →
+        </button>
+      </div>
+    )
   }
 
   const matchesFilters = (r: RecipeOut) => {
@@ -172,6 +184,9 @@ export function Setup({ onCreated, onManageKitchens, kitchensVersion }: Props) {
         <div>
           <h1>Octocook</h1>
           <p>Pick recipes, a kitchen, and how many cooks. We'll plan the rest.</p>
+          <button type="button" className="link viewer-link" onClick={onOpenViewer}>
+            View a recipe (offline) →
+          </button>
         </div>
       </header>
 

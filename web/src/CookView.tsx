@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { doneStep, getSession, startStep } from './api'
 import type { ScheduleStep, Session } from './types'
+import { ToolIcons } from './components/ToolIcon'
 
 interface Props {
   sessionId: string
@@ -370,7 +371,7 @@ function StepCard({
       )}
 
       {step.tools.length > 0 && (
-        <div className="step-tools">{step.tools.join(' · ')}</div>
+        <div className="step-tools"><ToolIcons tools={step.tools} /></div>
       )}
 
       {status === 'blocked' && blockers.length > 0 && (
