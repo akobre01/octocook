@@ -892,8 +892,25 @@ button.danger {
   flex: 1;
   min-height: 0;
 }
+/* Each item is a vertical duration bar (left) + the step box (right); both
+   stretch to the item's height, which is proportional to the step's duration. */
+.vtimeline-item {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+.vrow-bar {
+  width: 6px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.8;
+}
+.vrow-bar.passive { background: var(--muted); opacity: 0.6; }
+
 .vtimeline-row {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -925,21 +942,14 @@ button.danger {
 }
 .vrow-icon .tool-icon { font-size: 1.45rem; }
 .vrow-icon .tool-rect { width: 1.6rem; height: 0.95rem; }
-.vrow-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
 .vrow-desc {
+  flex: 1;
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.95rem;
 }
-.vrow-bar {
-  height: 3px;
-  background: var(--accent);
-  opacity: 0.5;
-  border-radius: 999px;
-  min-width: 2px;
-}
-.vtimeline-row.passive .vrow-bar { background: var(--muted); }
 .vrow-min {
   font-size: 0.75rem;
   color: var(--muted);
