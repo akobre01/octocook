@@ -15,12 +15,14 @@ import { Timeline } from './components/Timeline'
 import { VariantBar } from './components/VariantBar'
 import { RecipeEditor } from './components/RecipeEditor'
 import { TimingReview } from './components/TimingReview'
+import { IngredientsView } from './components/IngredientsView'
 
 interface Props {
   onExit: () => void
 }
 
-type Mode = 'steps' | 'timeline' | 'edit' | 'review'
+// 'ingredients' is the default landing view for a recipe; 'cook' walks the steps.
+type Mode = 'ingredients' | 'cook' | 'timeline' | 'edit' | 'review'
 
 function toStepView(step: CookStep, recipe: Recipe): StepView {
   return {
@@ -48,7 +50,7 @@ export function Viewer({ onExit }: Props) {
   const [variants, setVariants] = useState<RecipeVariant[]>([])
   const [activeVariantId, setActiveVariantId] = useState<string | null>(null)
   const [index, setIndex] = useState(0)
-  const [mode, setMode] = useState<Mode>('steps')
+  const [mode, setMode] = useState<Mode>('ingredients')
 
   // Timing state.
   const [timingOn, setTimingOn] = useState(false)
@@ -101,12 +103,12 @@ export function Viewer({ onExit }: Props) {
     setActiveVariantId(null)
     setIndex(0)
     resetTiming()
-    setMode(edit ? 'edit' : 'steps')
+    setMode(edit ? 'edit' : 'ingredients')
   }
 
   const closeRecipe = () => {
     setRecipe(null)
-    setMode('steps')
+    setMode('ingredients')
     resetTiming()
     void voice.stop()
   }
@@ -145,14 +147,15 @@ export function Viewer({ onExit }: Props) {
       case 'next': handleNext(); break
       case 'prev': handlePrev(); break
       case 'timeline': setMode('timeline'); break
-      case 'steps': setMode('steps'); break
+      case 'cook': setMode('cook'); break
+      case 'ingredients': setMode('ingredients'); break
     }
   }
 
   const voice = useVoiceCommands(handleCommand)
 
   const startTiming = () => {
-    setMode('steps')
+    setMode('cook')
     setIndex(0)
     setActuals({})
     setTimingOn(true)
@@ -175,7 +178,7 @@ export function Viewer({ onExit }: Props) {
       updateVariant({ ...v, cookSteps: copy })
       reloadVariants(v.recipeName)
       setActiveVariantId(v.id)
-      setMode('steps')
+      setMode('cook')
     }
     if (activeVariant) apply(activeVariant)
     else requestVariant(apply)
@@ -188,7 +191,7 @@ export function Viewer({ onExit }: Props) {
       updateVariant({ ...v, cookSteps: newSteps })
       reloadVariants(v.recipeName)
       setActiveVariantId(v.id)
-      setMode('steps')
+      setMode('cook')
       resetTiming()
     }
     if (activeVariant) apply(activeVariant)
@@ -196,9 +199,9 @@ export function Viewer({ onExit }: Props) {
   }
 
   const requestVariant = (onCreate: (v: RecipeVariant) => void) => {
-    // The name-prompt overlay renders in the step view, so leave edit/review
-    // mode first — otherwise the prompt would be invisible.
-    setMode('steps')
+    // The name-prompt overlay renders in the cook/ingredients view, so leave
+    // edit/review mode first — otherwise the prompt would be invisible.
+    setMode('cook')
     setPromptValue('')
     setNamePrompt({ onCreate })
   }
@@ -256,7 +259,7 @@ export function Viewer({ onExit }: Props) {
         variantLabel={variantLabel}
         steps={effectiveSteps}
         onDone={saveEditedSteps}
-        onCancel={() => setMode('steps')}
+        onCancel={() => setMode('cook')}
       />
     )
   }
@@ -266,14 +269,14 @@ export function Viewer({ onExit }: Props) {
     return (
       <div className="viewer">
         <header className="viewer-header">
-          <button className="link" onClick={() => { setMode('steps'); resetTiming() }}>← Back</button>
+          <button className="link" onClick={() => { setMode('cook'); resetTiming() }}>← Back</button>
           <h1>{recipe.icon} {recipe.name}</h1>
         </header>
         <TimingReview
           steps={effectiveSteps}
           actuals={actuals}
           onSave={saveTimings}
-          onDiscard={() => { setMode('steps'); resetTiming() }}
+          onDiscard={() => { setMode('cook'); resetTiming() }}
         />
       </div>
     )
@@ -305,9 +308,6 @@ export function Viewer({ onExit }: Props) {
           >
             ⏱
           </button>
-          <button onClick={() => setMode((m) => (m === 'steps' ? 'timeline' : 'steps'))}>
-            {mode === 'steps' ? 'Full recipe' : 'Step view'}
-          </button>
         </div>
       </header>
 
@@ -319,6 +319,12 @@ export function Viewer({ onExit }: Props) {
         onChange={() => reloadVariants(recipe.name)}
       />
 
+      <div className="view-tabs">
+        <button className={mode === 'ingredients' ? 'on' : ''} onClick={() => setMode('ingredients')}>Ingredients</button>
+        <button className={mode === 'cook' ? 'on' : ''} onClick={() => setMode('cook')}>Cook</button>
+        <button className={mode === 'timeline' ? 'on' : ''} onClick={() => setMode('timeline')}>Full recipe</button>
+      </div>
+
       {timingOn && (
         <div className="timing-banner">
           <span>⏱ Timing · step {clampedIndex + 1}/{steps.length} · {fmtElapsed(elapsedSec)}</span>
@@ -326,19 +332,21 @@ export function Viewer({ onExit }: Props) {
         </div>
       )}
 
-      {mode === 'steps' ? (
+      {mode === 'ingredients' ? (
+        <IngredientsView steps={effectiveSteps} onStartCooking={() => setMode('cook')} />
+      ) : mode === 'cook' ? (
         <StepStack steps={steps} currentIndex={clampedIndex} onPrev={handlePrev} onNext={handleNext} />
       ) : (
         <Timeline
           steps={steps}
           currentIndex={clampedIndex}
-          onSelect={(i) => { setIndex(i); setMode('steps') }}
+          onSelect={(i) => { setIndex(i); setMode('cook') }}
         />
       )}
 
       {voice.listening && (
         <div className="viewer-heard muted">
-          {voice.lastHeard ? `heard: “${voice.lastHeard}”` : 'Listening… say “next”, “previous”, or “full recipe”'}
+          {voice.lastHeard ? `heard: “${voice.lastHeard}”` : 'Listening… say “next”, “cook”, “ingredients”, or “full recipe”'}
         </div>
       )}
 

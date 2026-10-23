@@ -792,6 +792,63 @@ button.danger {
 .viewer-recipe .icon { font-size: 1.8rem; line-height: 1; }
 .viewer-recipe .title { flex: 1; font-weight: 600; font-size: 1.05rem; }
 
+/* --- View tabs (Ingredients / Cook / Full recipe) --- */
+
+.view-tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+.view-tabs button {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+.view-tabs button.on {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+/* --- Ingredients view --- */
+
+.ingredients-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.ingredient-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.5rem;
+}
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.ing-icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+.ing-text { font-size: 0.9rem; line-height: 1.2; }
+.ingredients-total {
+  margin: 1rem 0 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+.start-cooking {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  margin-top: auto;
+}
+
 .viewer-heard {
   margin-top: 1rem;
   text-align: center;
