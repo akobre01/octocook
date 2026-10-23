@@ -53,3 +53,10 @@ const TOOL_SHAPES: Record<string, ToolShape> = {
 export function toolShape(tool: string): ToolShape | null {
   return TOOL_SHAPES[tool] ?? null
 }
+
+// The full controlled tool vocabulary (emoji + shape tools), sorted, for the
+// step editor's tool picker. Single source of truth shared with the icon map.
+export const TOOL_VOCAB: string[] = [
+  ...Object.keys(TOOL_ICONS),
+  ...Object.keys(TOOL_SHAPES),
+].sort()

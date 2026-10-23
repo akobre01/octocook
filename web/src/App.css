@@ -799,6 +799,139 @@ button.danger {
   font-style: italic;
 }
 
+.edit-toggle { font-size: 0.85rem; padding: 0.4rem 0.7rem; }
+.edit-toggle.on { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.viewer-controls button { padding: 0.4rem 0.6rem; }
+
+/* --- Variant bar --- */
+
+.variant-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+.variant-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.variant-chip {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  border-radius: 999px;
+}
+.variant-chip.on { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.variant-chip.add { border-style: dashed; color: var(--muted); }
+.variant-manage { display: flex; gap: 0.9rem; font-size: 0.8rem; }
+.variant-prompt { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.variant-prompt .field-input { flex: 1; min-width: 8rem; }
+
+/* --- Timing banner + review --- */
+
+.timing-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  background: var(--current-bg);
+  border: 1px solid var(--current-border);
+  border-radius: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.timing-review { display: flex; flex-direction: column; gap: 0.75rem; }
+.timing-review h2 { margin: 0; }
+.timing-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.timing-table th, .timing-table td { padding: 0.35rem 0.4rem; text-align: left; border-bottom: 1px solid var(--border); }
+.timing-table th { color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+.timing-table td.tr-desc { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw; }
+.timing-table tr.untimed { opacity: 0.5; }
+.timing-table .over { color: var(--error); }
+.timing-table .under { color: var(--accent); }
+.timing-table tfoot td { font-weight: 600; border-bottom: none; }
+
+/* --- Recipe / step editor --- */
+
+.recipe-editor {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(2rem, env(safe-area-inset-bottom));
+}
+.editor-header { display: flex; align-items: center; gap: 0.75rem; }
+.editor-header h2 { flex: 1; margin: 0; font-size: 1.15rem; min-width: 0; }
+.editor-subhead { margin: 0.25rem 0 0.75rem; font-size: 0.85rem; }
+
+.editor-steps { list-style: none; margin: 0 0 0.75rem; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.editor-step { display: flex; align-items: center; gap: 0.5rem; }
+.es-num { color: var(--muted); font-size: 0.8rem; min-width: 1.4rem; text-align: right; font-variant-numeric: tabular-nums; }
+.es-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0.5rem 0.7rem;
+  border-radius: 10px;
+}
+.es-desc { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.es-meta { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--muted); }
+.es-controls { display: flex; gap: 0.25rem; }
+.es-controls button { padding: 0.35rem 0.5rem; }
+.add-step { width: 100%; border-style: dashed; }
+
+.step-editor { display: flex; flex-direction: column; gap: 1rem; margin-top: 0.5rem; }
+.field { display: flex; flex-direction: column; gap: 0.3rem; }
+.field-label { font-size: 0.8rem; color: var(--muted); }
+.field-input {
+  width: 100%;
+  font: inherit;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--fg);
+  border-radius: 8px;
+}
+.field-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; }
+.toggle-field { flex-direction: row; align-items: center; gap: 0.5rem; }
+.chip-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tool-chip, .dep-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 999px;
+}
+.tool-chip.on, .dep-chip.on { background: var(--current-bg); border-color: var(--accent); }
+.editor-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+.editor-actions .primary { min-width: 7rem; }
+
+/* --- Name prompt overlay --- */
+
+.name-prompt-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 50;
+}
+.name-prompt {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.name-prompt p { margin: 0; font-weight: 600; }
+
 /* --- Step stack (up to 5 steps at once) --- */
 
 .step-stack {
