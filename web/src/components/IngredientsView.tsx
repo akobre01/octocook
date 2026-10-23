@@ -31,6 +31,7 @@ export function IngredientsView({ steps, onStartCooking }: Props) {
   }
 
   const totalMin = steps.reduce((sum, s) => sum + Math.max(0, s.duration_min), 0)
+  const activeMin = steps.reduce((sum, s) => sum + (s.active ? Math.max(0, s.duration_min) : 0), 0)
 
   return (
     <div className="ingredients-view">
@@ -48,6 +49,7 @@ export function IngredientsView({ steps, onStartCooking }: Props) {
       )}
 
       <div className="ingredients-total muted">Total time {formatTotal(totalMin)}</div>
+      <div className="ingredients-active">Active time {formatTotal(activeMin)}</div>
 
       <button className="primary start-cooking" onClick={onStartCooking}>
         Start cooking →

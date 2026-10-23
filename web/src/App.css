@@ -838,9 +838,15 @@ button.danger {
 .ing-icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
 .ing-text { font-size: 0.9rem; line-height: 1.2; }
 .ingredients-total {
-  margin: 1rem 0 0.75rem;
+  margin: 1rem 0 0.2rem;
   text-align: center;
   font-size: 0.9rem;
+}
+.ingredients-active {
+  margin: 0 0 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #c17d3a; /* dull orange: hands-on time */
 }
 .start-cooking {
   width: 100%;
