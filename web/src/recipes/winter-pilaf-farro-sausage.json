@@ -1,0 +1,15 @@
+{
+  "name": "Winter Pilaf — Farro, Sausage & Parsnips",
+  "icon": "❄️",
+  "cookSteps": [
+    { "id": "S0", "description": "Preheat oven to 375°F", "duration_min": 12, "active": false, "tools": ["oven"], "depends_on": [], "ingredients": [] },
+    { "id": "S1", "description": "Smash garlic, dice parsnips, form sausage into small patties", "duration_min": 10, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["a few garlic cloves", "2–3 parsnips", "spicy sausage"] },
+    { "id": "S2", "description": "Warm olive oil in an ovenproof skillet; soften the garlic until fragrant", "duration_min": 4, "active": true, "tools": ["cast_iron_skillet", "stove_burner"], "depends_on": ["S1"], "ingredients": ["olive oil"] },
+    { "id": "S3", "description": "Stir in the farro and toast it briefly", "duration_min": 2, "active": true, "tools": ["cast_iron_skillet", "stove_burner"], "depends_on": ["S2"], "ingredients": ["1 cup farro"] },
+    { "id": "S4", "description": "Add turmeric, curry, salt, pepper, chile; cook a few seconds", "duration_min": 1, "active": true, "tools": ["cast_iron_skillet", "stove_burner"], "depends_on": ["S3"], "ingredients": ["1 tbsp ground turmeric", "1 tbsp curry powder", "kosher salt", "black pepper", "dried chile flakes"] },
+    { "id": "S5", "description": "Nestle in the sausage patties, parsnips, and raisins", "duration_min": 3, "active": true, "tools": ["cast_iron_skillet"], "depends_on": ["S4"], "ingredients": ["handful of golden raisins"] },
+    { "id": "S6", "description": "Pour in the broth, bring to a boil, then cover", "duration_min": 4, "active": true, "tools": ["cast_iron_skillet", "stove_burner"], "depends_on": ["S5"], "ingredients": ["1 3/4 cups vegetable or chicken broth"] },
+    { "id": "S7", "description": "Bake undisturbed until liquid is gone and farro is tender", "duration_min": 35, "active": false, "tools": ["oven", "cast_iron_skillet"], "depends_on": ["S0", "S6"], "ingredients": [] },
+    { "id": "S8", "description": "Rest 5 min, fluff, and fold in cilantro and celery leaves", "duration_min": 5, "active": true, "tools": [], "depends_on": ["S7"], "ingredients": ["fresh cilantro", "celery leaves"] }
+  ]
+}

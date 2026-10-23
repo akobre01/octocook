@@ -20,6 +20,7 @@ const TOOL_ICONS: Record<string, string> = {
   baking_dish: '🍜',
   // mixers / blenders
   hand_mixer: '🥣',
+  stand_mixer: '🥣',
   blender: '🧋',
   food_processor: '🥣',
   immersion_blender: '🧋',

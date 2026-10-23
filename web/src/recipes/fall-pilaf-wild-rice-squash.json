@@ -1,0 +1,15 @@
+{
+  "name": "Fall Pilaf — Wild Rice & Winter Squash",
+  "icon": "🍂",
+  "cookSteps": [
+    { "id": "S0", "description": "Preheat oven to 375°F", "duration_min": 12, "active": false, "tools": ["oven"], "depends_on": [], "ingredients": [] },
+    { "id": "S1", "description": "Chop the mirepoix and garlic; cut squash into 1-inch chunks", "duration_min": 12, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["mirepoix (onion, carrot, celery)", "a few garlic cloves", "winter squash"] },
+    { "id": "S2", "description": "Warm olive oil in an ovenproof skillet; soften the aromatics", "duration_min": 5, "active": true, "tools": ["cast_iron_skillet", "stove_burner"], "depends_on": ["S1"], "ingredients": ["olive oil"] },
+    { "id": "S3", "description": "Stir in the wild rice and toast it briefly", "duration_min": 2, "active": true, "tools": ["cast_iron_skillet", "stove_burner"], "depends_on": ["S2"], "ingredients": ["1 cup wild rice"] },
+    { "id": "S4", "description": "Add salt, pepper, and chile; cook a few seconds", "duration_min": 1, "active": true, "tools": ["cast_iron_skillet", "stove_burner"], "depends_on": ["S3"], "ingredients": ["kosher salt", "black pepper", "dried chile flakes"] },
+    { "id": "S5", "description": "Pour in the broth, bring to a boil, then cover", "duration_min": 4, "active": true, "tools": ["cast_iron_skillet", "stove_burner"], "depends_on": ["S4"], "ingredients": ["3 cups vegetable or chicken broth"] },
+    { "id": "S6", "description": "Bake about 20 min to give the rice a head start", "duration_min": 20, "active": false, "tools": ["oven", "cast_iron_skillet"], "depends_on": ["S0", "S5"], "ingredients": [] },
+    { "id": "S7", "description": "Add the squash and bake until liquid is gone and rice is tender", "duration_min": 30, "active": false, "tools": ["oven", "cast_iron_skillet"], "depends_on": ["S6"], "ingredients": [] },
+    { "id": "S8", "description": "Rest 5 min, fluff, and top with the finishing sauces", "duration_min": 5, "active": true, "tools": [], "depends_on": ["S7"], "ingredients": ["green sauce & garlic-chile crunch, to finish"] }
+  ]
+}

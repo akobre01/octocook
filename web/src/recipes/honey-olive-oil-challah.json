@@ -1,0 +1,17 @@
+{
+  "name": "Honey & Olive Oil Challah",
+  "icon": "✡️",
+  "cookSteps": [
+    { "id": "S0", "description": "Whisk yeast with 1¾ cups water; add flour, eggs, sugar, honey, oil; mix", "duration_min": 4, "active": true, "tools": ["stand_mixer", "mixing_bowl"], "depends_on": [], "ingredients": ["5 tsp instant yeast", "7 cups all-purpose flour", "2 eggs", "1/2 cup sugar", "1/3 cup honey", "1/3 cup olive oil"] },
+    { "id": "S1", "description": "Add salt and knead until smooth, about 5 min", "duration_min": 5, "active": true, "tools": ["stand_mixer"], "depends_on": ["S0"], "ingredients": ["1 tbsp fine sea salt"] },
+    { "id": "S2", "description": "Tear and fold the dough 15 times; tuck into a ball", "duration_min": 5, "active": true, "tools": [], "depends_on": ["S1"], "ingredients": [] },
+    { "id": "S3", "description": "First rise, covered, until almost doubled", "duration_min": 55, "active": false, "tools": [], "depends_on": ["S2"], "ingredients": [] },
+    { "id": "S4", "description": "Divide the dough into 3 pieces", "duration_min": 3, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": ["S3"], "ingredients": [] },
+    { "id": "S5", "description": "Shape into 6 ropes about 14 inches long", "duration_min": 9, "active": true, "tools": [], "depends_on": ["S4"], "ingredients": [] },
+    { "id": "S6", "description": "Braid into two challahs; seal the ends", "duration_min": 7, "active": true, "tools": [], "depends_on": ["S5"], "ingredients": [] },
+    { "id": "S7", "description": "Second rise on sheet pans; preheat oven to 425°F", "duration_min": 42, "active": false, "tools": ["oven", "sheet_pan"], "depends_on": ["S6"], "ingredients": [] },
+    { "id": "S8", "description": "Egg wash the loaves and sprinkle with seeds", "duration_min": 4, "active": true, "tools": [], "depends_on": ["S7"], "ingredients": ["1 egg", "pinch of salt", "2/3 cup sesame or poppy seeds"] },
+    { "id": "S9", "description": "Bake 15 min, swap pans, bake ~10 min more until golden", "duration_min": 25, "active": false, "tools": ["oven", "sheet_pan"], "depends_on": ["S8"], "ingredients": [] },
+    { "id": "S10", "description": "Cool completely on the pans", "duration_min": 18, "active": false, "tools": [], "depends_on": ["S9"], "ingredients": [] }
+  ]
+}
