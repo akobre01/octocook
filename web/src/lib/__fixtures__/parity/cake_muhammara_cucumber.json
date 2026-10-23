@@ -1,0 +1,461 @@
+{
+  "recipes": [
+    "Olive Oil Cake",
+    "Muhammara",
+    "Smashed Cucumber Salad"
+  ],
+  "schedule": {
+    "makespan_min": 109,
+    "makespan_label": "1h 49m",
+    "substitutions": [],
+    "steps": [
+      {
+        "step_id": "1:S0",
+        "recipe": "Muhammara",
+        "description": "Preheat oven to 450\u00b0F",
+        "duration_min": 12,
+        "active": false,
+        "tools": [
+          "oven"
+        ],
+        "depends_on": [],
+        "ingredients": [],
+        "start_min": 0,
+        "end_min": 12,
+        "start_clock": "00:00",
+        "end_clock": "00:12",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S3",
+        "recipe": "Olive Oil Cake",
+        "description": "Beat eggs and sugar until pale",
+        "duration_min": 5,
+        "active": true,
+        "tools": [
+          "hand_mixer",
+          "mixing_bowl"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "3 eggs",
+          "1 cup sugar"
+        ],
+        "start_min": 0,
+        "end_min": 5,
+        "start_clock": "00:00",
+        "end_clock": "00:05",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S4",
+        "recipe": "Olive Oil Cake",
+        "description": "Stream in olive oil, then milk and zest",
+        "duration_min": 4,
+        "active": true,
+        "tools": [
+          "hand_mixer",
+          "mixing_bowl"
+        ],
+        "depends_on": [
+          "0:S3"
+        ],
+        "ingredients": [
+          "3/4 cup olive oil",
+          "3/4 cup milk",
+          "1 tbsp lemon zest"
+        ],
+        "start_min": 5,
+        "end_min": 9,
+        "start_clock": "00:05",
+        "end_clock": "00:09",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S2",
+        "recipe": "Olive Oil Cake",
+        "description": "Whisk flour, baking powder, salt",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "whisk",
+          "mixing_bowl"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "1 3/4 cups flour",
+          "2 tsp baking powder",
+          "1/2 tsp salt"
+        ],
+        "start_min": 9,
+        "end_min": 11,
+        "start_clock": "00:09",
+        "end_clock": "00:11",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S1",
+        "recipe": "Olive Oil Cake",
+        "description": "Grease and flour a cake pan",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "baking_dish"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "1 tbsp butter",
+          "1 tbsp flour"
+        ],
+        "start_min": 11,
+        "end_min": 14,
+        "start_clock": "00:11",
+        "end_clock": "00:14",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S1",
+        "recipe": "Muhammara",
+        "description": "Char red peppers on a sheet pan",
+        "duration_min": 20,
+        "active": false,
+        "tools": [
+          "oven",
+          "sheet_pan"
+        ],
+        "depends_on": [
+          "1:S0"
+        ],
+        "ingredients": [
+          "3 red bell peppers"
+        ],
+        "start_min": 12,
+        "end_min": 32,
+        "start_clock": "00:12",
+        "end_clock": "00:32",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S5",
+        "recipe": "Olive Oil Cake",
+        "description": "Fold dry into wet until just combined",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "spatula",
+          "mixing_bowl"
+        ],
+        "depends_on": [
+          "0:S2",
+          "0:S4"
+        ],
+        "ingredients": [],
+        "start_min": 14,
+        "end_min": 17,
+        "start_clock": "00:14",
+        "end_clock": "00:17",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S6",
+        "recipe": "Olive Oil Cake",
+        "description": "Pour batter into the pan",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "baking_dish"
+        ],
+        "depends_on": [
+          "0:S1",
+          "0:S5"
+        ],
+        "ingredients": [],
+        "start_min": 17,
+        "end_min": 19,
+        "start_clock": "00:17",
+        "end_clock": "00:19",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S0",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Smash cucumbers with the flat of a knife",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "2 English cucumbers"
+        ],
+        "start_min": 19,
+        "end_min": 22,
+        "start_clock": "00:19",
+        "end_clock": "00:22",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S1",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Tear into bite-size pieces",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [
+          "2:S0"
+        ],
+        "ingredients": [],
+        "start_min": 22,
+        "end_min": 24,
+        "start_clock": "00:22",
+        "end_clock": "00:24",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S2",
+        "recipe": "Muhammara",
+        "description": "Toast walnuts in a dry pan",
+        "duration_min": 5,
+        "active": true,
+        "tools": [
+          "saute_pan"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "1 cup walnuts"
+        ],
+        "start_min": 24,
+        "end_min": 29,
+        "start_clock": "00:24",
+        "end_clock": "00:29",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S2",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Salt and drain in a colander",
+        "duration_min": 15,
+        "active": false,
+        "tools": [
+          "colander"
+        ],
+        "depends_on": [
+          "2:S1"
+        ],
+        "ingredients": [
+          "1 tsp salt"
+        ],
+        "start_min": 24,
+        "end_min": 39,
+        "start_clock": "00:24",
+        "end_clock": "00:39",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S3",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Whisk rice vinegar, sesame oil, garlic, chili",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "whisk",
+          "mixing_bowl"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "2 tbsp rice vinegar",
+          "1 tbsp sesame oil",
+          "2 garlic cloves",
+          "1 tsp chili crisp"
+        ],
+        "start_min": 29,
+        "end_min": 32,
+        "start_clock": "00:29",
+        "end_clock": "00:32",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S3",
+        "recipe": "Muhammara",
+        "description": "Peel and seed the charred peppers",
+        "duration_min": 6,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "1:S1"
+        ],
+        "ingredients": [],
+        "start_min": 32,
+        "end_min": 38,
+        "start_clock": "00:32",
+        "end_clock": "00:38",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S0",
+        "recipe": "Olive Oil Cake",
+        "description": "Preheat oven to 350\u00b0F",
+        "duration_min": 12,
+        "active": false,
+        "tools": [
+          "oven"
+        ],
+        "depends_on": [],
+        "ingredients": [],
+        "start_min": 32,
+        "end_min": 44,
+        "start_clock": "00:32",
+        "end_clock": "00:44",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S4",
+        "recipe": "Muhammara",
+        "description": "Blend peppers, walnuts, pomegranate molasses",
+        "duration_min": 4,
+        "active": true,
+        "tools": [
+          "food_processor"
+        ],
+        "depends_on": [
+          "1:S2",
+          "1:S3"
+        ],
+        "ingredients": [
+          "2 tbsp pomegranate molasses",
+          "1 tsp Aleppo pepper"
+        ],
+        "start_min": 38,
+        "end_min": 42,
+        "start_clock": "00:38",
+        "end_clock": "00:42",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S5",
+        "recipe": "Muhammara",
+        "description": "Stream in olive oil, season with cumin and salt",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "food_processor"
+        ],
+        "depends_on": [
+          "1:S4"
+        ],
+        "ingredients": [
+          "1/3 cup olive oil",
+          "1 tsp cumin",
+          "3/4 tsp salt"
+        ],
+        "start_min": 42,
+        "end_min": 45,
+        "start_clock": "00:42",
+        "end_clock": "00:45",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S7",
+        "recipe": "Olive Oil Cake",
+        "description": "Bake until a tester comes out clean",
+        "duration_min": 45,
+        "active": false,
+        "tools": [
+          "oven",
+          "baking_dish"
+        ],
+        "depends_on": [
+          "0:S0",
+          "0:S6"
+        ],
+        "ingredients": [],
+        "start_min": 44,
+        "end_min": 89,
+        "start_clock": "00:44",
+        "end_clock": "01:29",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S4",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Toss cucumbers with the dressing",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "mixing_bowl"
+        ],
+        "depends_on": [
+          "2:S2",
+          "2:S3"
+        ],
+        "ingredients": [],
+        "start_min": 45,
+        "end_min": 47,
+        "start_clock": "00:45",
+        "end_clock": "00:47",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S6",
+        "recipe": "Muhammara",
+        "description": "Garnish with walnuts and parsley; serve",
+        "duration_min": 3,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "1:S5"
+        ],
+        "ingredients": [
+          "2 tbsp walnuts",
+          "1 tbsp parsley"
+        ],
+        "start_min": 47,
+        "end_min": 50,
+        "start_clock": "00:47",
+        "end_clock": "00:50",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S5",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Top with toasted sesame seeds; serve",
+        "duration_min": 2,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "2:S4"
+        ],
+        "ingredients": [
+          "1 tsp toasted sesame seeds"
+        ],
+        "start_min": 50,
+        "end_min": 52,
+        "start_clock": "00:50",
+        "end_clock": "00:52",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S8",
+        "recipe": "Olive Oil Cake",
+        "description": "Cool on a rack before slicing",
+        "duration_min": 20,
+        "active": false,
+        "tools": [],
+        "depends_on": [
+          "0:S7"
+        ],
+        "ingredients": [],
+        "start_min": 89,
+        "end_min": 109,
+        "start_clock": "01:29",
+        "end_clock": "01:49",
+        "cook_id": 0
+      }
+    ]
+  }
+}

@@ -19,6 +19,7 @@ import { IngredientsView } from './components/IngredientsView'
 
 interface Props {
   onExit: () => void
+  onCookMeal: () => void
 }
 
 // 'ingredients' is the default landing view for a recipe; 'cook' walks the steps.
@@ -44,7 +45,7 @@ function fmtElapsed(seconds: number): string {
 
 // Offline recipe viewer: walk a recipe (or one of its saved variants) step by
 // step, edit it, and time your real pace — all persisted locally, no network.
-export function Viewer({ onExit }: Props) {
+export function Viewer({ onExit, onCookMeal }: Props) {
   const [recipe, setRecipe] = useState<Recipe | null>(null)
   const [listEditMode, setListEditMode] = useState(false)
   const [variants, setVariants] = useState<RecipeVariant[]>([])
@@ -231,6 +232,7 @@ export function Viewer({ onExit }: Props) {
           </button>
         </header>
         {listEditMode && <div className="viewer-heard muted">Pick a recipe to edit</div>}
+        <button className="cook-meal-btn" onClick={onCookMeal}>🍲 Cook a meal (multiple recipes) →</button>
         {RECIPES.length === 0 ? (
           <p className="muted">No bundled recipes found.</p>
         ) : (

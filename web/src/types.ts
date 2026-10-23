@@ -45,6 +45,7 @@ export interface StepView {
   ingredients?: string[]
   recipeName?: string
   recipeIcon?: string
+  accent?: string // recipe color (meal cook mode); undefined = neutral
 }
 
 export interface RecipeOut {
@@ -54,6 +55,20 @@ export interface RecipeOut {
   found_in: string
   rating: string
   enriched: boolean
+}
+
+// A kitchen's tool inventory + substitution graph, mirroring
+// server/presets/<name>/{inventory,substitutions}.yaml. Bundled in lib/kitchens.
+export interface SubRule {
+  tool: string | null // null = "by hand" (no tool reserved)
+  time_multiplier: number
+  note: string
+}
+
+export interface KitchenPreset {
+  name: string
+  inventory: Record<string, number> // tool -> count (includes "cook")
+  substitutions: Record<string, SubRule[]>
 }
 
 export interface ScheduleStep {

@@ -848,6 +848,122 @@ button.danger {
   font-size: 0.9rem;
   color: #c17d3a; /* dull orange: hands-on time */
 }
+
+/* ---------- Meal (multi-recipe) ---------- */
+
+.cook-meal-btn {
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0.85rem;
+  font-size: 0.95rem;
+  border-style: dashed;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.meal-setup-hint { margin: 0 0 1rem; }
+.meal-kitchen {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  max-width: 14rem;
+}
+.meal-subhead { margin: -0.25rem 0 0.75rem; font-size: 0.85rem; }
+
+/* Recipe filter buttons on the merged ingredients view. */
+.meal-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+.meal-filter-btn {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  border-width: 2px;
+}
+.meal-filter-btn.on { font-weight: 600; }
+.ingredient-item.dim { opacity: 0.35; }
+.ingredient-item { transition: opacity 120ms ease; }
+
+/* Cook mode: step stack + background rail. */
+.cook-layout { flex: 1; display: flex; gap: 0.5rem; min-height: 0; }
+.cook-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bg-rail {
+  width: 4.75rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: 0.25rem;
+}
+.bg-rail-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  text-align: center;
+}
+.bg-event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.4rem 0.2rem;
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: 8px;
+  background: var(--past);
+  opacity: 0.85;
+}
+.bg-event-icon { font-size: 1.25rem; line-height: 1; }
+.bg-event-min { font-size: 0.7rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Full-recipe view — readable cards in sequence + a left gutter of concurrency
+   bars (a step's bar spans every card it overlaps; nested lanes grow left). */
+.gantt { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.gantt-caption { text-align: center; font-size: 0.78rem; }
+.gantt-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+.gantt-rows { display: flex; gap: 0.5rem; align-items: flex-start; }
+.gantt-gutter { position: relative; flex-shrink: 0; }
+.gantt-gbar { position: absolute; width: 7px; border-radius: 999px; }
+.gantt-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* == GAP in ScheduleGantt.tsx */
+}
+.gantt-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  overflow: hidden;
+}
+.gantt-card.passive { opacity: 0.6; }
+.gantt-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.gantt-card-clock { font-variant-numeric: tabular-nums; }
+.gantt-card-icon { font-size: 1rem; }
+.gantt-card-min { margin-left: auto; font-variant-numeric: tabular-nums; }
+.gantt-card-desc { font-size: 0.92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .start-cooking {
   width: 100%;
   padding: 0.9rem;

@@ -31,14 +31,18 @@ export function StepCard({ step, emphasis, position, children }: Props) {
   const kind = step.active ? 'active' : 'passive'
   const classes = ['step-card', kind]
   if (emphasis) classes.push(emphasis)
+  // Meal cook mode: a colored left edge identifies the recipe.
+  const style = step.accent
+    ? { borderLeftColor: step.accent, borderLeftWidth: '5px' }
+    : undefined
 
   return (
-    <div className={classes.join(' ')}>
+    <div className={classes.join(' ')} style={style}>
       <div className="step-head">
         {step.recipeIcon && <span className="step-icon">{step.recipeIcon}</span>}
         <div className="step-meta">
           {(step.recipeName || !step.active) && (
-            <div className="step-recipe">
+            <div className="step-recipe" style={step.accent ? { color: step.accent } : undefined}>
               {step.recipeName}
               {!step.active && <span className="passive-tag">hands-off</span>}
             </div>

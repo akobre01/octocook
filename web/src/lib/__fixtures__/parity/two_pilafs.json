@@ -1,0 +1,395 @@
+{
+  "recipes": [
+    "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+    "Fall Pilaf \u2014 Wild Rice & Winter Squash"
+  ],
+  "schedule": {
+    "makespan_min": 126,
+    "makespan_label": "2h 06m",
+    "substitutions": [],
+    "steps": [
+      {
+        "step_id": "0:S0",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Preheat oven to 375\u00b0F",
+        "duration_min": 12,
+        "active": false,
+        "tools": [
+          "oven"
+        ],
+        "depends_on": [],
+        "ingredients": [],
+        "start_min": 0,
+        "end_min": 12,
+        "start_clock": "00:00",
+        "end_clock": "00:12",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S1",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Smash garlic, dice parsnips, form sausage into small patties",
+        "duration_min": 10,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "a few garlic cloves",
+          "2\u20133 parsnips",
+          "spicy sausage"
+        ],
+        "start_min": 0,
+        "end_min": 10,
+        "start_clock": "00:00",
+        "end_clock": "00:10",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S2",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Warm olive oil in an ovenproof skillet; soften the garlic until fragrant",
+        "duration_min": 4,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S1"
+        ],
+        "ingredients": [
+          "olive oil"
+        ],
+        "start_min": 10,
+        "end_min": 14,
+        "start_clock": "00:10",
+        "end_clock": "00:14",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S3",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Stir in the farro and toast it briefly",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S2"
+        ],
+        "ingredients": [
+          "1 cup farro"
+        ],
+        "start_min": 14,
+        "end_min": 16,
+        "start_clock": "00:14",
+        "end_clock": "00:16",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S4",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Add turmeric, curry, salt, pepper, chile; cook a few seconds",
+        "duration_min": 1,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S3"
+        ],
+        "ingredients": [
+          "1 tbsp ground turmeric",
+          "1 tbsp curry powder",
+          "kosher salt",
+          "black pepper",
+          "dried chile flakes"
+        ],
+        "start_min": 16,
+        "end_min": 17,
+        "start_clock": "00:16",
+        "end_clock": "00:17",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S5",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Nestle in the sausage patties, parsnips, and raisins",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet"
+        ],
+        "depends_on": [
+          "0:S4"
+        ],
+        "ingredients": [
+          "handful of golden raisins"
+        ],
+        "start_min": 17,
+        "end_min": 20,
+        "start_clock": "00:17",
+        "end_clock": "00:20",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S6",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Pour in the broth, bring to a boil, then cover",
+        "duration_min": 4,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S5"
+        ],
+        "ingredients": [
+          "1 3/4 cups vegetable or chicken broth"
+        ],
+        "start_min": 20,
+        "end_min": 24,
+        "start_clock": "00:20",
+        "end_clock": "00:24",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S1",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Chop the mirepoix and garlic; cut squash into 1-inch chunks",
+        "duration_min": 12,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "mirepoix (onion, carrot, celery)",
+          "a few garlic cloves",
+          "winter squash"
+        ],
+        "start_min": 24,
+        "end_min": 36,
+        "start_clock": "00:24",
+        "end_clock": "00:36",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S7",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Bake undisturbed until liquid is gone and farro is tender",
+        "duration_min": 35,
+        "active": false,
+        "tools": [
+          "oven",
+          "cast_iron_skillet"
+        ],
+        "depends_on": [
+          "0:S0",
+          "0:S6"
+        ],
+        "ingredients": [],
+        "start_min": 24,
+        "end_min": 59,
+        "start_clock": "00:24",
+        "end_clock": "00:59",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S0",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Preheat oven to 375\u00b0F",
+        "duration_min": 12,
+        "active": false,
+        "tools": [
+          "oven"
+        ],
+        "depends_on": [],
+        "ingredients": [],
+        "start_min": 59,
+        "end_min": 71,
+        "start_clock": "00:59",
+        "end_clock": "01:11",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S2",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Warm olive oil in an ovenproof skillet; soften the aromatics",
+        "duration_min": 5,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S1"
+        ],
+        "ingredients": [
+          "olive oil"
+        ],
+        "start_min": 59,
+        "end_min": 64,
+        "start_clock": "00:59",
+        "end_clock": "01:04",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S3",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Stir in the wild rice and toast it briefly",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S2"
+        ],
+        "ingredients": [
+          "1 cup wild rice"
+        ],
+        "start_min": 64,
+        "end_min": 66,
+        "start_clock": "01:04",
+        "end_clock": "01:06",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S4",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Add salt, pepper, and chile; cook a few seconds",
+        "duration_min": 1,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S3"
+        ],
+        "ingredients": [
+          "kosher salt",
+          "black pepper",
+          "dried chile flakes"
+        ],
+        "start_min": 66,
+        "end_min": 67,
+        "start_clock": "01:06",
+        "end_clock": "01:07",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S5",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Pour in the broth, bring to a boil, then cover",
+        "duration_min": 4,
+        "active": true,
+        "tools": [
+          "cast_iron_skillet",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S4"
+        ],
+        "ingredients": [
+          "3 cups vegetable or chicken broth"
+        ],
+        "start_min": 67,
+        "end_min": 71,
+        "start_clock": "01:07",
+        "end_clock": "01:11",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S6",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Bake about 20 min to give the rice a head start",
+        "duration_min": 20,
+        "active": false,
+        "tools": [
+          "oven",
+          "cast_iron_skillet"
+        ],
+        "depends_on": [
+          "1:S0",
+          "1:S5"
+        ],
+        "ingredients": [],
+        "start_min": 71,
+        "end_min": 91,
+        "start_clock": "01:11",
+        "end_clock": "01:31",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S8",
+        "recipe": "Winter Pilaf \u2014 Farro, Sausage & Parsnips",
+        "description": "Rest 5 min, fluff, and fold in cilantro and celery leaves",
+        "duration_min": 5,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "0:S7"
+        ],
+        "ingredients": [
+          "fresh cilantro",
+          "celery leaves"
+        ],
+        "start_min": 71,
+        "end_min": 76,
+        "start_clock": "01:11",
+        "end_clock": "01:16",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S7",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Add the squash and bake until liquid is gone and rice is tender",
+        "duration_min": 30,
+        "active": false,
+        "tools": [
+          "oven",
+          "cast_iron_skillet"
+        ],
+        "depends_on": [
+          "1:S6"
+        ],
+        "ingredients": [],
+        "start_min": 91,
+        "end_min": 121,
+        "start_clock": "01:31",
+        "end_clock": "02:01",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S8",
+        "recipe": "Fall Pilaf \u2014 Wild Rice & Winter Squash",
+        "description": "Rest 5 min, fluff, and top with the finishing sauces",
+        "duration_min": 5,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "1:S7"
+        ],
+        "ingredients": [
+          "green sauce & garlic-chile crunch, to finish"
+        ],
+        "start_min": 121,
+        "end_min": 126,
+        "start_clock": "02:01",
+        "end_clock": "02:06",
+        "cook_id": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,352 @@
+{
+  "recipes": [
+    "Butternut Squash & Red Lentil Soup",
+    "Smashed Cucumber Salad"
+  ],
+  "schedule": {
+    "makespan_min": 69,
+    "makespan_label": "1h 09m",
+    "substitutions": [],
+    "steps": [
+      {
+        "step_id": "0:S0",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Dice onions and finely chop garlic",
+        "duration_min": 6,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "2 onions",
+          "4 garlic cloves"
+        ],
+        "start_min": 0,
+        "end_min": 6,
+        "start_clock": "00:00",
+        "end_clock": "00:06",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S2",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Heat oil and cook onions and garlic until soft",
+        "duration_min": 7,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S0"
+        ],
+        "ingredients": [
+          "6 tbsp olive oil"
+        ],
+        "start_min": 6,
+        "end_min": 13,
+        "start_clock": "00:06",
+        "end_clock": "00:13",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S1",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Peel, seed, and dice the butternut squash",
+        "duration_min": 8,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "12 oz butternut squash"
+        ],
+        "start_min": 13,
+        "end_min": 21,
+        "start_clock": "00:13",
+        "end_clock": "00:21",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S3",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Stir in tomato paste, cumin, cayenne, salt, pepper; cook 2 min",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S2"
+        ],
+        "ingredients": [
+          "2 tbsp tomato paste",
+          "2 tsp ground cumin",
+          "pinch of cayenne",
+          "3/4 tsp kosher salt",
+          "black pepper"
+        ],
+        "start_min": 21,
+        "end_min": 23,
+        "start_clock": "00:21",
+        "end_clock": "00:23",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S4",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Add squash, lentils, stock, and 4 cups water; bring to a simmer",
+        "duration_min": 5,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S1",
+          "0:S3"
+        ],
+        "ingredients": [
+          "1 cup red lentils",
+          "2 cups chicken stock (vegetable works)"
+        ],
+        "start_min": 23,
+        "end_min": 28,
+        "start_clock": "00:23",
+        "end_clock": "00:28",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S5",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Partly cover and simmer until lentils and squash are soft",
+        "duration_min": 30,
+        "active": false,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S4"
+        ],
+        "ingredients": [],
+        "start_min": 28,
+        "end_min": 58,
+        "start_clock": "00:28",
+        "end_clock": "00:58",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S0",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Smash cucumbers with the flat of a knife",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "2 English cucumbers"
+        ],
+        "start_min": 28,
+        "end_min": 31,
+        "start_clock": "00:28",
+        "end_clock": "00:31",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S1",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Tear into bite-size pieces",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [
+          "1:S0"
+        ],
+        "ingredients": [],
+        "start_min": 31,
+        "end_min": 33,
+        "start_clock": "00:31",
+        "end_clock": "00:33",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S2",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Salt and drain in a colander",
+        "duration_min": 15,
+        "active": false,
+        "tools": [
+          "colander"
+        ],
+        "depends_on": [
+          "1:S1"
+        ],
+        "ingredients": [
+          "1 tsp salt"
+        ],
+        "start_min": 33,
+        "end_min": 48,
+        "start_clock": "00:33",
+        "end_clock": "00:48",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S3",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Whisk rice vinegar, sesame oil, garlic, chili",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "whisk",
+          "mixing_bowl"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "2 tbsp rice vinegar",
+          "1 tbsp sesame oil",
+          "2 garlic cloves",
+          "1 tsp chili crisp"
+        ],
+        "start_min": 33,
+        "end_min": 36,
+        "start_clock": "00:33",
+        "end_clock": "00:36",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S4",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Toss cucumbers with the dressing",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "mixing_bowl"
+        ],
+        "depends_on": [
+          "1:S2",
+          "1:S3"
+        ],
+        "ingredients": [],
+        "start_min": 48,
+        "end_min": 50,
+        "start_clock": "00:48",
+        "end_clock": "00:50",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S5",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Top with toasted sesame seeds; serve",
+        "duration_min": 2,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "1:S4"
+        ],
+        "ingredients": [
+          "1 tsp toasted sesame seeds"
+        ],
+        "start_min": 50,
+        "end_min": 52,
+        "start_clock": "00:50",
+        "end_clock": "00:52",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S6",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Stir in coconut milk, heat through, adjust seasoning",
+        "duration_min": 4,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S5"
+        ],
+        "ingredients": [
+          "1 can (13.5 oz) coconut milk"
+        ],
+        "start_min": 58,
+        "end_min": 62,
+        "start_clock": "00:58",
+        "end_clock": "01:02",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S7",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Coarsely pur\u00e9e with an immersion blender",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "immersion_blender"
+        ],
+        "depends_on": [
+          "0:S6"
+        ],
+        "ingredients": [],
+        "start_min": 62,
+        "end_min": 65,
+        "start_clock": "01:02",
+        "end_clock": "01:05",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S8",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Stir in lime zest and spinach; cook until spinach wilts",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S7"
+        ],
+        "ingredients": [
+          "1 tsp grated lime zest",
+          "5 oz baby spinach"
+        ],
+        "start_min": 65,
+        "end_min": 68,
+        "start_clock": "01:05",
+        "end_clock": "01:08",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S9",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Season with lime juice and serve",
+        "duration_min": 1,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "0:S8"
+        ],
+        "ingredients": [
+          "fresh lime juice"
+        ],
+        "start_min": 68,
+        "end_min": 69,
+        "start_clock": "01:08",
+        "end_clock": "01:09",
+        "cook_id": 0
+      }
+    ]
+  }
+}
