@@ -1,0 +1,17 @@
+{
+  "name": "Chocolate-Coated Oat, Date & Cashew Bars",
+  "icon": "🍫",
+  "cookSteps": [
+    { "id": "S0", "description": "Preheat oven to 350°F", "duration_min": 15, "active": false, "tools": ["oven"], "depends_on": [], "ingredients": [] },
+    { "id": "S1", "description": "Spread oats, cashews, and hazelnuts on a sheet pan", "duration_min": 3, "active": true, "tools": ["sheet_pan"], "depends_on": [], "ingredients": ["1 1/2 cups rolled oats", "1 1/4 cups raw cashews", "1 cup raw hazelnuts"] },
+    { "id": "S2", "description": "Toast until fragrant (stir once), then cool", "duration_min": 20, "active": false, "tools": ["oven", "sheet_pan"], "depends_on": ["S0", "S1"], "ingredients": [] },
+    { "id": "S3", "description": "Pulse the toasted oat-nut mix with dates in a food processor", "duration_min": 3, "active": true, "tools": ["food_processor"], "depends_on": ["S2"], "ingredients": ["2 cups pitted dates"] },
+    { "id": "S4", "description": "Add cashew butter, cocoa, maple syrup, salt; pulse to combine", "duration_min": 3, "active": true, "tools": ["food_processor"], "depends_on": ["S3"], "ingredients": ["150 g cashew butter", "1/3 cup cocoa powder", "1/4 cup maple syrup", "1 tsp kosher salt"] },
+    { "id": "S5", "description": "Tip into a bowl and finish mixing by hand", "duration_min": 3, "active": true, "tools": ["mixing_bowl"], "depends_on": ["S4"], "ingredients": [] },
+    { "id": "S6", "description": "Oil a 9x13 dish and press the mixture flat", "duration_min": 5, "active": true, "tools": ["baking_dish"], "depends_on": ["S5"], "ingredients": ["olive oil, for the pan"] },
+    { "id": "S7", "description": "Refrigerate until firm", "duration_min": 30, "active": false, "tools": [], "depends_on": ["S6"], "ingredients": [] },
+    { "id": "S8", "description": "Melt chocolate with oil and spread over the base", "duration_min": 6, "active": true, "tools": ["saucepan", "stove_burner", "spatula"], "depends_on": ["S7"], "ingredients": ["3 oz semisweet chocolate", "1 tbsp olive oil"] },
+    { "id": "S9", "description": "Refrigerate until set", "duration_min": 60, "active": false, "tools": [], "depends_on": ["S8"], "ingredients": [] },
+    { "id": "S10", "description": "Cut into bars", "duration_min": 5, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": ["S9"], "ingredients": [] }
+  ]
+}
