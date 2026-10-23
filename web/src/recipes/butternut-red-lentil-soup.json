@@ -1,0 +1,16 @@
+{
+  "name": "Butternut Squash & Red Lentil Soup",
+  "icon": "🎃",
+  "cookSteps": [
+    { "id": "S0", "description": "Dice onions and finely chop garlic", "duration_min": 6, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["2 onions", "4 garlic cloves"] },
+    { "id": "S1", "description": "Peel, seed, and dice the butternut squash", "duration_min": 8, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["12 oz butternut squash"] },
+    { "id": "S2", "description": "Heat oil and cook onions and garlic until soft", "duration_min": 7, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S0"], "ingredients": ["6 tbsp olive oil"] },
+    { "id": "S3", "description": "Stir in tomato paste, cumin, cayenne, salt, pepper; cook 2 min", "duration_min": 2, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S2"], "ingredients": ["2 tbsp tomato paste", "2 tsp ground cumin", "pinch of cayenne", "3/4 tsp kosher salt", "black pepper"] },
+    { "id": "S4", "description": "Add squash, lentils, stock, and 4 cups water; bring to a simmer", "duration_min": 5, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S1", "S3"], "ingredients": ["1 cup red lentils", "2 cups chicken stock (vegetable works)"] },
+    { "id": "S5", "description": "Partly cover and simmer until lentils and squash are soft", "duration_min": 30, "active": false, "tools": ["stockpot", "stove_burner"], "depends_on": ["S4"], "ingredients": [] },
+    { "id": "S6", "description": "Stir in coconut milk, heat through, adjust seasoning", "duration_min": 4, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S5"], "ingredients": ["1 can (13.5 oz) coconut milk"] },
+    { "id": "S7", "description": "Coarsely purée with an immersion blender", "duration_min": 3, "active": true, "tools": ["immersion_blender"], "depends_on": ["S6"], "ingredients": [] },
+    { "id": "S8", "description": "Stir in lime zest and spinach; cook until spinach wilts", "duration_min": 3, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S7"], "ingredients": ["1 tsp grated lime zest", "5 oz baby spinach"] },
+    { "id": "S9", "description": "Season with lime juice and serve", "duration_min": 1, "active": true, "tools": [], "depends_on": ["S8"], "ingredients": ["fresh lime juice"] }
+  ]
+}

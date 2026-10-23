@@ -6,6 +6,22 @@
 export const FALLBACK_INGREDIENT_ICON = '🥄'
 
 const INGREDIENT_ICONS: [string, string][] = [
+  ['coconut', '🥥'],
+  ['squash', '🎃'],
+  ['lentil', '🫘'],
+  ['chickpea', '🫘'],
+  ['bean', '🫘'],
+  ['spinach', '🥬'],
+  ['chard', '🥬'],
+  ['stock', '🥣'],
+  ['broth', '🥣'],
+  ['lime', '🍋'],
+  ['cayenne', '🌶️'],
+  ['chile', '🌶️'],
+  ['paprika', '🌶️'],
+  ['shallot', '🧅'],
+  ['bread', '🍞'],
+  ['ginger', '🫚'],
   ['egg', '🥚'],
   ['sugar', '🍬'],
   ['flour', '🌾'],

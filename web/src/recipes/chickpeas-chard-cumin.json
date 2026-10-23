@@ -1,0 +1,15 @@
+{
+  "name": "Olive Oil–Braised Chickpeas & Swiss Chard",
+  "icon": "🥬",
+  "cookSteps": [
+    { "id": "S0", "description": "Slice garlic and shallots; prep chard stems and leaves", "duration_min": 9, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["5 garlic cloves", "2 shallots", "2 bunches Swiss chard"] },
+    { "id": "S1", "description": "Heat oil and cook sliced garlic until edges are pale gold", "duration_min": 4, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S0"], "ingredients": ["1/2 cup olive oil"] },
+    { "id": "S2", "description": "Add chard stems, cumin seeds, salt, chile; cook until stems soften", "duration_min": 5, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S1"], "ingredients": ["2 tsp cumin seeds", "3/4 tsp sea salt", "pinch of red chile flakes"] },
+    { "id": "S3", "description": "Add shallots and cook 3 min", "duration_min": 3, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S2"], "ingredients": [] },
+    { "id": "S4", "description": "Stir in chickpeas, chard leaves, and stock; cover", "duration_min": 3, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S3"], "ingredients": ["4 cups cooked chickpeas", "1 cup chicken or vegetable stock"] },
+    { "id": "S5", "description": "Simmer covered until the chard is very tender", "duration_min": 13, "active": false, "tools": ["stockpot", "stove_burner"], "depends_on": ["S4"], "ingredients": [] },
+    { "id": "S6", "description": "Partly purée with an immersion blender (keep it chunky)", "duration_min": 3, "active": true, "tools": ["immersion_blender"], "depends_on": ["S5"], "ingredients": [] },
+    { "id": "S7", "description": "Toast bread and rub with a cut garlic clove", "duration_min": 5, "active": true, "tools": [], "depends_on": ["S0"], "ingredients": ["4–6 slices country bread"] },
+    { "id": "S8", "description": "Ladle stew over toast; finish with oil, lemon, paprika", "duration_min": 2, "active": true, "tools": [], "depends_on": ["S6", "S7"], "ingredients": ["fresh lemon juice", "sweet smoked paprika", "olive oil for serving"] }
+  ]
+}
