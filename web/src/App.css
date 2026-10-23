@@ -986,6 +986,16 @@ button.danger {
 .step-card.current .step-icon { font-size: 2.1rem; }
 .step-card.current .tool-icon { font-size: 2rem; }
 
+/* In the step stack, show the ingredient quantities only on the current step so
+   the surrounding (dimmed) cards stay compact. CookView's neutral cards (no
+   emphasis class) keep showing them. */
+.step-card.prev .step-ingredients,
+.step-card.prev2 .step-ingredients,
+.step-card.prev3 .step-ingredients,
+.step-card.next .step-ingredients,
+.step-card.next2 .step-ingredients,
+.step-card.next3 .step-ingredients { display: none; }
+
 .step-stack-nav {
   position: sticky;
   bottom: 0;

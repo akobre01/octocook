@@ -28,6 +28,7 @@ function toStepView(step: CookStep, recipe: Recipe): StepView {
     duration_min: step.duration_min,
     active: step.active,
     tools: step.tools,
+    ingredients: step.ingredients,
     recipeName: recipe.name,
     recipeIcon: recipe.icon,
   }

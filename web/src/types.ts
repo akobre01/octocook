@@ -9,6 +9,9 @@ export interface CookStep {
   active: boolean
   tools: string[]
   depends_on: string[]
+  // Ingredient phrases this step uses, e.g. ["3 eggs", "1 cup sugar"]. Optional:
+  // steps like preheating have none.
+  ingredients?: string[]
 }
 
 // A bundled, fully-structured recipe the viewer walks linearly.

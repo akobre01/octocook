@@ -2,11 +2,11 @@
   "name": "Smashed Cucumber Salad",
   "icon": "🥒",
   "cookSteps": [
-    { "id": "S0", "description": "Smash cucumbers with the flat of a knife", "duration_min": 3, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [] },
-    { "id": "S1", "description": "Tear into bite-size pieces", "duration_min": 2, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": ["S0"] },
-    { "id": "S2", "description": "Salt and drain in a colander", "duration_min": 15, "active": false, "tools": ["colander"], "depends_on": ["S1"] },
-    { "id": "S3", "description": "Whisk rice vinegar, sesame oil, garlic, chili", "duration_min": 3, "active": true, "tools": ["whisk", "mixing_bowl"], "depends_on": [] },
-    { "id": "S4", "description": "Toss cucumbers with the dressing", "duration_min": 2, "active": true, "tools": ["mixing_bowl"], "depends_on": ["S2", "S3"] },
-    { "id": "S5", "description": "Top with toasted sesame seeds; serve", "duration_min": 2, "active": true, "tools": [], "depends_on": ["S4"] }
+    { "id": "S0", "description": "Smash cucumbers with the flat of a knife", "duration_min": 3, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["2 English cucumbers"] },
+    { "id": "S1", "description": "Tear into bite-size pieces", "duration_min": 2, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": ["S0"], "ingredients": [] },
+    { "id": "S2", "description": "Salt and drain in a colander", "duration_min": 15, "active": false, "tools": ["colander"], "depends_on": ["S1"], "ingredients": ["1 tsp salt"] },
+    { "id": "S3", "description": "Whisk rice vinegar, sesame oil, garlic, chili", "duration_min": 3, "active": true, "tools": ["whisk", "mixing_bowl"], "depends_on": [], "ingredients": ["2 tbsp rice vinegar", "1 tbsp sesame oil", "2 garlic cloves", "1 tsp chili crisp"] },
+    { "id": "S4", "description": "Toss cucumbers with the dressing", "duration_min": 2, "active": true, "tools": ["mixing_bowl"], "depends_on": ["S2", "S3"], "ingredients": [] },
+    { "id": "S5", "description": "Top with toasted sesame seeds; serve", "duration_min": 2, "active": true, "tools": [], "depends_on": ["S4"], "ingredients": ["1 tsp toasted sesame seeds"] }
   ]
 }

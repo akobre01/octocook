@@ -19,6 +19,8 @@ export function StepEditor({ step, otherStepIds, onSave, onCancel }: Props) {
   const [active, setActive] = useState(step.active)
   const [tools, setTools] = useState<string[]>(step.tools)
   const [dependsOn, setDependsOn] = useState<string[]>(step.depends_on)
+  // Edited as one ingredient per line, e.g. "3 eggs\n1 cup sugar".
+  const [ingredientsText, setIngredientsText] = useState((step.ingredients ?? []).join('\n'))
 
   const toggle = (list: string[], value: string) =>
     list.includes(value) ? list.filter((x) => x !== value) : [...list, value]
@@ -32,6 +34,7 @@ export function StepEditor({ step, otherStepIds, onSave, onCancel }: Props) {
       active,
       tools,
       depends_on: dependsOn.filter((id) => otherStepIds.includes(id)),
+      ingredients: ingredientsText.split('\n').map((s) => s.trim()).filter(Boolean),
     })
   }
 
@@ -44,6 +47,17 @@ export function StepEditor({ step, otherStepIds, onSave, onCancel }: Props) {
           rows={2}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+        />
+      </label>
+
+      <label className="field">
+        <span className="field-label">Ingredients (one per line)</span>
+        <textarea
+          className="field-input"
+          rows={3}
+          placeholder="3 eggs&#10;1 cup sugar"
+          value={ingredientsText}
+          onChange={(e) => setIngredientsText(e.target.value)}
         />
       </label>
 
