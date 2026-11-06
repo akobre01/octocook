@@ -1,0 +1,16 @@
+{
+  "name": "Cauliflower Shawarma with Spicy Tahini",
+  "icon": "🥙",
+  "cookSteps": [
+    { "id": "S0", "description": "Set racks in upper and lower thirds; preheat oven to 425°F", "duration_min": 12, "active": false, "tools": ["oven"], "depends_on": [], "ingredients": [] },
+    { "id": "S1", "description": "Whisk olive oil and spices in a large bowl", "duration_min": 3, "active": true, "tools": ["mixing_bowl", "whisk"], "depends_on": [], "ingredients": ["5 tbsp extra-virgin olive oil", "1 1/4 tsp ground cumin", "1 1/4 tsp sweet paprika", "3/4 tsp fine sea salt", "1 tsp ground coriander", "1/4 tsp ground turmeric", "1/4 tsp black pepper", "pinch of cayenne"] },
+    { "id": "S2", "description": "Cut cauliflower into bite-size florets and onion into wedges", "duration_min": 8, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["1 large head cauliflower (about 2 1/2 lb)", "1 large red onion"] },
+    { "id": "S3", "description": "Toss vegetables in the spiced oil; spread on a sheet pan", "duration_min": 3, "active": true, "tools": ["mixing_bowl", "sheet_pan"], "depends_on": ["S1", "S2"], "ingredients": [] },
+    { "id": "S4", "description": "Roast on the top rack until golden, stirring once or twice", "duration_min": 30, "active": false, "tools": ["oven", "sheet_pan"], "depends_on": ["S0", "S3"], "ingredients": [] },
+    { "id": "S5", "description": "Make tahini sauce: lemon, harissa, garlic, salt; whisk in tahini and ice water", "duration_min": 6, "active": true, "tools": ["mixing_bowl", "whisk"], "depends_on": [], "ingredients": ["1 tbsp fresh lemon juice", "1-2 tsp harissa paste", "1 fat garlic clove, grated", "1/4 tsp fine sea salt", "1/3 cup tahini", "1/3 cup ice water"] },
+    { "id": "S6", "description": "Chop parsley, tomato, cucumber, and olives for serving", "duration_min": 6, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["1/4 cup parsley", "tomato, cucumber, and olives"] },
+    { "id": "S7", "description": "Slide the pitas onto the bottom rack", "duration_min": 1, "active": true, "tools": ["oven"], "depends_on": ["S4"], "ingredients": ["pita or flatbread"] },
+    { "id": "S8", "description": "Roast 5 min more while the pitas warm", "duration_min": 5, "active": false, "tools": ["oven", "sheet_pan"], "depends_on": ["S7"], "ingredients": [] },
+    { "id": "S9", "description": "Scatter parsley over the vegetables; serve with pitas, sauce, and toppings", "duration_min": 3, "active": true, "tools": [], "depends_on": ["S5", "S6", "S8"], "ingredients": [] }
+  ]
+}

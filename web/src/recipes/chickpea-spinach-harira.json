@@ -1,0 +1,17 @@
+{
+  "name": "Chickpea & Spinach Harira",
+  "icon": "🍲",
+  "cookSteps": [
+    { "id": "S0", "description": "Dice onion and carrots; mince garlic and ginger", "duration_min": 10, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["1 large onion", "2 medium carrots", "3 garlic cloves", "1 tbsp fresh ginger"] },
+    { "id": "S1", "description": "Chop the tomatoes (skip if using canned)", "duration_min": 5, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["6 medium tomatoes (or 2 cans diced)"] },
+    { "id": "S2", "description": "Heat oil and cook onion and carrots until golden", "duration_min": 10, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S0"], "ingredients": ["1/4 cup olive oil"] },
+    { "id": "S3", "description": "Stir in garlic, ginger, spices, and harissa; then tomato paste", "duration_min": 5, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S2"], "ingredients": ["1 1/2 tsp ground turmeric", "1 1/2 tsp ground cumin", "1 tsp ground cinnamon", "1 tsp honey harissa", "2 tbsp tomato paste"] },
+    { "id": "S4", "description": "Add broth, tomatoes, chickpeas, lentils, and seasonings", "duration_min": 5, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S1", "S3"], "ingredients": ["7 cups vegetable broth", "15-oz can chickpeas, drained", "1/2 cup red lentils", "2 tbsp kosher salt", "1 tsp black pepper", "1/4 tsp smoked paprika"] },
+    { "id": "S5", "description": "Bring to a boil, then simmer on low until thickened", "duration_min": 45, "active": false, "tools": ["stockpot", "stove_burner"], "depends_on": ["S4"], "ingredients": [] },
+    { "id": "S6", "description": "Stir in the pastina", "duration_min": 2, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S5"], "ingredients": ["1/3 cup pastina or orzo"] },
+    { "id": "S7", "description": "Simmer until the pasta is tender", "duration_min": 10, "active": false, "tools": ["stockpot", "stove_burner"], "depends_on": ["S6"], "ingredients": [] },
+    { "id": "S8", "description": "Stir in spinach until wilted", "duration_min": 3, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S7"], "ingredients": ["6 cups baby spinach"] },
+    { "id": "S9", "description": "Chop the cilantro", "duration_min": 2, "active": true, "tools": ["chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["1/2 cup cilantro or parsley"] },
+    { "id": "S10", "description": "Off the heat, stir in lemon juice and cilantro; season and serve", "duration_min": 2, "active": true, "tools": ["stockpot"], "depends_on": ["S8", "S9"], "ingredients": ["1/4 cup lemon juice"] }
+  ]
+}

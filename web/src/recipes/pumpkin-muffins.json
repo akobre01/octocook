@@ -1,0 +1,14 @@
+{
+  "name": "Pumpkin Muffins",
+  "icon": "🧁",
+  "cookSteps": [
+    { "id": "S0", "description": "Preheat oven to 425°F", "duration_min": 12, "active": false, "tools": ["oven"], "depends_on": [], "ingredients": [] },
+    { "id": "S1", "description": "Grease or line a 12-cup muffin pan", "duration_min": 2, "active": true, "tools": ["muffin_pan"], "depends_on": [], "ingredients": ["nonstick spray or cupcake liners"] },
+    { "id": "S2", "description": "Whisk flour, baking soda, spices, and salt in a large bowl", "duration_min": 3, "active": true, "tools": ["mixing_bowl", "whisk"], "depends_on": [], "ingredients": ["1 3/4 cups (219g) all-purpose flour", "1 tsp baking soda", "1 1/2 tsp ground cinnamon", "1 1/2 tsp pumpkin pie spice", "1/4 tsp ground ginger", "1/2 tsp salt"] },
+    { "id": "S3", "description": "Whisk oil, sugars, pumpkin, eggs, and milk in a medium bowl", "duration_min": 3, "active": true, "tools": ["mixing_bowl", "whisk"], "depends_on": [], "ingredients": ["1/2 cup (120ml) vegetable oil", "1/2 cup (100g) granulated sugar", "1/2 cup (100g) brown sugar", "1 1/2 cups (340g) pumpkin puree", "2 large eggs", "1/4 cup (60ml) milk"] },
+    { "id": "S4", "description": "Fold wet into dry until just combined", "duration_min": 2, "active": true, "tools": ["mixing_bowl", "spatula"], "depends_on": ["S2", "S3"], "ingredients": [] },
+    { "id": "S5", "description": "Spoon batter into the cups, filling to the top", "duration_min": 3, "active": true, "tools": ["muffin_pan"], "depends_on": ["S1", "S4"], "ingredients": [] },
+    { "id": "S6", "description": "Bake 5 min at 425°F, then lower to 350°F and bake ~17 min more", "duration_min": 22, "active": false, "tools": ["oven", "muffin_pan"], "depends_on": ["S0", "S5"], "ingredients": [] },
+    { "id": "S7", "description": "Cool in the pan for 5 minutes", "duration_min": 5, "active": false, "tools": ["muffin_pan"], "depends_on": ["S6"], "ingredients": [] }
+  ]
+}
