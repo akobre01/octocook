@@ -18,6 +18,8 @@ const INGREDIENT_ICONS: [string, string][] = [
   ['cauliflower', '🥦'],
   ['pumpkin', '🎃'],
   ['cinnamon', '🟤'],
+  ['sweet potato', '🍠'],
+  ['kale', '🥬'],
   ['coconut', '🥥'],
   ['squash', '🎃'],
   ['lentil', '🫘'],

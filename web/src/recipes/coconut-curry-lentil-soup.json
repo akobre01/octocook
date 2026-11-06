@@ -1,0 +1,16 @@
+{
+  "name": "Coconut Curry Lentil Soup",
+  "icon": "🥥",
+  "cookSteps": [
+    { "id": "S0", "description": "Chop onion, mince garlic, and grate ginger", "duration_min": 5, "active": true, "tools": ["chef_knife", "cutting_board", "grater"], "depends_on": [], "ingredients": ["1 small yellow onion", "4 garlic cloves", "1 tbsp fresh ginger"] },
+    { "id": "S1", "description": "Peel sweet potatoes and cut into 1-inch pieces", "duration_min": 8, "active": true, "tools": ["peeler", "chef_knife", "cutting_board"], "depends_on": [], "ingredients": ["1 1/2 lb sweet potato"] },
+    { "id": "S2", "description": "Stem the kale and tear into pieces", "duration_min": 4, "active": true, "tools": [], "depends_on": [], "ingredients": ["4 cups packed curly kale"] },
+    { "id": "S3", "description": "Heat oil and sauté onion until translucent", "duration_min": 5, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S0"], "ingredients": ["2 tbsp extra-virgin olive oil"] },
+    { "id": "S4", "description": "Add ginger and garlic; cook until fragrant", "duration_min": 2, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S3"], "ingredients": [] },
+    { "id": "S5", "description": "Stir in curry powder and cinnamon", "duration_min": 1, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S4"], "ingredients": ["2 tbsp yellow curry powder", "1/2 tsp ground cinnamon"] },
+    { "id": "S6", "description": "Pour in stock and coconut milk; stir in sweet potatoes, lentils, and salt", "duration_min": 3, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S1", "S5"], "ingredients": ["4 cups vegetable or chicken stock", "2 (13.5-oz) cans full-fat coconut milk", "1 1/2 cups brown lentils", "1 1/2 tsp sea salt"] },
+    { "id": "S7", "description": "Bring to a boil, then cover and simmer until sweet potatoes and lentils are tender", "duration_min": 25, "active": false, "tools": ["stockpot", "stove_burner"], "depends_on": ["S6"], "ingredients": [] },
+    { "id": "S8", "description": "Uncover, stir in kale, and cook until wilted", "duration_min": 4, "active": true, "tools": ["stockpot", "stove_burner"], "depends_on": ["S2", "S7"], "ingredients": [] },
+    { "id": "S9", "description": "Ladle into bowls and serve warm", "duration_min": 2, "active": true, "tools": [], "depends_on": ["S8"], "ingredients": [] }
+  ]
+}
