@@ -41,10 +41,11 @@ export function StepCard({ step, emphasis, position, children }: Props) {
       <div className="step-head">
         {step.recipeIcon && <span className="step-icon">{step.recipeIcon}</span>}
         <div className="step-meta">
-          {(step.recipeName || !step.active) && (
+          {(step.recipeName || !step.active || step.prep) && (
             <div className="step-recipe" style={step.accent ? { color: step.accent } : undefined}>
               {step.recipeName}
               {!step.active && <span className="passive-tag">hands-off</span>}
+              {step.prep && <span className="passive-tag prep-tag">prep</span>}
             </div>
           )}
           <div className="step-positions">

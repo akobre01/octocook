@@ -2,10 +2,11 @@ import { useState } from 'react'
 import type { KitchenPreset, Recipe } from './types'
 import { RECIPES } from './lib/loadRecipes'
 import { KITCHENS } from './lib/kitchens'
+import { loadMisePref, saveMisePref } from './lib/prep'
 
 interface Props {
   onExit: () => void
-  onStart: (recipes: Recipe[], kitchen: KitchenPreset) => void
+  onStart: (recipes: Recipe[], kitchen: KitchenPreset, miseEnPlace: boolean) => void
   error?: string | null
 }
 
@@ -14,6 +15,7 @@ interface Props {
 export function MealSetup({ onExit, onStart, error }: Props) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [kitchen, setKitchen] = useState(KITCHENS[0].name)
+  const [mise, setMise] = useState(loadMisePref)
 
   const toggle = (name: string) =>
     setSelected((s) => {
@@ -43,6 +45,18 @@ export function MealSetup({ onExit, onStart, error }: Props) {
         </select>
       </label>
 
+      <label className="mise-toggle">
+        <input
+          type="checkbox"
+          checked={mise}
+          onChange={(e) => { setMise(e.target.checked); saveMisePref(e.target.checked) }}
+        />
+        <span>
+          🔪 <strong>Mise en place first</strong>
+          <span className="muted"> — do all the chopping and prep before anything goes on the heat</span>
+        </span>
+      </label>
+
       <ul className="recipe-grid">
         {RECIPES.map((r) => (
           <li
@@ -68,7 +82,7 @@ export function MealSetup({ onExit, onStart, error }: Props) {
           </span>
         </div>
         {error && <p className="error">{error}</p>}
-        <button className="primary" disabled={selected.size === 0} onClick={() => onStart(chosen, kit)}>
+        <button className="primary" disabled={selected.size === 0} onClick={() => onStart(chosen, kit, mise)}>
           Plan meal →
         </button>
       </div>

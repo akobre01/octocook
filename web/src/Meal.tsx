@@ -13,10 +13,10 @@ export function Meal({ onExit }: Props) {
   const [planned, setPlanned] = useState<{ recipes: Recipe[]; plan: MealPlan } | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  const start = async (recipes: Recipe[], kitchen: KitchenPreset) => {
+  const start = async (recipes: Recipe[], kitchen: KitchenPreset, miseEnPlace: boolean) => {
     setError(null)
     try {
-      const plan = await scheduleMeal(recipes, kitchen, 1)
+      const plan = await scheduleMeal(recipes, kitchen, 1, { miseEnPlace })
       setPlanned({ recipes, plan })
     } catch (e) {
       setError(String((e as Error).message ?? e))

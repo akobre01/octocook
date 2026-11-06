@@ -16,6 +16,7 @@ import { VariantBar } from './components/VariantBar'
 import { RecipeEditor } from './components/RecipeEditor'
 import { TimingReview } from './components/TimingReview'
 import { IngredientsView } from './components/IngredientsView'
+import { loadMisePref, misePrepFirst, prepStepIds, saveMisePref } from './lib/prep'
 
 interface Props {
   onExit: () => void
@@ -25,7 +26,7 @@ interface Props {
 // 'ingredients' is the default landing view for a recipe; 'cook' walks the steps.
 type Mode = 'ingredients' | 'cook' | 'timeline' | 'edit' | 'review'
 
-function toStepView(step: CookStep, recipe: Recipe): StepView {
+function toStepView(step: CookStep, recipe: Recipe, prep?: boolean): StepView {
   return {
     description: step.description,
     duration_min: step.duration_min,
@@ -34,6 +35,7 @@ function toStepView(step: CookStep, recipe: Recipe): StepView {
     ingredients: step.ingredients,
     recipeName: recipe.name,
     recipeIcon: recipe.icon,
+    prep,
   }
 }
 
@@ -52,6 +54,7 @@ export function Viewer({ onExit, onCookMeal }: Props) {
   const [activeVariantId, setActiveVariantId] = useState<string | null>(null)
   const [index, setIndex] = useState(0)
   const [mode, setMode] = useState<Mode>('ingredients')
+  const [mise, setMise] = useState(loadMisePref)
 
   // Timing state.
   const [timingOn, setTimingOn] = useState(false)
@@ -80,9 +83,15 @@ export function Viewer({ onExit, onCookMeal }: Props) {
     () => (activeVariant?.cookSteps ?? recipe?.cookSteps ?? []),
     [activeVariant, recipe],
   )
+  // The order Cook mode walks: as written, or prep steps first (mise en place).
+  const orderedSteps: CookStep[] = useMemo(
+    () => (mise ? misePrepFirst(effectiveSteps) : effectiveSteps),
+    [mise, effectiveSteps],
+  )
+  const prepIds = useMemo(() => prepStepIds(effectiveSteps), [effectiveSteps])
   const steps: StepView[] = useMemo(
-    () => (recipe ? effectiveSteps.map((s) => toStepView(s, recipe)) : []),
-    [effectiveSteps, recipe],
+    () => (recipe ? orderedSteps.map((s) => toStepView(s, recipe, mise && prepIds.has(s.id))) : []),
+    [orderedSteps, recipe, mise, prepIds],
   )
   const variantLabel = activeVariant?.name ?? 'Original'
 
@@ -122,9 +131,9 @@ export function Viewer({ onExit, onCookMeal }: Props) {
 
   // Advance, recording the current step's elapsed time when timing is on.
   const handleNext = () => {
-    if (timingOn && timingStartMs != null && effectiveSteps[clampedIndex]) {
+    if (timingOn && timingStartMs != null && orderedSteps[clampedIndex]) {
       const sec = (Date.now() - timingStartMs) / 1000
-      setActuals((a) => ({ ...a, [effectiveSteps[clampedIndex].id]: sec }))
+      setActuals((a) => ({ ...a, [orderedSteps[clampedIndex].id]: sec }))
       if (clampedIndex < steps.length - 1) {
         setIndex(clampedIndex + 1)
         setTimingStartMs(Date.now())
@@ -164,9 +173,9 @@ export function Viewer({ onExit, onCookMeal }: Props) {
   }
 
   const finishTiming = () => {
-    if (timingStartMs != null && effectiveSteps[clampedIndex]) {
+    if (timingStartMs != null && orderedSteps[clampedIndex]) {
       const sec = (Date.now() - timingStartMs) / 1000
-      setActuals((a) => ({ ...a, [effectiveSteps[clampedIndex].id]: sec }))
+      setActuals((a) => ({ ...a, [orderedSteps[clampedIndex].id]: sec }))
     }
     setTimingOn(false)
     setMode('review')
@@ -326,6 +335,21 @@ export function Viewer({ onExit, onCookMeal }: Props) {
         <button className={mode === 'cook' ? 'on' : ''} onClick={() => setMode('cook')}>Cook</button>
         <button className={mode === 'timeline' ? 'on' : ''} onClick={() => setMode('timeline')}>Full recipe</button>
       </div>
+
+      {mode !== 'ingredients' && prepIds.size > 0 && (
+        <label className="mise-toggle">
+          <input
+            type="checkbox"
+            checked={mise}
+            disabled={timingOn}
+            onChange={(e) => { setMise(e.target.checked); saveMisePref(e.target.checked); setIndex(0) }}
+          />
+          <span>
+            🔪 <strong>Mise en place first</strong>
+            <span className="muted"> — {prepIds.size} prep step{prepIds.size === 1 ? '' : 's'} up front</span>
+          </span>
+        </label>
+      )}
 
       {timingOn && (
         <div className="timing-banner">

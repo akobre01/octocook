@@ -1,5 +1,5 @@
 import type { KitchenPreset, Recipe, Schedule } from '../types'
-import { scheduleRecipes } from './scheduler'
+import { scheduleRecipes, type ScheduleOptions } from './scheduler'
 
 // The scheduler seam. Auto-selects: prefer the remote Python/CP-SAT scheduler
 // when a backend is reachable (better plans, future online "cook together"
@@ -21,10 +21,11 @@ export async function scheduleMeal(
   recipes: Recipe[],
   kitchen: KitchenPreset,
   numCooks = 1,
+  opts: ScheduleOptions = {},
 ): Promise<MealPlan> {
   if (await remoteAvailable()) {
-    // future: POST recipes+kitchen+numCooks to the backend, map the response
+    // future: POST recipes+kitchen+numCooks(+opts) to the backend, map the response
     // (schedule_to_dict shape) straight onto Schedule, return source: 'remote'.
   }
-  return { schedule: scheduleRecipes(recipes, kitchen, numCooks), source: 'local' }
+  return { schedule: scheduleRecipes(recipes, kitchen, numCooks, opts), source: 'local' }
 }

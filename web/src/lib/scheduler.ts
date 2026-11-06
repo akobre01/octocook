@@ -6,6 +6,7 @@ import type {
   ScheduleStep,
   Substitution,
 } from '../types'
+import { prepStepIds } from './prep.ts'
 
 // Offline TypeScript scheduler — a heuristic port of tools/scheduler.py (which
 // uses OR-Tools CP-SAT). It interleaves ONE cook's work across several recipes
@@ -40,6 +41,7 @@ interface RStep {
   tools: string[]
   depends_on: string[]
   ingredients: string[]
+  prep?: boolean
 }
 
 interface Interval {
@@ -146,10 +148,18 @@ function maxOverlap(reservations: Interval[], start: number, end: number): numbe
 
 // ---- list scheduler ----
 
+export interface ScheduleOptions {
+  // Mise en place: every prep step (lib/prep) finishes before any other
+  // hands-on step starts. Passive steps (preheat, salting) can still run
+  // during prep.
+  miseEnPlace?: boolean
+}
+
 export function scheduleRecipes(
   recipes: Recipe[],
   kitchen: KitchenPreset,
   numCooks = 1,
+  opts: ScheduleOptions = {},
 ): Schedule {
   // Namespace step ids per recipe and remap depends_on.
   const steps: RStep[] = []
@@ -164,6 +174,7 @@ export function scheduleRecipes(
         tools: s.tools,
         depends_on: s.depends_on.map((d) => `${i}:${d}`),
         ingredients: (s as CookStep).ingredients ?? [],
+        prep: (s as CookStep).prep,
       })
     }
   })
@@ -236,6 +247,13 @@ export function scheduleRecipes(
   type Unit = (typeof units)[number]
   const head = (u: Unit) => u.members[0]
 
+  // Mise en place: units with non-prep hands-on work wait until every prep
+  // step is placed, then start no earlier than the last prep step ends.
+  const prepIds = opts.miseEnPlace ? prepStepIds(resolved) : new Set<string>()
+  let prepLeft = prepIds.size
+  let prepEnd = 0
+  const waitsForPrep = (u: Unit) => u.members.some((s) => s.active && !prepIds.has(s.id))
+
   // Earliest start permitted by dependencies outside the unit (ignores locks).
   const depLowerBound = (u: Unit): number => {
     let lb = 0
@@ -246,6 +264,7 @@ export function scheduleRecipes(
         if (p) lb = Math.max(lb, p.end - u.offsets[i])
       }
     })
+    if (prepIds.size > 0 && waitsForPrep(u)) lb = Math.max(lb, prepEnd)
     return lb
   }
 
@@ -289,6 +308,7 @@ export function scheduleRecipes(
     units.filter(
       (u) =>
         !scheduledIds.has(head(u).id) &&
+        !(prepLeft > 0 && prepIds.size > 0 && waitsForPrep(u)) &&
         u.members.every((s) =>
           s.depends_on.every((d) => u.ids.has(d) || !byId.has(d) || scheduledIds.has(d)),
         ),
@@ -347,6 +367,10 @@ export function scheduleRecipes(
           freeAfter.set(tool, Math.max(freeAfter.get(tool) ?? 0, iv.end))
         }
       }
+      if (prepIds.has(s.id)) {
+        prepLeft--
+        prepEnd = Math.max(prepEnd, iv.end)
+      }
       scheduledIds.add(s.id)
     })
   }
@@ -371,6 +395,7 @@ export function scheduleRecipes(
         start_clock: formatClock(iv.start),
         end_clock: formatClock(iv.end),
         cook_id: s.active ? 0 : null,
+        ...(opts.miseEnPlace ? { prep: prepIds.has(s.id) } : {}),
       }
     })
     // Order by start; among ties, passive first (so "preheat the oven" leads
@@ -392,6 +417,7 @@ export function scheduleRecipes(
     steps: steps_out,
     icons,
     num_cooks: numCooks,
+    ...(opts.miseEnPlace ? { mise_en_place: true } : {}),
   }
 }
 
@@ -444,6 +470,16 @@ export function validateSchedule(schedule: Schedule, kitchen: KitchenPreset, num
     const pa = byId.get(a)!
     const pb = byId.get(b)!
     if (pb.start_min !== pa.end_min) problems.push(`stovetop run broken: ${a} ends ${pa.end_min}, ${b} starts ${pb.start_min}`)
+  }
+
+  // Mise en place: no non-prep hands-on step starts before prep is done.
+  if (schedule.mise_en_place) {
+    const prepDone = schedule.steps.reduce((m, s) => (s.prep ? Math.max(m, s.end_min) : m), 0)
+    for (const s of schedule.steps) {
+      if (s.active && !s.prep && s.start_min < prepDone) {
+        problems.push(`mise en place: ${s.step_id} starts at ${s.start_min} before prep ends at ${prepDone}`)
+      }
+    }
   }
 
   // Stateful-tool sessions must not overlap across recipes.

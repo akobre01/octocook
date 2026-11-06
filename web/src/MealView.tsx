@@ -28,6 +28,7 @@ function toStepView(s: ScheduleStep, accent?: string, icon?: string): StepView {
     recipeName: s.recipe,
     recipeIcon: icon,
     accent,
+    prep: s.prep,
   }
 }
 
@@ -90,6 +91,7 @@ export function MealView({ recipes, schedule, source, onExit }: Props) {
       </header>
       <div className="meal-subhead muted">
         total ~ {schedule.makespan_label} · planned {source === 'local' ? 'offline' : 'online'}
+        {schedule.mise_en_place && ' · 🔪 mise en place first'}
       </div>
 
       <div className="view-tabs">

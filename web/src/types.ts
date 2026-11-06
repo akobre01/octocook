@@ -12,6 +12,9 @@ export interface CookStep {
   // Ingredient phrases this step uses, e.g. ["3 eggs", "1 cup sugar"]. Optional:
   // steps like preheating have none.
   ingredients?: string[]
+  // Mise-en-place override: true/false forces whether this is up-front prep
+  // work; omitted = decided by lib/prep's tool/verb heuristic.
+  prep?: boolean
 }
 
 // A bundled, fully-structured recipe the viewer walks linearly.
@@ -46,6 +49,7 @@ export interface StepView {
   recipeName?: string
   recipeIcon?: string
   accent?: string // recipe color (meal cook mode); undefined = neutral
+  prep?: boolean // mise-en-place prep step (shown with a "prep" tag)
 }
 
 export interface RecipeOut {
@@ -85,6 +89,7 @@ export interface ScheduleStep {
   start_clock: string
   end_clock: string
   cook_id: number | null
+  prep?: boolean // set in mise-en-place mode for up-front prep steps
 }
 
 export interface Schedule {
@@ -94,6 +99,7 @@ export interface Schedule {
   steps: ScheduleStep[]
   icons: Record<string, string>
   num_cooks: number
+  mise_en_place?: boolean // all prep finishes before other hands-on work
 }
 
 export interface Substitution {
