@@ -37,6 +37,11 @@ MEALS = {
         "Fall Pilaf — Wild Rice & Winter Squash",
     ],
     "cake_muhammara_cucumber": ["Olive Oil Cake", "Muhammara", "Smashed Cucumber Salad"],
+    "soup_chickpeas_cucumber": [
+        "Butternut Squash & Red Lentil Soup",
+        "Olive Oil–Braised Chickpeas & Swiss Chard",
+        "Smashed Cucumber Salad",
+    ],
 }
 
 

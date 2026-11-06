@@ -20,6 +20,11 @@ const COOK_RESOURCE = 'cook'
 // can't preheat to a different temperature in the gap. Modeled as a per-recipe
 // "session" span that can't overlap another recipe's session for that tool.
 const STATEFUL_TOOLS = new Set(['oven'])
+// Stovetop runs (scheduler.py _stove_links): once the onions hit the pan the
+// cook stays with that recipe until the next hands-off step, so linked steps
+// are placed as one back-to-back block.
+const STOVE = 'stove_burner'
+const STOVETOP_TOOLS = new Set([STOVE, 'stockpot', 'saucepan', 'saute_pan', 'cast_iron_skillet', 'dutch_oven'])
 
 const overlaps = (a: Interval, b: Interval) => a.start < b.end && b.start < a.end
 
@@ -88,6 +93,35 @@ function resolveTools(
     resolved.push({ ...s, tools: newTools, duration_min: duration })
   }
   return { resolved, substitutions }
+}
+
+// ---- stovetop runs (ports _stove_links) ----
+
+// [pred, succ] pairs that must run back-to-back: an active step and a
+// same-recipe dependent sharing a stovetop tool, with at least one on the
+// burner. A passive successor (covered simmer) ends the run. Only unambiguous
+// links are kept, so runs are linear chains.
+export function stoveLinks(
+  steps: { id?: string; step_id?: string; recipe: string; active: boolean; tools: string[]; depends_on: string[] }[],
+): [string, string][] {
+  const idOf = (s: (typeof steps)[number]) => (s.id ?? s.step_id)!
+  const byId = new Map(steps.map((s) => [idOf(s), s]))
+  const cands: [string, string][] = []
+  for (const b of steps) {
+    for (const d of b.depends_on) {
+      const a = byId.get(d)
+      if (!a || a.recipe !== b.recipe || !a.active) continue
+      const shared = a.tools.some((t) => STOVETOP_TOOLS.has(t) && b.tools.includes(t))
+      if (shared && (a.tools.includes(STOVE) || b.tools.includes(STOVE))) cands.push([d, idOf(b)])
+    }
+  }
+  const outDeg = new Map<string, number>()
+  const inDeg = new Map<string, number>()
+  for (const [a, b] of cands) {
+    outDeg.set(a, (outDeg.get(a) ?? 0) + 1)
+    inDeg.set(b, (inDeg.get(b) ?? 0) + 1)
+  }
+  return cands.filter(([a, b]) => outDeg.get(a) === 1 && inDeg.get(b) === 1)
 }
 
 // ---- resource timeline ----
@@ -181,31 +215,69 @@ export function scheduleRecipes(
     }
   }
 
-  // Earliest feasible start, or null if the step can't be placed right now
-  // (another recipe owns a stateful tool it needs — defer and retry later).
-  const earliestFeasibleStart = (s: RStep): number | null => {
+  // Scheduling units: a stovetop run (head + its linked successors, placed
+  // back-to-back) or a lone step. `offsets[i]` is member i's start relative to
+  // the unit's start.
+  const nextInRun = new Map(stoveLinks(resolved))
+  const linkedSucc = new Set(nextInRun.values())
+  const units = resolved
+    .filter((s) => !linkedSucc.has(s.id))
+    .map((head) => {
+      const members = [head]
+      for (let n = nextInRun.get(head.id); n; n = nextInRun.get(n)) members.push(byId.get(n)!)
+      const offsets: number[] = []
+      let off = 0
+      for (const m of members) {
+        offsets.push(off)
+        off += m.duration_min
+      }
+      return { members, offsets, ids: new Set(members.map((m) => m.id)) }
+    })
+  type Unit = (typeof units)[number]
+  const head = (u: Unit) => u.members[0]
+
+  // Earliest start permitted by dependencies outside the unit (ignores locks).
+  const depLowerBound = (u: Unit): number => {
     let lb = 0
-    for (const dep of s.depends_on) {
-      const p = placed.get(dep)
-      if (p) lb = Math.max(lb, p.end)
+    u.members.forEach((s, i) => {
+      for (const dep of s.depends_on) {
+        if (u.ids.has(dep)) continue
+        const p = placed.get(dep)
+        if (p) lb = Math.max(lb, p.end - u.offsets[i])
+      }
+    })
+    return lb
+  }
+
+  // Earliest feasible unit start, or null if it can't be placed right now
+  // (another recipe owns a stateful tool it needs — defer and retry later).
+  const earliestFeasibleStart = (u: Unit): number | null => {
+    let lb = depLowerBound(u)
+    for (const [i, s] of u.members.entries()) {
+      for (const tool of s.tools) {
+        if (!STATEFUL_TOOLS.has(tool)) continue
+        const owner = sessionOwner.get(tool) ?? null
+        if (owner !== null && owner !== s.recipe) return null // tool busy with another recipe
+        if (owner === null) lb = Math.max(lb, (freeAfter.get(tool) ?? 0) - u.offsets[i]) // opening a new session
+      }
     }
-    for (const tool of s.tools) {
-      if (!STATEFUL_TOOLS.has(tool)) continue
-      const owner = sessionOwner.get(tool) ?? null
-      if (owner !== null && owner !== s.recipe) return null // tool busy with another recipe
-      if (owner === null) lb = Math.max(lb, freeAfter.get(tool) ?? 0) // opening a new session
-    }
-    const res = resourcesOf(s)
     const candidates = new Set<number>([lb])
-    for (const r of res) {
-      for (const iv of reservations.get(r) ?? []) if (iv.end > lb) candidates.add(iv.end)
-    }
+    u.members.forEach((s, i) => {
+      for (const r of resourcesOf(s)) {
+        for (const iv of reservations.get(r) ?? []) {
+          if (iv.end - u.offsets[i] > lb) candidates.add(iv.end - u.offsets[i])
+        }
+      }
+    })
     for (const t of [...candidates].sort((a, b) => a - b)) {
-      const end = t + s.duration_min
-      const ok = res.every((r) => {
-        const cap = capacity(r)
-        if (cap <= 0) return false
-        return maxOverlap(reservations.get(r) ?? [], t, end) + 1 <= cap
+      const ok = u.members.every((s, i) => {
+        const start = t + u.offsets[i]
+        const end = start + s.duration_min
+        return resourcesOf(s).every((r) => {
+          const cap = capacity(r)
+          if (cap <= 0) return false
+          return maxOverlap(reservations.get(r) ?? [], start, end) + 1 <= cap
+        })
       })
       if (ok) return t
     }
@@ -214,70 +286,69 @@ export function scheduleRecipes(
 
   const scheduledIds = new Set<string>()
   const ready = () =>
-    resolved.filter(
-      (s) => !scheduledIds.has(s.id) && s.depends_on.every((d) => !byId.has(d) || scheduledIds.has(d)),
+    units.filter(
+      (u) =>
+        !scheduledIds.has(head(u).id) &&
+        u.members.every((s) =>
+          s.depends_on.every((d) => u.ids.has(d) || !byId.has(d) || scheduledIds.has(d)),
+        ),
     )
 
-  // Parallel schedule generation: place the ready, placeable step with the
+  // Parallel schedule generation: place the ready, placeable unit with the
   // earliest feasible start (ties: passive first — frees cook/oven sooner —
   // then longest critical-path tail, then longer duration).
   while (scheduledIds.size < resolved.length) {
     const cands = ready()
     if (cands.length === 0) break // dependency cycle / dangling — stop safely
-    let best: RStep | null = null
+    let best: Unit | null = null
     let bestStart = Infinity
-    for (const s of cands) {
-      const start = earliestFeasibleStart(s)
+    for (const u of cands) {
+      const start = earliestFeasibleStart(u)
       if (start === null) continue
+      const s = head(u)
+      const b = best && head(best)
       const better =
-        best === null ||
+        b === null ||
         start < bestStart ||
         (start === bestStart &&
-          ((!s.active && best.active) ||
-            (s.active === best.active &&
-              (computeTail(s.id) > computeTail(best.id) ||
-                (computeTail(s.id) === computeTail(best.id) &&
-                  s.duration_min > best.duration_min)))))
+          ((!s.active && b.active) ||
+            (s.active === b.active &&
+              (computeTail(s.id) > computeTail(b.id) ||
+                (computeTail(s.id) === computeTail(b.id) &&
+                  s.duration_min > b.duration_min)))))
       if (better) {
-        best = s
+        best = u
         bestStart = start
       }
     }
-    // Safety valve: if every ready step is session-blocked, place the earliest
+    // Safety valve: if every ready unit is session-blocked, place the earliest
     // by lb ignoring the lock (shouldn't happen for acyclic single-cook meals).
     if (!best) {
-      best = cands.reduce((a, b) => (earliestFeasibleStart0(a) <= earliestFeasibleStart0(b) ? a : b))
-      bestStart = earliestFeasibleStart0(best)
+      best = cands.reduce((a, b) => (depLowerBound(a) <= depLowerBound(b) ? a : b))
+      bestStart = depLowerBound(best)
     }
-    const iv = { start: bestStart, end: bestStart + best.duration_min }
-    placed.set(best.id, iv)
-    for (const r of resourcesOf(best)) {
-      const list = reservations.get(r) ?? []
-      list.push(iv)
-      reservations.set(r, list)
-    }
-    for (const tool of best.tools) {
-      if (!STATEFUL_TOOLS.has(tool)) continue
-      sessionOwner.set(tool, best.recipe)
-      const key = `${tool}|${best.recipe}`
-      const rem = (sessionRemaining.get(key) ?? 1) - 1
-      sessionRemaining.set(key, rem)
-      if (rem <= 0) {
-        sessionOwner.set(tool, null) // session complete; tool free after this step
-        freeAfter.set(tool, Math.max(freeAfter.get(tool) ?? 0, iv.end))
+    best.members.forEach((s, i) => {
+      const start = bestStart + best.offsets[i]
+      const iv = { start, end: start + s.duration_min }
+      placed.set(s.id, iv)
+      for (const r of resourcesOf(s)) {
+        const list = reservations.get(r) ?? []
+        list.push(iv)
+        reservations.set(r, list)
       }
-    }
-    scheduledIds.add(best.id)
-  }
-
-  // lb-only start (ignores locks), for the safety valve above.
-  function earliestFeasibleStart0(s: RStep): number {
-    let lb = 0
-    for (const dep of s.depends_on) {
-      const p = placed.get(dep)
-      if (p) lb = Math.max(lb, p.end)
-    }
-    return lb
+      for (const tool of s.tools) {
+        if (!STATEFUL_TOOLS.has(tool)) continue
+        sessionOwner.set(tool, s.recipe)
+        const key = `${tool}|${s.recipe}`
+        const rem = (sessionRemaining.get(key) ?? 1) - 1
+        sessionRemaining.set(key, rem)
+        if (rem <= 0) {
+          sessionOwner.set(tool, null) // session complete; tool free after this step
+          freeAfter.set(tool, Math.max(freeAfter.get(tool) ?? 0, iv.end))
+        }
+      }
+      scheduledIds.add(s.id)
+    })
   }
 
   const icons: Record<string, string> = {}
@@ -366,6 +437,13 @@ export function validateSchedule(schedule: Schedule, kitchen: KitchenPreset, num
         break
       }
     }
+  }
+
+  // Stovetop runs must be back-to-back.
+  for (const [a, b] of stoveLinks(schedule.steps)) {
+    const pa = byId.get(a)!
+    const pb = byId.get(b)!
+    if (pb.start_min !== pa.end_min) problems.push(`stovetop run broken: ${a} ends ${pa.end_min}, ${b} starts ${pb.start_min}`)
   }
 
   // Stateful-tool sessions must not overlap across recipes.

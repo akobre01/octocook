@@ -1,0 +1,544 @@
+{
+  "recipes": [
+    "Butternut Squash & Red Lentil Soup",
+    "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+    "Smashed Cucumber Salad"
+  ],
+  "schedule": {
+    "makespan_min": 93,
+    "makespan_label": "1h 33m",
+    "substitutions": [],
+    "steps": [
+      {
+        "step_id": "1:S0",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Slice garlic and shallots; prep chard stems and leaves",
+        "duration_min": 9,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "5 garlic cloves",
+          "2 shallots",
+          "2 bunches Swiss chard"
+        ],
+        "start_min": 0,
+        "end_min": 9,
+        "start_clock": "00:00",
+        "end_clock": "00:09",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S1",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Heat oil and cook sliced garlic until edges are pale gold",
+        "duration_min": 4,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S0"
+        ],
+        "ingredients": [
+          "1/2 cup olive oil"
+        ],
+        "start_min": 9,
+        "end_min": 13,
+        "start_clock": "00:09",
+        "end_clock": "00:13",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S2",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Add chard stems, cumin seeds, salt, chile; cook until stems soften",
+        "duration_min": 5,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S1"
+        ],
+        "ingredients": [
+          "2 tsp cumin seeds",
+          "3/4 tsp sea salt",
+          "pinch of red chile flakes"
+        ],
+        "start_min": 13,
+        "end_min": 18,
+        "start_clock": "00:13",
+        "end_clock": "00:18",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S3",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Add shallots and cook 3 min",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S2"
+        ],
+        "ingredients": [],
+        "start_min": 18,
+        "end_min": 21,
+        "start_clock": "00:18",
+        "end_clock": "00:21",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S4",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Stir in chickpeas, chard leaves, and stock; cover",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S3"
+        ],
+        "ingredients": [
+          "4 cups cooked chickpeas",
+          "1 cup chicken or vegetable stock"
+        ],
+        "start_min": 21,
+        "end_min": 24,
+        "start_clock": "00:21",
+        "end_clock": "00:24",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S1",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Peel, seed, and dice the butternut squash",
+        "duration_min": 8,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "12 oz butternut squash"
+        ],
+        "start_min": 24,
+        "end_min": 32,
+        "start_clock": "00:24",
+        "end_clock": "00:32",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S5",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Simmer covered until the chard is very tender",
+        "duration_min": 13,
+        "active": false,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "1:S4"
+        ],
+        "ingredients": [],
+        "start_min": 24,
+        "end_min": 37,
+        "start_clock": "00:24",
+        "end_clock": "00:37",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S0",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Dice onions and finely chop garlic",
+        "duration_min": 6,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "2 onions",
+          "4 garlic cloves"
+        ],
+        "start_min": 32,
+        "end_min": 38,
+        "start_clock": "00:32",
+        "end_clock": "00:38",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S2",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Heat oil and cook onions and garlic until soft",
+        "duration_min": 7,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S0"
+        ],
+        "ingredients": [
+          "6 tbsp olive oil"
+        ],
+        "start_min": 38,
+        "end_min": 45,
+        "start_clock": "00:38",
+        "end_clock": "00:45",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S3",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Stir in tomato paste, cumin, cayenne, salt, pepper; cook 2 min",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S2"
+        ],
+        "ingredients": [
+          "2 tbsp tomato paste",
+          "2 tsp ground cumin",
+          "pinch of cayenne",
+          "3/4 tsp kosher salt",
+          "black pepper"
+        ],
+        "start_min": 45,
+        "end_min": 47,
+        "start_clock": "00:45",
+        "end_clock": "00:47",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S4",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Add squash, lentils, stock, and 4 cups water; bring to a simmer",
+        "duration_min": 5,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S1",
+          "0:S3"
+        ],
+        "ingredients": [
+          "1 cup red lentils",
+          "2 cups chicken stock (vegetable works)"
+        ],
+        "start_min": 47,
+        "end_min": 52,
+        "start_clock": "00:47",
+        "end_clock": "00:52",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S5",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Partly cover and simmer until lentils and squash are soft",
+        "duration_min": 30,
+        "active": false,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S4"
+        ],
+        "ingredients": [],
+        "start_min": 52,
+        "end_min": 82,
+        "start_clock": "00:52",
+        "end_clock": "01:22",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S6",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Partly pur\u00e9e with an immersion blender (keep it chunky)",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "immersion_blender"
+        ],
+        "depends_on": [
+          "1:S5"
+        ],
+        "ingredients": [],
+        "start_min": 52,
+        "end_min": 55,
+        "start_clock": "00:52",
+        "end_clock": "00:55",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S3",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Whisk rice vinegar, sesame oil, garlic, chili",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "whisk",
+          "mixing_bowl"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "2 tbsp rice vinegar",
+          "1 tbsp sesame oil",
+          "2 garlic cloves",
+          "1 tsp chili crisp"
+        ],
+        "start_min": 55,
+        "end_min": 58,
+        "start_clock": "00:55",
+        "end_clock": "00:58",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S0",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Smash cucumbers with the flat of a knife",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "2 English cucumbers"
+        ],
+        "start_min": 58,
+        "end_min": 61,
+        "start_clock": "00:58",
+        "end_clock": "01:01",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S1",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Tear into bite-size pieces",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [
+          "2:S0"
+        ],
+        "ingredients": [],
+        "start_min": 61,
+        "end_min": 63,
+        "start_clock": "01:01",
+        "end_clock": "01:03",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S7",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Toast bread and rub with a cut garlic clove",
+        "duration_min": 5,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "1:S0"
+        ],
+        "ingredients": [
+          "4\u20136 slices country bread"
+        ],
+        "start_min": 63,
+        "end_min": 68,
+        "start_clock": "01:03",
+        "end_clock": "01:08",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S2",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Salt and drain in a colander",
+        "duration_min": 15,
+        "active": false,
+        "tools": [
+          "colander"
+        ],
+        "depends_on": [
+          "2:S1"
+        ],
+        "ingredients": [
+          "1 tsp salt"
+        ],
+        "start_min": 63,
+        "end_min": 78,
+        "start_clock": "01:03",
+        "end_clock": "01:18",
+        "cook_id": 0
+      },
+      {
+        "step_id": "1:S8",
+        "recipe": "Olive Oil\u2013Braised Chickpeas & Swiss Chard",
+        "description": "Ladle stew over toast; finish with oil, lemon, paprika",
+        "duration_min": 2,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "1:S6",
+          "1:S7"
+        ],
+        "ingredients": [
+          "fresh lemon juice",
+          "sweet smoked paprika",
+          "olive oil for serving"
+        ],
+        "start_min": 68,
+        "end_min": 70,
+        "start_clock": "01:08",
+        "end_clock": "01:10",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S4",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Toss cucumbers with the dressing",
+        "duration_min": 2,
+        "active": true,
+        "tools": [
+          "mixing_bowl"
+        ],
+        "depends_on": [
+          "2:S2",
+          "2:S3"
+        ],
+        "ingredients": [],
+        "start_min": 78,
+        "end_min": 80,
+        "start_clock": "01:18",
+        "end_clock": "01:20",
+        "cook_id": 0
+      },
+      {
+        "step_id": "2:S5",
+        "recipe": "Smashed Cucumber Salad",
+        "description": "Top with toasted sesame seeds; serve",
+        "duration_min": 2,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "2:S4"
+        ],
+        "ingredients": [
+          "1 tsp toasted sesame seeds"
+        ],
+        "start_min": 80,
+        "end_min": 82,
+        "start_clock": "01:20",
+        "end_clock": "01:22",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S6",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Stir in coconut milk, heat through, adjust seasoning",
+        "duration_min": 4,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S5"
+        ],
+        "ingredients": [
+          "1 can (13.5 oz) coconut milk"
+        ],
+        "start_min": 82,
+        "end_min": 86,
+        "start_clock": "01:22",
+        "end_clock": "01:26",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S7",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Coarsely pur\u00e9e with an immersion blender",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "immersion_blender"
+        ],
+        "depends_on": [
+          "0:S6"
+        ],
+        "ingredients": [],
+        "start_min": 86,
+        "end_min": 89,
+        "start_clock": "01:26",
+        "end_clock": "01:29",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S8",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Stir in lime zest and spinach; cook until spinach wilts",
+        "duration_min": 3,
+        "active": true,
+        "tools": [
+          "stockpot",
+          "stove_burner"
+        ],
+        "depends_on": [
+          "0:S7"
+        ],
+        "ingredients": [
+          "1 tsp grated lime zest",
+          "5 oz baby spinach"
+        ],
+        "start_min": 89,
+        "end_min": 92,
+        "start_clock": "01:29",
+        "end_clock": "01:32",
+        "cook_id": 0
+      },
+      {
+        "step_id": "0:S9",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Season with lime juice and serve",
+        "duration_min": 1,
+        "active": true,
+        "tools": [],
+        "depends_on": [
+          "0:S8"
+        ],
+        "ingredients": [
+          "fresh lime juice"
+        ],
+        "start_min": 92,
+        "end_min": 93,
+        "start_clock": "01:32",
+        "end_clock": "01:33",
+        "cook_id": 0
+      }
+    ]
+  }
+}

@@ -30,6 +30,26 @@
         "cook_id": 0
       },
       {
+        "step_id": "0:S1",
+        "recipe": "Butternut Squash & Red Lentil Soup",
+        "description": "Peel, seed, and dice the butternut squash",
+        "duration_min": 8,
+        "active": true,
+        "tools": [
+          "chef_knife",
+          "cutting_board"
+        ],
+        "depends_on": [],
+        "ingredients": [
+          "12 oz butternut squash"
+        ],
+        "start_min": 6,
+        "end_min": 14,
+        "start_clock": "00:06",
+        "end_clock": "00:14",
+        "cook_id": 0
+      },
+      {
         "step_id": "0:S2",
         "recipe": "Butternut Squash & Red Lentil Soup",
         "description": "Heat oil and cook onions and garlic until soft",
@@ -45,29 +65,9 @@
         "ingredients": [
           "6 tbsp olive oil"
         ],
-        "start_min": 6,
-        "end_min": 13,
-        "start_clock": "00:06",
-        "end_clock": "00:13",
-        "cook_id": 0
-      },
-      {
-        "step_id": "0:S1",
-        "recipe": "Butternut Squash & Red Lentil Soup",
-        "description": "Peel, seed, and dice the butternut squash",
-        "duration_min": 8,
-        "active": true,
-        "tools": [
-          "chef_knife",
-          "cutting_board"
-        ],
-        "depends_on": [],
-        "ingredients": [
-          "12 oz butternut squash"
-        ],
-        "start_min": 13,
+        "start_min": 14,
         "end_min": 21,
-        "start_clock": "00:13",
+        "start_clock": "00:14",
         "end_clock": "00:21",
         "cook_id": 0
       },

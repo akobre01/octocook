@@ -27,6 +27,12 @@ COOK_RESOURCE = "cook"
 # and its bake (or between two consecutive bakes that share a preheated state).
 _STATEFUL_TOOLS = frozenset({"oven"})
 
+# Stovetop cooking can't be paused: once the onions hit the pan, the cook
+# stays with that recipe until the next hands-off step (a covered simmer, a
+# bake). See _stove_links.
+_STOVE = "stove_burner"
+_STOVETOP_TOOLS = frozenset({_STOVE, "stockpot", "saucepan", "saute_pan", "cast_iron_skillet", "dutch_oven"})
+
 
 @dataclass
 class Step:
@@ -172,6 +178,35 @@ def resolve_tools(
     return out_steps, out_subs
 
 
+def _stove_links(steps: list[Step]) -> list[tuple[str, str]]:
+    """Return (pred_id, succ_id) pairs that must run back-to-back.
+
+    A dependency A -> B is linked when A is an *active* step, both belong to
+    the same recipe, they share a stovetop tool (burner or pan/pot), and at
+    least one is on the burner. B then starts the moment A ends, so nothing
+    else can be wedged into the middle of a saute. A passive B (a covered
+    simmer) ends the run: the step after it isn't linked, which frees the cook
+    to work elsewhere. Only unambiguous links are kept (A's sole linkable
+    successor and B's sole linkable predecessor), so runs stay linear chains.
+    """
+    by_id = {s.id: s for s in steps}
+    cands: list[tuple[str, str]] = []
+    for b in steps:
+        for dep in b.depends_on:
+            a = by_id.get(dep)
+            if a is None or a.recipe != b.recipe or not a.active:
+                continue
+            shared = _STOVETOP_TOOLS & set(a.tools) & set(b.tools)
+            if shared and (_STOVE in a.tools or _STOVE in b.tools):
+                cands.append((a.id, b.id))
+    out_deg: dict[str, int] = defaultdict(int)
+    in_deg: dict[str, int] = defaultdict(int)
+    for a, b in cands:
+        out_deg[a] += 1
+        in_deg[b] += 1
+    return [(a, b) for a, b in cands if out_deg[a] == 1 and in_deg[b] == 1]
+
+
 def solve(
     steps: list[Step],
     inventory: Inventory,
@@ -283,6 +318,14 @@ def solve(
                 f"Tool {tool!r} has 0 capacity but {len(ivs)} step(s) need it."
             )
         model.AddCumulative(ivs, [1] * len(ivs), capacity)
+
+    # Stovetop runs: linked steps start the instant their predecessor ends, and
+    # an active successor stays with the same cook.
+    for a, b in _stove_links(resolved):
+        model.Add(starts[b] == ends[a])
+        if a in cook_assignment and b in cook_assignment:
+            for pa, pb in zip(cook_assignment[a], cook_assignment[b]):
+                model.Add(pa == pb)
 
     makespan = model.NewIntVar(0, horizon, "makespan")
     model.AddMaxEquality(makespan, list(ends.values()))
