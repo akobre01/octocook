@@ -1,22 +1,17 @@
 import type { CookStep } from '../types'
 import { ingredientIcon } from '../lib/ingredientIcons'
+import { formatMinutes, formatTimeSplit, type TimeSplit } from '../lib/timing'
 
 interface Props {
   steps: CookStep[]
+  time: TimeSplit // from recipeTime: the plan, minus cooling and do-ahead waits
   onStartCooking: () => void
-}
-
-function formatTotal(totalMin: number): string {
-  if (totalMin < 60) return `~ ${totalMin} min`
-  const h = Math.floor(totalMin / 60)
-  const m = totalMin % 60
-  return m ? `~ ${h} hr ${m} min` : `~ ${h} hr`
 }
 
 // The default view for a recipe: every ingredient it needs, each with an icon
 // and quantity, laid out in columns, with a grayed total-time estimate below.
 // Ingredients are aggregated across all steps (exact duplicates removed).
-export function IngredientsView({ steps, onStartCooking }: Props) {
+export function IngredientsView({ steps, time, onStartCooking }: Props) {
   const seen = new Set<string>()
   const ingredients: string[] = []
   for (const step of steps) {
@@ -30,7 +25,6 @@ export function IngredientsView({ steps, onStartCooking }: Props) {
     }
   }
 
-  const totalMin = steps.reduce((sum, s) => sum + Math.max(0, s.duration_min), 0)
   const activeMin = steps.reduce((sum, s) => sum + (s.active ? Math.max(0, s.duration_min) : 0), 0)
 
   return (
@@ -48,8 +42,8 @@ export function IngredientsView({ steps, onStartCooking }: Props) {
         </ul>
       )}
 
-      <div className="ingredients-total muted">Total time {formatTotal(totalMin)}</div>
-      <div className="ingredients-active">Active time {formatTotal(activeMin)}</div>
+      <div className="ingredients-total muted">Total time {formatTimeSplit(time)}</div>
+      <div className="ingredients-active">Active time ~ {formatMinutes(activeMin)}</div>
 
       <button className="primary start-cooking" onClick={onStartCooking}>
         Start cooking →

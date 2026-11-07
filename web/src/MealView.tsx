@@ -8,10 +8,12 @@ import { StepStack } from './components/StepStack'
 import { MealIngredients } from './components/MealIngredients'
 import { ScheduleGantt } from './components/ScheduleGantt'
 import { BackgroundRail } from './components/BackgroundRail'
+import { formatTimeSplit, type TimeSplit } from './lib/timing'
 
 interface Props {
   recipes: Recipe[]
   schedule: Schedule
+  time: TimeSplit // makespan split into ready time + cooling/do-ahead waits
   source: 'remote' | 'local'
   onExit: () => void // back to meal setup
 }
@@ -34,7 +36,7 @@ function toStepView(s: ScheduleStep, accent?: string, icon?: string): StepView {
 
 // The planned meal: Ingredients (merged) / Cook (interleaved steps + background
 // rail) / Full recipe (schedule Gantt). One cook; fully offline.
-export function MealView({ recipes, schedule, source, onExit }: Props) {
+export function MealView({ recipes, schedule, time, source, onExit }: Props) {
   const [mode, setMode] = useState<Mode>('ingredients')
   const [index, setIndex] = useState(0)
   useKeepAwake(true)
@@ -90,7 +92,7 @@ export function MealView({ recipes, schedule, source, onExit }: Props) {
         </div>
       </header>
       <div className="meal-subhead muted">
-        total ~ {schedule.makespan_label} · planned {source === 'local' ? 'offline' : 'online'}
+        total {formatTimeSplit(time)} · planned {source === 'local' ? 'offline' : 'online'}
         {schedule.mise_en_place && ' · 🔪 mise en place first'}
       </div>
 
@@ -101,7 +103,7 @@ export function MealView({ recipes, schedule, source, onExit }: Props) {
       </div>
 
       {mode === 'ingredients' && (
-        <MealIngredients recipes={recipes} totalMin={schedule.makespan_min} activeMin={activeMin} />
+        <MealIngredients recipes={recipes} time={time} activeMin={activeMin} />
       )}
       {mode === 'cook' && (
         <div className="cook-layout">

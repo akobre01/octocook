@@ -5,6 +5,7 @@ interface Props {
   steps: StepView[]
   currentIndex: number
   onSelect: (index: number) => void
+  totalLabel: string // e.g. "~ 1 hr 10 min · +1 hr cooling"
 }
 
 // The "full recipe" view (requirement #4): a vertical list of every step with
@@ -12,14 +13,13 @@ interface Props {
 // height — and the vertical bar running down its left edge — is proportional to
 // the step's duration, so you can scan the column and see at a glance how long
 // each step is relative to the others. Tapping a row jumps to that step.
-export function Timeline({ steps, currentIndex, onSelect }: Props) {
-  const totalMin = steps.reduce((sum, s) => sum + Math.max(1, s.duration_min), 0)
+export function Timeline({ steps, currentIndex, onSelect, totalLabel }: Props) {
   const maxMin = Math.max(1, ...steps.map((s) => s.duration_min))
 
   return (
     <div className="vtimeline">
       <div className="vtimeline-caption muted">
-        Total ~ {totalMin} min · tap a step to jump
+        Total {totalLabel} · tap a step to jump
       </div>
       <ol className="vtimeline-list">
         {steps.map((step, i) => {

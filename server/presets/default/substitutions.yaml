@@ -60,3 +60,100 @@ rolling_pin:
   - tool: null
     time_multiplier: 1.2
     note: "Roll with a wine bottle or press by hand"
+
+# Common tools recipes name that aren't worth listing in inventory: each has an
+# obvious stand-in, so a recipe that mentions one still schedules.
+muffin_tin:
+  - tool: muffin_pan
+    time_multiplier: 1.0
+    note: "Use muffin pan"
+
+potato_masher:
+  - tool: null
+    time_multiplier: 1.3
+    note: "Mash with a fork"
+
+wire_rack:
+  - tool: null
+    time_multiplier: 1.0
+    note: "Cool on a trivet or the stovetop"
+
+refrigerator:
+  - tool: null
+    time_multiplier: 1.0
+    note: "Chill in the fridge"
+
+biscuit_cutter:
+  - tool: null
+    time_multiplier: 1.0
+    note: "Cut with the rim of a glass"
+
+fine_mesh_sieve:
+  - tool: colander
+    time_multiplier: 1.0
+    note: "Use colander (line with a paper towel for fine solids)"
+
+fine_mesh_strainer:
+  - tool: colander
+    time_multiplier: 1.0
+    note: "Use colander (line with a paper towel for fine solids)"
+
+zester:
+  - tool: grater
+    time_multiplier: 1.0
+    note: "Use the fine side of the grater"
+
+small_pan:
+  - tool: saucepan
+    time_multiplier: 1.0
+    note: "Use a saucepan"
+
+small_bowl:
+  - tool: mixing_bowl
+    time_multiplier: 1.0
+    note: "Use a mixing bowl"
+
+steamer_basket:
+  - tool: colander
+    time_multiplier: 1.0
+    note: "Steam in a colander set over a covered pot"
+
+rice_cooker:
+  - tool: saucepan
+    time_multiplier: 1.0
+    note: "Cook rice in a covered saucepan"
+
+pressure_cooker:
+  - tool: stockpot
+    time_multiplier: 2.5
+    note: "Simmer covered in a stockpot (takes longer)"
+
+air_fryer:
+  - tool: oven
+    time_multiplier: 1.3
+    note: "Roast on a sheet pan in a hot oven"
+
+electric_kettle:
+  - tool: saucepan
+    time_multiplier: 1.0
+    note: "Boil water in a saucepan"
+
+ladle:
+  - tool: null
+    time_multiplier: 1.0
+    note: "Use a measuring cup to scoop"
+
+mug:
+  - tool: null
+    time_multiplier: 1.0
+    note: "Use any heatproof cup"
+
+liquid_measuring_cup:
+  - tool: null
+    time_multiplier: 1.0
+    note: "Use any measuring cup or a bowl"
+
+canning_jar:
+  - tool: null
+    time_multiplier: 1.0
+    note: "Use any clean lidded jar"

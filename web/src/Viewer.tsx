@@ -16,6 +16,7 @@ import { VariantBar } from './components/VariantBar'
 import { RecipeEditor } from './components/RecipeEditor'
 import { TimingReview } from './components/TimingReview'
 import { IngredientsView } from './components/IngredientsView'
+import { formatTimeSplit, recipeTime } from './lib/timing'
 import { loadMisePref, misePrepFirst, prepStepIds, saveMisePref } from './lib/prep'
 
 interface Props {
@@ -94,6 +95,8 @@ export function Viewer({ onExit, onCookMeal }: Props) {
     [orderedSteps, recipe, mise, prepIds],
   )
   const variantLabel = activeVariant?.name ?? 'Original'
+  // Planned time for this recipe alone, split the way recipes state it.
+  const time = useMemo(() => recipeTime(effectiveSteps).split, [effectiveSteps])
 
   // Derive a clamped index so a shrunk step list (edits, variant switch) never
   // points out of range, without a setState-in-effect round trip.
@@ -359,13 +362,14 @@ export function Viewer({ onExit, onCookMeal }: Props) {
       )}
 
       {mode === 'ingredients' ? (
-        <IngredientsView steps={effectiveSteps} onStartCooking={() => setMode('cook')} />
+        <IngredientsView steps={effectiveSteps} time={time} onStartCooking={() => setMode('cook')} />
       ) : mode === 'cook' ? (
         <StepStack steps={steps} currentIndex={clampedIndex} onPrev={handlePrev} onNext={handleNext} />
       ) : (
         <Timeline
           steps={steps}
           currentIndex={clampedIndex}
+          totalLabel={formatTimeSplit(time)}
           onSelect={(i) => { setIndex(i); setMode('cook') }}
         />
       )}

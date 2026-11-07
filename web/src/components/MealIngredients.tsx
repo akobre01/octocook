@@ -2,18 +2,12 @@ import { useMemo, useState } from 'react'
 import type { Recipe } from '../types'
 import { mergeMeal } from '../lib/ingredientMerge'
 import { recipeColor } from '../lib/recipeColors'
+import { formatMinutes, formatTimeSplit, type TimeSplit } from '../lib/timing'
 
 interface Props {
   recipes: Recipe[]
-  totalMin: number // meal makespan
+  time: TimeSplit // meal makespan, split into ready time + waits
   activeMin: number // combined hands-on time
-}
-
-function formatTotal(min: number): string {
-  if (min < 60) return `~ ${min} min`
-  const h = Math.floor(min / 60)
-  const m = min % 60
-  return m ? `~ ${h} hr ${m} min` : `~ ${h} hr`
 }
 
 function shortName(name: string): string {
@@ -24,7 +18,7 @@ function shortName(name: string): string {
 // Merged ingredients across all recipes in the meal. Recipe filter buttons on
 // top (none selected by default, one at a time) highlight that recipe's
 // ingredients in its color and swap shared amounts to that recipe's share.
-export function MealIngredients({ recipes, totalMin, activeMin }: Props) {
+export function MealIngredients({ recipes, time, activeMin }: Props) {
   const merged = useMemo(() => mergeMeal(recipes), [recipes])
   const [sel, setSel] = useState<number | null>(null)
 
@@ -69,8 +63,8 @@ export function MealIngredients({ recipes, totalMin, activeMin }: Props) {
         })}
       </ul>
 
-      <div className="ingredients-total muted">Total time {formatTotal(totalMin)}</div>
-      <div className="ingredients-active">Active time {formatTotal(activeMin)}</div>
+      <div className="ingredients-total muted">Total time {formatTimeSplit(time)}</div>
+      <div className="ingredients-active">Active time ~ {formatMinutes(activeMin)}</div>
     </div>
   )
 }
