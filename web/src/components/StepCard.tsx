@@ -25,7 +25,7 @@ interface Props {
   children?: ReactNode
 }
 
-// Presentational core shared by the offline Viewer and the scheduler CookView.
+// Presentational core shared by the offline MealView and the scheduler CookView.
 // Pure: it renders a StepView and an optional action slot, nothing more.
 export function StepCard({ step, emphasis, position, children }: Props) {
   const kind = step.active ? 'active' : 'passive'

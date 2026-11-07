@@ -1,6 +1,5 @@
 import type { CookStep, KitchenPreset, Recipe, Schedule } from '../types'
 import { scheduleRecipes, type ScheduleOptions } from './scheduler.ts'
-import { getKitchen } from './kitchens.ts'
 
 // Recipe "total time" conventions leave out cooling at the end ("1 hour, plus
 // cooling") and long waits like an overnight soak or chill. Octocook's plans
@@ -96,40 +95,6 @@ function zeroed(recipe: Recipe, zero: Set<string>, prefix: string): Recipe {
       zero.has(prefix + s.id) ? { ...s, duration_min: 0 } : s,
     ),
   }
-}
-
-// Longest dependency chain — the fallback when a recipe can't be scheduled in
-// the default kitchen (a tool with no substitute).
-function criticalPath(steps: CookStep[]): number {
-  const byId = new Map(steps.map((s) => [s.id, s]))
-  const memo = new Map<string, number>()
-  const finish = (s: CookStep): number => {
-    const cached = memo.get(s.id)
-    if (cached !== undefined) return cached
-    memo.set(s.id, 0) // cycle guard
-    const start = Math.max(0, ...s.depends_on.map((d) => byId.get(d)).filter((d) => !!d).map((d) => finish(d!)))
-    const end = start + Math.max(0, s.duration_min)
-    memo.set(s.id, end)
-    return end
-  }
-  return Math.max(0, ...steps.map(finish))
-}
-
-// One recipe on its own, as the single-recipe viewer shows it: one cook in the
-// default kitchen.
-export function recipeTime(steps: CookStep[]): { totalMin: number; split: TimeSplit } {
-  const plan = (s: CookStep[]): number => {
-    try {
-      return scheduleRecipes([{ name: 'recipe', cookSteps: s }], getKitchen('default'), 1).makespan_min
-    } catch {
-      return criticalPath(s)
-    }
-  }
-  const total = plan(steps)
-  const kinds = waitKinds(steps)
-  const list = steps.filter((s) => kinds.has(s.id)).map((s) => ({ key: s.id, kind: kinds.get(s.id)!, description: s.description }))
-  const recipe: Recipe = { name: 'recipe', cookSteps: steps }
-  return { totalMin: total, split: split(total, list, (zero) => plan(zeroed(recipe, zero, '').cookSteps)) }
 }
 
 // A planned meal: re-plans with the waits collapsed, same kitchen and options.

@@ -2,28 +2,28 @@ import { useState } from 'react'
 import type { KitchenPreset, Recipe } from './types'
 import { RECIPES } from './lib/loadRecipes'
 import { KITCHENS } from './lib/kitchens'
-import { loadMisePref, saveMisePref } from './lib/prep'
 
 interface Props {
+  selected: Set<string>
+  onSelectedChange: (selected: Set<string>) => void
   onExit: () => void
-  onStart: (recipes: Recipe[], kitchen: KitchenPreset, miseEnPlace: boolean) => void
-  error?: string | null
+  timing: boolean
+  onTimingChange: (on: boolean) => void
+  onStart: (recipes: Recipe[], kitchen: KitchenPreset) => void
 }
 
-// Pick several recipes + a kitchen, then plan the meal. Styled like the
-// octocook scheduler Setup, but over the bundled recipes/kitchens (offline).
-export function MealSetup({ onExit, onStart, error }: Props) {
-  const [selected, setSelected] = useState<Set<string>>(new Set())
+// The recipe list: pick one recipe to cook it, or several to interleave them
+// for one cook. Styled like the octocook scheduler Setup, but over the bundled
+// recipes/kitchens (offline).
+export function MealSetup({ selected, onSelectedChange, timing, onTimingChange, onExit, onStart }: Props) {
   const [kitchen, setKitchen] = useState(KITCHENS[0].name)
-  const [mise, setMise] = useState(loadMisePref)
 
-  const toggle = (name: string) =>
-    setSelected((s) => {
-      const n = new Set(s)
-      if (n.has(name)) n.delete(name)
-      else n.add(name)
-      return n
-    })
+  const toggle = (name: string) => {
+    const n = new Set(selected)
+    if (n.has(name)) n.delete(name)
+    else n.add(name)
+    onSelectedChange(n)
+  }
 
   const chosen = RECIPES.filter((r) => selected.has(r.name))
   const kit = KITCHENS.find((k) => k.name === kitchen) ?? KITCHENS[0]
@@ -32,47 +32,49 @@ export function MealSetup({ onExit, onStart, error }: Props) {
     <div className="viewer">
       <header className="viewer-header">
         <button className="link" onClick={onExit}>← Back</button>
-        <h1>Cook a meal</h1>
+        <h1>Recipes</h1>
       </header>
-      <p className="muted meal-setup-hint">Pick the dishes and a kitchen — we'll interleave them for one cook.</p>
-
-      <label className="meal-kitchen">
-        Kitchen
-        <select value={kitchen} onChange={(e) => setKitchen(e.target.value)}>
-          {KITCHENS.map((k) => (
-            <option key={k.name} value={k.name}>{k.name}</option>
-          ))}
-        </select>
-      </label>
+      <p className="muted meal-setup-hint">Pick a recipe — or several, and we'll interleave them for one cook.</p>
 
       <label className="mise-toggle">
-        <input
-          type="checkbox"
-          checked={mise}
-          onChange={(e) => { setMise(e.target.checked); saveMisePref(e.target.checked) }}
-        />
+        <input type="checkbox" checked={timing} onChange={(e) => onTimingChange(e.target.checked)} />
         <span>
-          🔪 <strong>Mise en place first</strong>
-          <span className="muted"> — do all the chopping and prep before anything goes on the heat</span>
+          ⏱ <strong>Timing mode</strong>
+          <span className="muted"> — adds a ⏱ button to time your real pace and save it as a variant</span>
         </span>
       </label>
 
-      <ul className="recipe-grid">
-        {RECIPES.map((r) => (
-          <li
-            key={r.name}
-            className={selected.has(r.name) ? 'recipe-card selected' : 'recipe-card'}
-            onClick={() => toggle(r.name)}
-          >
-            <div className="recipe-head">
-              <span className="icon">{r.icon ?? '🍽️'}</span>
-              {selected.has(r.name) && <span className="check">✓</span>}
-            </div>
-            <div className="title">{r.name}</div>
-            <div className="meta"><span className="found-in">{r.cookSteps.length} steps</span></div>
-          </li>
-        ))}
-      </ul>
+      {KITCHENS.length > 1 && (
+        <label className="meal-kitchen">
+          Kitchen
+          <select value={kitchen} onChange={(e) => setKitchen(e.target.value)}>
+            {KITCHENS.map((k) => (
+              <option key={k.name} value={k.name}>{k.name}</option>
+            ))}
+          </select>
+        </label>
+      )}
+
+      {RECIPES.length === 0 ? (
+        <p className="muted">No bundled recipes found.</p>
+      ) : (
+        <ul className="recipe-grid">
+          {RECIPES.map((r) => (
+            <li
+              key={r.name}
+              className={selected.has(r.name) ? 'recipe-card selected' : 'recipe-card'}
+              onClick={() => toggle(r.name)}
+            >
+              <div className="recipe-head">
+                <span className="icon">{r.icon ?? '🍽️'}</span>
+                {selected.has(r.name) && <span className="check">✓</span>}
+              </div>
+              <div className="title">{r.name}</div>
+              <div className="meta"><span className="found-in">{r.cookSteps.length} steps</span></div>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <div className="meal-panel">
         <div className="meal-header">
@@ -81,9 +83,8 @@ export function MealSetup({ onExit, onStart, error }: Props) {
             {selected.size === 0 ? 'No recipes selected' : `${selected.size} recipe${selected.size === 1 ? '' : 's'}`}
           </span>
         </div>
-        {error && <p className="error">{error}</p>}
-        <button className="primary" disabled={selected.size === 0} onClick={() => onStart(chosen, kit, mise)}>
-          Plan meal →
+        <button className="primary" disabled={selected.size === 0} onClick={() => onStart(chosen, kit)}>
+          {selected.size > 1 ? 'Plan meal →' : 'Open recipe →'}
         </button>
       </div>
     </div>

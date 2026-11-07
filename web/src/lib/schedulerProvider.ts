@@ -1,31 +1,24 @@
 import type { KitchenPreset, Recipe, Schedule } from '../types'
 import { scheduleRecipes, type ScheduleOptions } from './scheduler'
 
-// The scheduler seam. Auto-selects: prefer the remote Python/CP-SAT scheduler
-// when a backend is reachable (better plans, future online "cook together"
-// mode), else fall back to the offline TS heuristic. Remote is STUBBED for now
-// — this is the single place online mode plugs in later.
+// The scheduler seam: the single place online mode (the remote Python/CP-SAT
+// scheduler — better plans, future "cook together") plugs in later. For now
+// every plan comes from the offline TS heuristic.
 
 export interface MealPlan {
   schedule: Schedule
   source: 'remote' | 'local'
 }
 
-async function remoteAvailable(): Promise<boolean> {
-  // Stub: no online mode yet. Later: probe `${VITE_API_BASE_URL}/health` with a
-  // short timeout and return true when reachable.
-  return false
-}
-
-export async function scheduleMeal(
+// Synchronous so the meal view can re-plan instantly when a variant, an edit,
+// or the mise-en-place toggle changes. Online mode will need an async path
+// (probe the backend, POST recipes+kitchen+numCooks+opts, map the
+// schedule_to_dict response onto Schedule) alongside this local one.
+export function scheduleMeal(
   recipes: Recipe[],
   kitchen: KitchenPreset,
   numCooks = 1,
   opts: ScheduleOptions = {},
-): Promise<MealPlan> {
-  if (await remoteAvailable()) {
-    // future: POST recipes+kitchen+numCooks(+opts) to the backend, map the response
-    // (schedule_to_dict shape) straight onto Schedule, return source: 'remote'.
-  }
+): MealPlan {
   return { schedule: scheduleRecipes(recipes, kitchen, numCooks, opts), source: 'local' }
 }

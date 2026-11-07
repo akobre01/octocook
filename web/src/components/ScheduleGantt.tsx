@@ -4,6 +4,9 @@ import { recipeColor } from '../lib/recipeColors'
 interface Props {
   steps: ScheduleStep[] // scheduled, sorted by start_min
   icons: Record<string, string> // recipe -> icon
+  totalLabel: string // e.g. "~ 1 hr 10 min · +1 hr cooling"
+  currentIndex: number
+  onSelect: (index: number) => void // tap a card to jump there in Cook
 }
 
 // Fixed card height so short steps stay readable (NOT time-proportional); the
@@ -19,9 +22,7 @@ const LANE_W = 11 // px per concurrency lane in the gutter
 // into concurrency lanes (lane 0 nearest the cards; later lanes grow leftward),
 // each lane its own color (first step alone = color 1; a step that starts while
 // one is running = color 2; same lane = same color).
-export function ScheduleGantt({ steps, icons }: Props) {
-  const makespan = steps.reduce((m, s) => Math.max(m, s.end_min), 0)
-
+export function ScheduleGantt({ steps, icons, totalLabel, currentIndex, onSelect }: Props) {
   // Greedy lane assignment in schedule order (lowest free lane).
   const laneEnd: number[] = []
   const laneOf = new Map<string, number>()
@@ -51,7 +52,7 @@ export function ScheduleGantt({ steps, icons }: Props) {
 
   return (
     <div className="gantt">
-      <div className="gantt-caption muted">Total ~ {makespan} min · bars show overlapping work</div>
+      <div className="gantt-caption muted">Total {totalLabel} · tap a step to jump</div>
       <div className="gantt-scroll">
         <div className="gantt-rows">
           <div className="gantt-gutter" style={{ width: `${numLanes * LANE_W}px`, height: `${totalH}px` }}>
@@ -74,8 +75,13 @@ export function ScheduleGantt({ steps, icons }: Props) {
             })}
           </div>
           <ol className="gantt-cards">
-            {steps.map((s) => (
-              <li className={`gantt-card ${s.active ? 'active' : 'passive'}`} key={s.step_id} style={{ height: `${CARD_H}px` }}>
+            {steps.map((s, i) => (
+              <li
+                className={`gantt-card ${s.active ? 'active' : 'passive'}${i === currentIndex ? ' current' : ''}`}
+                key={s.step_id}
+                style={{ height: `${CARD_H}px` }}
+                onClick={() => onSelect(i)}
+              >
                 <div className="gantt-card-head">
                   <span className="gantt-card-clock">{s.start_clock}</span>
                   <span className="gantt-card-icon">{icons[s.recipe] ?? ''}</span>

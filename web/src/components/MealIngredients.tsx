@@ -24,22 +24,24 @@ export function MealIngredients({ recipes, time, activeMin }: Props) {
 
   return (
     <div className="ingredients-view">
-      <div className="meal-filter">
-        {recipes.map((r, i) => {
-          const c = recipeColor(i)
-          const on = sel === i
-          return (
-            <button
-              key={r.name}
-              className={on ? 'meal-filter-btn on' : 'meal-filter-btn'}
-              style={{ borderColor: c.accent, background: on ? c.tint : undefined, color: on ? c.accent : undefined }}
-              onClick={() => setSel(on ? null : i)}
-            >
-              {r.icon ?? '🍽️'} {shortName(r.name)}
-            </button>
-          )
-        })}
-      </div>
+      {recipes.length > 1 && (
+        <div className="meal-filter">
+          {recipes.map((r, i) => {
+            const c = recipeColor(i)
+            const on = sel === i
+            return (
+              <button
+                key={r.name}
+                className={on ? 'meal-filter-btn on' : 'meal-filter-btn'}
+                style={{ borderColor: c.accent, background: on ? c.tint : undefined, color: on ? c.accent : undefined }}
+                onClick={() => setSel(on ? null : i)}
+              >
+                {r.icon ?? '🍽️'} {shortName(r.name)}
+              </button>
+            )
+          })}
+        </div>
+      )}
 
       <ul className="ingredient-grid">
         {merged.map((ing) => {

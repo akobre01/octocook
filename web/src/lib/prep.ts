@@ -1,7 +1,6 @@
 // Mise en place: the knife-and-board work (chop, peel, wash, ...) that can all
 // be done before anything goes on the heat. In mise-en-place mode the meal
-// scheduler finishes every prep step before any other hands-on step starts,
-// and the single-recipe viewer walks prep steps first.
+// scheduler finishes every prep step before any other hands-on step starts.
 
 // A step is prep when it's hands-on, uses only these tools (or none), its
 // description has a prep verb and no cooking verb, and everything it depends
@@ -46,14 +45,7 @@ export function prepStepIds(steps: PrepCandidate[]): Set<string> {
   return new Set(steps.filter(isPrep).map((s) => s.id))
 }
 
-// Prep steps first (in their original order), then the rest. Always a valid
-// order: prep steps only depend on other prep steps.
-export function misePrepFirst<T extends PrepCandidate>(steps: T[]): T[] {
-  const prep = prepStepIds(steps)
-  return [...steps.filter((s) => prep.has(s.id)), ...steps.filter((s) => !prep.has(s.id))]
-}
-
-// The on/off preference, shared by the meal planner and the recipe viewer.
+// The on/off preference, remembered across recipes and meals.
 const PREF_KEY = 'octocook.miseEnPlace'
 
 export function loadMisePref(): boolean {
