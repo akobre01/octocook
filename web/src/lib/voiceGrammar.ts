@@ -2,7 +2,7 @@
 // voice logic (requirement #5) is deterministic and unit-testable. The engine
 // feeds raw transcripts in; this maps them to one of the viewer's actions.
 
-export type VoiceCommand = 'next' | 'prev' | 'timeline' | 'cook' | 'ingredients'
+export type VoiceCommand = 'next' | 'prev' | 'timeline' | 'columns' | 'cook' | 'ingredients'
 
 // Ordered rules: earlier rules win. Multi-word "view" phrases are checked
 // before the bare "next"/"back" keywords so e.g. "back to steps" resolves to
@@ -13,10 +13,14 @@ const RULES: { command: VoiceCommand; phrases: string[] }[] = [
     phrases: ['ingredient', 'ingredients', 'shopping list'],
   },
   {
+    command: 'columns',
+    phrases: ['side by side', 'side-by-side', 'overview', 'over view', 'columns', 'each recipe'],
+  },
+  {
     command: 'timeline',
     phrases: [
-      'full recipe', 'whole recipe', 'entire recipe', 'full view',
-      'zoom out', 'overview', 'over view', 'all steps', 'timeline', 'full',
+      'octocook', 'octo cook', 'octopus', 'full recipe', 'whole recipe', 'entire recipe',
+      'full view', 'zoom out', 'all steps', 'timeline', 'full',
     ],
   },
   {

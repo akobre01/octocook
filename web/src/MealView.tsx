@@ -10,7 +10,8 @@ import { formatTimeSplit, mealTimeSplit } from './lib/timing'
 import { loadMisePref, prepStepIds, saveMisePref } from './lib/prep'
 import { StepStack } from './components/StepStack'
 import { MealIngredients } from './components/MealIngredients'
-import { ScheduleGantt } from './components/ScheduleGantt'
+import { ScheduleGraph } from './components/ScheduleGraph'
+import { SideBySide } from './components/SideBySide'
 import { BackgroundRail } from './components/BackgroundRail'
 import { VariantBar } from './components/VariantBar'
 import { RecipeEditor } from './components/RecipeEditor'
@@ -23,7 +24,7 @@ interface Props {
   onExit: () => void // back to the recipe list
 }
 
-type Mode = 'ingredients' | 'cook' | 'gantt' | 'edit' | 'review'
+type Mode = 'ingredients' | 'cook' | 'sbs' | 'gantt' | 'edit' | 'review'
 
 function toStepView(s: ScheduleStep, accent?: string, icon?: string): StepView {
   return {
@@ -53,7 +54,8 @@ function splitStepId(id: string): [number, string] {
 
 // One or more recipes, planned for one cook: Ingredients (merged, plus each
 // recipe's variant picker and edit button) / Cook (steps in schedule order +
-// background rail) / Full recipe (schedule Gantt). Switching a variant,
+// background rail) / Side by side (a column per recipe) / Octocook (the whole
+// interleaved schedule). Switching a variant,
 // editing, or toggling mise en place re-plans on the spot. Timing mode records
 // your real pace on the hands-on steps and saves it into each recipe's variant.
 // Fully offline; variants persist in localStorage.
@@ -64,6 +66,7 @@ export function MealView({ recipes, kitchen, timingEnabled, onExit }: Props) {
   const [variants, setVariants] = useState<RecipeVariant[][]>(() => recipes.map((r) => listVariants(r.name)))
   const [variantIds, setVariantIds] = useState<(string | null)[]>(() => recipes.map(() => null))
   const [editIdx, setEditIdx] = useState(0)
+  const [hiddenCols, setHiddenCols] = useState<Set<string>>(new Set()) // Side by side
 
   // Timing state. Actuals are seconds per schedule step id.
   const [timingOn, setTimingOn] = useState(false)
@@ -184,6 +187,7 @@ export function MealView({ recipes, kitchen, timingEnabled, onExit }: Props) {
       case 'prev': goPrev(); break
       case 'cook': setMode('cook'); break
       case 'ingredients': setMode('ingredients'); break
+      case 'columns': setMode('sbs'); break
       case 'timeline': setMode('gantt'); break
     }
   }
@@ -347,7 +351,8 @@ export function MealView({ recipes, kitchen, timingEnabled, onExit }: Props) {
       <div className="view-tabs">
         <button className={mode === 'ingredients' ? 'on' : ''} onClick={() => setMode('ingredients')}>Ingredients</button>
         <button className={mode === 'cook' ? 'on' : ''} onClick={() => setMode('cook')}>Cook</button>
-        <button className={mode === 'gantt' ? 'on' : ''} onClick={() => setMode('gantt')}>Full recipe</button>
+        <button className={mode === 'sbs' ? 'on' : ''} onClick={() => setMode('sbs')}>Side by side</button>
+        <button className={mode === 'gantt' ? 'on' : ''} onClick={() => setMode('gantt')}>Octocook</button>
       </div>
 
       {prepCount > 0 && (
@@ -425,10 +430,29 @@ export function MealView({ recipes, kitchen, timingEnabled, onExit }: Props) {
           )}
         </div>
       )}
+      {mode === 'sbs' && schedule && (
+        <SideBySide
+          steps={orderedSteps}
+          recipes={recipes}
+          colors={colorByRecipe}
+          hidden={hiddenCols}
+          onToggle={(name) =>
+            setHiddenCols((h) => {
+              const n = new Set(h)
+              if (n.has(name)) n.delete(name)
+              else n.add(name)
+              return n
+            })
+          }
+          currentIndex={clampedIndex}
+          onSelect={(i) => { setIndex(i); setMode('cook') }}
+        />
+      )}
       {mode === 'gantt' && schedule && planned.time && (
-        <ScheduleGantt
+        <ScheduleGraph
           steps={orderedSteps}
           icons={schedule.icons}
+          colors={colorByRecipe}
           totalLabel={formatTimeSplit(planned.time)}
           currentIndex={clampedIndex}
           onSelect={(i) => { setIndex(i); setMode('cook') }}
@@ -438,7 +462,7 @@ export function MealView({ recipes, kitchen, timingEnabled, onExit }: Props) {
 
       {voice.listening && (
         <div className="viewer-heard muted">
-          {voice.lastHeard ? `heard: “${voice.lastHeard}”` : 'Listening… say “next”, “cook”, “ingredients”, or “full recipe”'}
+          {voice.lastHeard ? `heard: “${voice.lastHeard}”` : 'Listening… say “next”, “cook”, “ingredients”, “side by side”, or “octocook”'}
         </div>
       )}
       {nameOverlay}

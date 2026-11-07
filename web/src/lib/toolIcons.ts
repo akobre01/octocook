@@ -43,6 +43,26 @@ export function toolIcon(tool: string): string {
   return TOOL_ICONS[tool] ?? FALLBACK_TOOL_ICON
 }
 
+// The one tool that best says what a step is, for places that show a single
+// icon: an appliance or the oven beats a pot or pan, which beats the burner
+// under it, which beats hand tools (the knife over the board, the bowl over
+// the spoon). Unranked tools come after ranked ones, in recipe order.
+const TOOL_RANK = [
+  'oven', 'microwave', 'blender', 'immersion_blender', 'food_processor', 'stand_mixer', 'hand_mixer',
+  'stockpot', 'saucepan', 'saute_pan', 'cast_iron_skillet', 'baking_dish', 'sheet_pan',
+  'stove_burner',
+  'chef_knife', 'grater', 'peeler', 'rolling_pin', 'colander', 'mixing_bowl', 'whisk', 'tongs',
+  'cutting_board', 'spatula',
+]
+
+export function primaryTool(tools: string[]): string | undefined {
+  const rank = (t: string) => {
+    const r = TOOL_RANK.indexOf(t)
+    return r === -1 ? TOOL_RANK.length : r
+  }
+  return tools.reduce<string | undefined>((best, t) => (best === undefined || rank(t) < rank(best) ? t : best), undefined)
+}
+
 // Some tools have no decent emoji; render them as a simple CSS shape instead.
 // A sheet pan is a plain gray rectangle (no sensible emoji exists).
 export type ToolShape = 'pan'

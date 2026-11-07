@@ -1,6 +1,7 @@
 import type { ScheduleStep } from '../types'
 import type { RecipeColor } from '../lib/recipeColors'
 import { ToolIcon } from './ToolIcon'
+import { primaryTool } from '../lib/toolIcons'
 
 interface Props {
   passive: ScheduleStep[]
@@ -25,7 +26,7 @@ export function BackgroundRail({ passive, windowStart, windowEnd, excludeId, col
       <div className="bg-rail-label">Meanwhile</div>
       {running.map((p) => {
         const c = colors[p.recipe]
-        const lead = p.tools[0]
+        const lead = primaryTool(p.tools)
         return (
           <div
             className="bg-event"

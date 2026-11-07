@@ -771,7 +771,7 @@ button.danger {
   animation: mic-pulse 1.2s ease-in-out infinite;
 }
 @keyframes mic-pulse { 50% { opacity: 0.55; } }
-/* --- View tabs (Ingredients / Cook / Full recipe) --- */
+/* --- View tabs (Ingredients / Cook / Side by side / Octocook) --- */
 
 .view-tabs {
   display: flex;
@@ -780,8 +780,10 @@ button.danger {
 }
 .view-tabs button {
   flex: 1;
-  padding: 0.5rem;
+  min-width: 0;
+  padding: 0.5rem 0.25rem;
   font-size: 0.9rem;
+  line-height: 1.15;
 }
 .view-tabs button.on {
   background: var(--accent);
@@ -901,55 +903,6 @@ button.danger {
 .bg-event-icon { font-size: 1.25rem; line-height: 1; }
 .bg-event-min { font-size: 0.7rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
-/* Full-recipe view — readable cards in sequence + a left gutter of concurrency
-   bars (a step's bar spans every card it overlaps; nested lanes grow left). */
-.gantt { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.gantt-caption { text-align: center; font-size: 0.78rem; }
-.gantt-scroll { flex: 1; min-height: 0; overflow-y: auto; }
-.gantt-rows { display: flex; gap: 0.5rem; align-items: flex-start; }
-.gantt-gutter { position: relative; flex-shrink: 0; }
-.gantt-gbar { position: absolute; width: 7px; border-radius: 999px; }
-.gantt-cards {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px; /* == GAP in ScheduleGantt.tsx */
-}
-.gantt-card {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.2rem;
-  padding: 0.4rem 0.7rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--card);
-  overflow: hidden;
-}
-.gantt-card.passive { opacity: 0.6; }
-.gantt-card { cursor: pointer; }
-.gantt-card.current {
-  background: var(--current-bg);
-  border-color: var(--current-border);
-  border-width: 2px;
-  opacity: 1;
-}
-.gantt-card-head {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-.gantt-card-clock { font-variant-numeric: tabular-nums; }
-.gantt-card-icon { font-size: 1rem; }
-.gantt-card-min { margin-left: auto; font-variant-numeric: tabular-nums; }
-.gantt-card-desc { font-size: 0.92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .start-cooking {
   width: 100%;
   padding: 0.9rem;
@@ -1184,3 +1137,163 @@ button.danger {
 .meal-recipe-controls { display: flex; align-items: flex-start; gap: 0.5rem; }
 .meal-recipe-controls .variant-bar { flex: 1; min-width: 0; }
 .meal-recipe-edit { flex: none; }
+
+/* --- Side by side: a column per recipe, scrolling sideways --- */
+.sbs { display: flex; flex-direction: column; gap: 0.6rem; min-width: 0; }
+.sbs-toggles { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.sbs-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  max-width: calc(50% - 0.2rem);
+  min-width: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.sbs-toggle input { flex: none; }
+.sbs-toggle span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sbs-scroll {
+  display: flex;
+  gap: 0.6rem;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.4rem;
+}
+.sbs-col {
+  /* Half the row, so two recipes fit without scrolling; more scroll sideways. */
+  flex: 0 0 calc(50% - 0.3rem);
+  min-width: 0;
+  max-width: 340px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.sbs-scroll > .sbs-col:only-child { flex-basis: 100%; max-width: none; }
+.sbs-col-head {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--border);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.sbs-col-icon { font-size: 1.1rem; flex: none; }
+.sbs-col-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sbs-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.sbs-step {
+  padding: 0.35rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+}
+.sbs-step.passive { border-style: dashed; }
+.sbs-step.done { opacity: 0.45; }
+/* Now = solid, next = dashed, both in the recipe's color (set inline) —
+   even for hands-off steps, whose own border is a thin gray dash. */
+.sbs-step.current { background: var(--current-bg); border-width: 2px; border-style: solid; }
+.sbs-step.next { border-width: 2px; border-style: dashed; }
+.sbs-step.running { background: var(--current-bg); }
+.sbs-step-head { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
+.sbs-step-clock { font-variant-numeric: tabular-nums; }
+.sbs-step-min { margin-left: auto; font-variant-numeric: tabular-nums; }
+.sbs-tag { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); }
+.sbs-step-desc {
+  font-size: 0.82rem;
+  line-height: 1.25;
+  margin-top: 0.1rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.sbs-step.current .sbs-step-desc, .sbs-step.next .sbs-step-desc { -webkit-line-clamp: unset; line-clamp: none; }
+
+/* --- Octocook view: schedule as a git-style graph (ScheduleGraph) --- */
+.graph { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.graph-caption { text-align: center; font-size: 0.78rem; }
+.graph-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.graph-clock { font-variant-numeric: tabular-nums; }
+.graph-card-icon { font-size: 1rem; }
+.graph-card-min { margin-left: auto; font-variant-numeric: tabular-nums; }
+.graph-rows { list-style: none; margin: 0; padding: 0; overflow-y: auto; }
+.graph-row { display: flex; align-items: stretch; min-width: 0; }
+/* Spacing lives inside the row (card margin) so rail cells span it unbroken. */
+.graph-card {
+  flex: 1;
+  min-width: 0;
+  margin-top: 6px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+}
+.graph-card.passive { border-style: dashed; border-left-style: solid; }
+.graph-card.current { background: var(--current-bg); border-color: var(--current-border); border-width: 2px; border-left-width: 4px; }
+.graph-card-desc {
+  font-size: 0.9rem;
+  line-height: 1.25;
+  margin-top: 0.15rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.graph-card.current .graph-card-desc { -webkit-line-clamp: unset; line-clamp: none; }
+.graph-end {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0 0.15rem 0.1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.graph-end-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.graph-rail { position: relative; flex: none; }
+.graph-rail-line {
+  position: absolute;
+  left: calc(50% - 1px);
+  width: 2px;
+  top: 0;
+  bottom: 0;
+  background: currentColor;
+}
+.graph-rail.end .graph-rail-line { bottom: auto; height: calc(50% + 4px); }
+.graph-rail-stub {
+  position: absolute;
+  left: 50%;
+  right: 0;
+  top: calc(50% + 3px); /* centre of the card, below its top margin */
+  height: 2px;
+  background: currentColor;
+}
+.graph-rail-dot {
+  position: absolute;
+  left: calc(50% - 5px);
+  top: calc(50% - 1px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+}

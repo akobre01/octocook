@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import type { StepView } from '../types'
-import { ToolIcons } from './ToolIcon'
+import { ToolIcon } from './ToolIcon'
+import { primaryTool } from '../lib/toolIcons'
 
 // Emphasis tiers, from most-faded past to upcoming preview. The further a step
 // is from the current one, the grayer (past) or lighter (upcoming) it renders.
@@ -29,6 +30,7 @@ interface Props {
 // Pure: it renders a StepView and an optional action slot, nothing more.
 export function StepCard({ step, emphasis, position, children }: Props) {
   const kind = step.active ? 'active' : 'passive'
+  const lead = primaryTool(step.tools) // one icon: the step's main tool
   const classes = ['step-card', kind]
   if (emphasis) classes.push(emphasis)
   // Meal cook mode: a colored left edge identifies the recipe.
@@ -54,7 +56,7 @@ export function StepCard({ step, emphasis, position, children }: Props) {
             <span>~ {step.duration_min} min</span>
           </div>
         </div>
-        {step.tools.length > 0 && <ToolIcons tools={step.tools} />}
+        {lead && <span className="tool-icons"><ToolIcon tool={lead} /></span>}
       </div>
 
       <div className="step-desc">{step.description}</div>
