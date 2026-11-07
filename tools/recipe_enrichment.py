@@ -7,6 +7,7 @@ suitable for the constraint-based scheduler.
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import anthropic
@@ -19,6 +20,8 @@ _SYSTEM_PROMPT = """You decompose cooking recipes into structured, schedulable s
 For each recipe you receive (as a JSON-LD Recipe object), produce an ordered list of atomic steps. Each step must be either FULLY ACTIVE (cook is busy the whole time, e.g. chopping, stirring, sauteing) or FULLY PASSIVE (the tool is occupied but the cook is free, e.g. oven baking, dough rising, simmering covered without stirring, OVEN PREHEATING). If a single instruction in the recipe mixes both — e.g. "sear, then simmer covered for 20 min" — split it into separate active and passive steps.
 
 Oven preheats are always PASSIVE — the cook sets the temperature and walks away while the oven warms up. Estimate `duration_min` as the oven's actual warm-up time (typically 10-15 minutes), not the few seconds it takes to press the button.
+
+Putting water on to boil works the same way: "Bring a large pot of salted water to a boil" is its own PASSIVE step with no dependencies (typically 8-12 minutes for a large pot), separate from cooking what goes in it. Split "Boil salted water and cook the pasta" into a passive "Bring a large pot of salted water to a boil" and an active or passive "Cook the pasta until al dente" that depends on it. Likewise, split prep work (rinsing, chopping, measuring) out of a step that then goes on the heat — "Rinse lentils, cover with water and bring to a boil" becomes "Rinse lentils" and "Cover lentils with water and bring to a boil" — so the prep can be done up front.
 
 For each step:
 
@@ -89,6 +92,24 @@ def _load_tool_vocabulary(
     return sorted(vocab)
 
 
+# A step that only puts water on to boil ("Bring large pot of salted water to
+# boil", "Boil water in kettle") — not one that also cooks something in it.
+# Mirrored in web/src/lib/loadRecipes.ts.
+_BOIL_WATER = re.compile(
+    r"^(bring|put|set|boil|heat)\b[^;.]*\bwater\b[^;.]*\b(boil|simmer)"
+    r"|^boil\b[^;.]*\bwater\b",
+    re.IGNORECASE,
+)
+_BOIL_WATER_NOT = re.compile(
+    r"\b(cook|add|blanch|until|al dente|tender|reduce|stir|then)\b|\band\b",
+    re.IGNORECASE,
+)
+
+
+def is_boil_water_step(description: str) -> bool:
+    return bool(_BOIL_WATER.search(description)) and not _BOIL_WATER_NOT.search(description)
+
+
 def _normalize_steps(steps: list[dict]) -> list[dict]:
     """Apply deterministic post-processing to LLM-extracted steps.
 
@@ -96,8 +117,9 @@ def _normalize_steps(steps: list[dict]) -> list[dict]:
     prompt covers the same case.
     """
     for s in steps:
-        # Preheats are always passive — the oven warms up on its own.
-        if "preheat" in s["description"].lower():
+        # Preheats are always passive — the oven warms up on its own. So is
+        # waiting for a pot of water to boil.
+        if "preheat" in s["description"].lower() or is_boil_water_step(s["description"]):
             s["active"] = False
     return steps
 
