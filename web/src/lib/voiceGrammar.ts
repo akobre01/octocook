@@ -14,12 +14,12 @@ const RULES: { command: VoiceCommand; phrases: string[] }[] = [
   },
   {
     command: 'columns',
-    phrases: ['side by side', 'side-by-side', 'overview', 'over view', 'columns', 'each recipe'],
+    phrases: ['side by side', 'side-by-side', 'columns', 'each recipe'],
   },
   {
     command: 'timeline',
     phrases: [
-      'octocook', 'octo cook', 'octopus', 'full recipe', 'whole recipe', 'entire recipe',
+      'overview', 'over view', 'octocook', 'octo cook', 'octopus', 'full recipe', 'whole recipe', 'entire recipe',
       'full view', 'zoom out', 'all steps', 'timeline', 'full',
     ],
   },

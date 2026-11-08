@@ -9,7 +9,7 @@ Octocook takes the recipes you want to make, breaks each one into small timed st
   <tr>
     <td align="center"><img src="docs/screenshots/3-cook.png" width="240" alt="Cook mode: the current step, large, with the previous step grayed above and a meanwhile rail showing the oven toasting"><br><sub><b>Cook</b> — one step at a time, with what's going on in the background</sub></td>
     <td align="center"><img src="docs/screenshots/4-side-by-side.png" width="240" alt="Side by side: a column per recipe with NOW, NEXT and ON markers"><br><sub><b>Side by side</b> — where you are in each recipe</sub></td>
-    <td align="center"><img src="docs/screenshots/5-octocook.png" width="240" alt="Octocook view: the preheat draws a line down to 'Oven ready', with the chopping indented beneath it"><br><sub><b>Octocook</b> — the whole interleaved plan</sub></td>
+    <td align="center"><img src="docs/screenshots/5-octocook.png" width="240" alt="Overview: the preheat draws a line down to 'Oven ready', with the chopping indented beneath it"><br><sub><b>Overview</b> — the whole interleaved plan</sub></td>
   </tr>
 </table>
 
@@ -20,8 +20,8 @@ Octocook takes the recipes you want to make, breaks each one into small timed st
 - **Shows the whole plan four ways:**
   - **Ingredients** — everything you need for the meal, merged across recipes.
   - **Cook** — one step at a time.
-  - **Side by side** — a column per recipe, with where you are in each.
-  - **Octocook** — the interleaved schedule as a graph: a preheat or simmer draws a line down the side until "Oven ready", with the work you do meanwhile indented under it.
+  - **Side by side** — a column per recipe, with where you are in each and the tool each step needs.
+  - **Overview** — the interleaved schedule as a graph: a preheat or simmer draws a line down the side until "Oven ready", with the work you do meanwhile indented under it.
 - **Keeps sautés together.** A run of hands-on stovetop steps from one recipe (onions → garlic → spices) is never broken up by other work; a covered simmer frees you up for something else.
 - **Mise en place mode.** Optionally do all the chopping, peeling, and washing up front before anything goes on the heat.
 - **Honest times.** Totals are reported the way recipes state them — "~1 hr 30 min · +1 hr chilling" — with cooling and do-ahead waits (an overnight soak) shown separately.
@@ -126,7 +126,7 @@ The original wishlist, and where each item stands.
 - [x] A symbol for the recipe each step belongs to
 - [x] See where a step sits among the rest of its recipe (Side by side)
 - [ ] Time each step and learn how fast *you* are, so future plans use your pace — timings can be saved into a personal variant of a recipe today, but aren't yet learned across recipes (chopping onions takes Charlie 3 minutes, not 5, in every recipe)
-- [x] Passive steps (preheating, baking) shown alongside the steps that happen during them — the Octocook view and the "meanwhile" rail
+- [x] Passive steps (preheating, baking) shown alongside the steps that happen during them — the Overview and the "meanwhile" rail
 - [x] Ingredient quantities on each step ("1 onion, 4 cloves garlic")
 
 **Cooking party**

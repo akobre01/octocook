@@ -54,7 +54,7 @@ function splitStepId(id: string): [number, string] {
 
 // One or more recipes, planned for one cook: Ingredients (merged, plus each
 // recipe's variant picker and edit button) / Cook (steps in schedule order +
-// background rail) / Side by side (a column per recipe) / Octocook (the whole
+// background rail) / Side by side (a column per recipe) / Overview (the whole
 // interleaved schedule). Switching a variant,
 // editing, or toggling mise en place re-plans on the spot. Timing mode records
 // your real pace on the hands-on steps and saves it into each recipe's variant.
@@ -352,7 +352,7 @@ export function MealView({ recipes, kitchen, timingEnabled, onExit }: Props) {
         <button className={mode === 'ingredients' ? 'on' : ''} onClick={() => setMode('ingredients')}>Ingredients</button>
         <button className={mode === 'cook' ? 'on' : ''} onClick={() => setMode('cook')}>Cook</button>
         <button className={mode === 'sbs' ? 'on' : ''} onClick={() => setMode('sbs')}>Side by side</button>
-        <button className={mode === 'gantt' ? 'on' : ''} onClick={() => setMode('gantt')}>Octocook</button>
+        <button className={mode === 'gantt' ? 'on' : ''} onClick={() => setMode('gantt')}>Overview</button>
       </div>
 
       {prepCount > 0 && (
@@ -451,7 +451,7 @@ export function MealView({ recipes, kitchen, timingEnabled, onExit }: Props) {
       {mode === 'gantt' && schedule && planned.time && (
         <ScheduleGraph
           steps={orderedSteps}
-          icons={schedule.icons}
+          recipes={recipes}
           colors={colorByRecipe}
           totalLabel={formatTimeSplit(planned.time)}
           currentIndex={clampedIndex}
@@ -462,7 +462,7 @@ export function MealView({ recipes, kitchen, timingEnabled, onExit }: Props) {
 
       {voice.listening && (
         <div className="viewer-heard muted">
-          {voice.lastHeard ? `heard: “${voice.lastHeard}”` : 'Listening… say “next”, “cook”, “ingredients”, “side by side”, or “octocook”'}
+          {voice.lastHeard ? `heard: “${voice.lastHeard}”` : 'Listening… say “next”, “cook”, “ingredients”, “side by side”, or “overview”'}
         </div>
       )}
       {nameOverlay}

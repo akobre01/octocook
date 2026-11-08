@@ -1,9 +1,11 @@
 import type { ScheduleStep } from '../types'
 import type { RecipeColor } from '../lib/recipeColors'
+import { primaryTool } from '../lib/toolIcons'
+import { ToolIcon } from './ToolIcon'
 
 interface Props {
   steps: ScheduleStep[] // scheduled, sorted by start_min
-  icons: Record<string, string> // recipe -> icon
+  recipes: { name: string; icon?: string }[] // for the color legend
   colors: Record<string, RecipeColor> // recipe -> color
   totalLabel: string // e.g. "~ 1 hr 10 min · +1 hr cooling"
   currentIndex: number
@@ -114,13 +116,24 @@ function Gutter({ segs, colors }: { segs: Seg[]; colors: (string | undefined)[] 
   )
 }
 
-// Octocook view: the whole interleaved schedule as one list, with overlapping
-// work drawn as rails and indents (see layout).
-export function ScheduleGraph({ steps, icons, colors, totalLabel, currentIndex, onSelect }: Props) {
+// Overview: the whole interleaved schedule as one list, with overlapping work
+// drawn as rails and indents (see layout). A card's color says which recipe it
+// belongs to (see the legend); its icon is the tool it needs.
+export function ScheduleGraph({ steps, recipes, colors, totalLabel, currentIndex, onSelect }: Props) {
   const rows = layout(steps, colors)
 
   return (
     <div className="graph">
+      {recipes.length > 1 && (
+        <div className="graph-legend">
+          {recipes.map((r) => (
+            <span key={r.name} className="graph-legend-item" style={{ borderColor: colors[r.name]?.accent }}>
+              <span className="graph-legend-swatch" style={{ background: colors[r.name]?.accent }} />
+              <span className="graph-legend-name">{r.icon ?? '🍽️'} {r.name}</span>
+            </span>
+          ))}
+        </div>
+      )}
       <div className="graph-caption muted">Total {totalLabel} · tap a step to jump</div>
       <ol className="graph-rows">
         {rows.map((row) =>
@@ -134,13 +147,17 @@ export function ScheduleGraph({ steps, icons, colors, totalLabel, currentIndex, 
               >
                 <div className="graph-card-head">
                   <span className="graph-clock">{row.step.start_clock}</span>
-                  <span className="graph-card-icon">{icons[row.step.recipe] ?? ''}</span>
                   <span className="graph-card-min">
                     {!row.step.active && <span title="hands-off">⏳</span>}
                     {row.step.duration_min}m
                   </span>
                 </div>
-                <div className="graph-card-desc">{row.step.description}</div>
+                <div className="graph-card-body">
+                  <div className="graph-card-desc">{row.step.description}</div>
+                  {primaryTool(row.step.tools) && (
+                    <ToolIcon tool={primaryTool(row.step.tools)!} className="graph-card-tool" />
+                  )}
+                </div>
               </div>
             </li>
           ) : (

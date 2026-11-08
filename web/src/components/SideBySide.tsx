@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import type { ScheduleStep } from '../types'
 import type { RecipeColor } from '../lib/recipeColors'
+import { primaryTool } from '../lib/toolIcons'
+import { ToolIcon } from './ToolIcon'
 
 interface Props {
   steps: ScheduleStep[] // the whole meal, in schedule order
@@ -20,7 +22,8 @@ type StepState = 'done' | 'current' | 'running' | 'next' | 'later'
 // anything of that recipe still running alongside it (a bake, a simmer), and
 // the recipe's next step. Columns are half the screen wide so two always fit:
 // long steps are clamped to a few lines (the current and next step show in
-// full) and hands-off steps get a ⏳ instead of a label.
+// full) and hands-off steps get a ⏳ instead of a label. Each step shows the
+// icon of the tool it needs, so a column can be skimmed without reading.
 export function SideBySide({ steps, recipes, colors, hidden, onToggle, currentIndex, onSelect }: Props) {
   const cur = steps[currentIndex]
   const currentRef = useRef<HTMLLIElement | null>(null)
@@ -88,7 +91,10 @@ export function SideBySide({ steps, recipes, colors, hidden, onToggle, currentIn
                             {s.duration_min}m
                           </span>
                         </div>
-                        <div className="sbs-step-desc">{s.description}</div>
+                        <div className="sbs-step-body">
+                          <div className="sbs-step-desc">{s.description}</div>
+                          {primaryTool(s.tools) && <ToolIcon tool={primaryTool(s.tools)!} className="sbs-step-tool" />}
+                        </div>
                       </li>
                     )
                   })}
