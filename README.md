@@ -9,7 +9,7 @@ Octocook takes the recipes you want to make, breaks each one into small timed st
   <tr>
     <td align="center"><img src="docs/screenshots/3-cook.png" width="240" alt="Cook mode: the current step, large, with the previous step grayed above and a meanwhile rail showing the oven toasting"><br><sub><b>Cook</b> — one step at a time, with what's going on in the background</sub></td>
     <td align="center"><img src="docs/screenshots/4-side-by-side.png" width="240" alt="Side by side: a column per recipe with NOW, NEXT and ON markers"><br><sub><b>Side by side</b> — where you are in each recipe</sub></td>
-    <td align="center"><img src="docs/screenshots/5-octocook.png" width="240" alt="Overview: the preheat draws a line down to 'Oven ready', with the chopping indented beneath it"><br><sub><b>Overview</b> — the whole interleaved plan</sub></td>
+    <td align="center"><img src="docs/screenshots/5-overview.png" width="240" alt="Overview: the preheat draws a line down to 'Oven ready', with the chopping indented beneath it"><br><sub><b>Overview</b> — the whole interleaved plan</sub></td>
   </tr>
 </table>
 
