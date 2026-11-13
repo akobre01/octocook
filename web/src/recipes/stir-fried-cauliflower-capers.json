@@ -1,0 +1,113 @@
+{
+  "name": "Stir-Fried Cauliflower with Capers, Chile and Parsley",
+  "icon": "🌶️",
+  "cookSteps": [
+    {
+      "id": "S0",
+      "description": "Prep onion, garlic, chile, capers, and parsley",
+      "duration_min": 8,
+      "active": true,
+      "tools": [
+        "cutting_board",
+        "chef_knife"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 small red onion, finely sliced",
+        "3 garlic cloves, finely chopped",
+        "1–2 bird's eye chiles, finely sliced (seeded for less heat)",
+        "3 tbsp capers, rinsed and roughly chopped",
+        "½ bunch parsley, stems and leaves finely chopped"
+      ]
+    },
+    {
+      "id": "S1",
+      "description": "Cut cauliflower into thin uniform stems",
+      "duration_min": 4,
+      "active": true,
+      "tools": [
+        "cutting_board",
+        "chef_knife"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 lb (450 g) Taishan (Chinese flowering) or regular cauliflower, cut into thin uniform stems"
+      ]
+    },
+    {
+      "id": "S2",
+      "description": "Stir-fry onion until softened and golden",
+      "duration_min": 2,
+      "active": true,
+      "tools": [
+        "saute_pan",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S0",
+        "S1"
+      ],
+      "ingredients": [
+        "Extra-virgin olive oil"
+      ]
+    },
+    {
+      "id": "S3",
+      "description": "Add cauliflower, garlic, chile, capers, parsley, salt; toss 1 min",
+      "duration_min": 1,
+      "active": true,
+      "tools": [
+        "saute_pan",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S2"
+      ],
+      "ingredients": [
+        "Sea salt"
+      ]
+    },
+    {
+      "id": "S4",
+      "description": "Add water, cover, and steam-fry 2 min",
+      "duration_min": 2,
+      "active": false,
+      "tools": [
+        "saute_pan",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S3"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S5",
+      "description": "Uncover and stir-fry until crisp-tender and charred",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "saute_pan",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S4"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S6",
+      "description": "Squeeze lemon over dish and serve",
+      "duration_min": 1,
+      "active": true,
+      "tools": [],
+      "depends_on": [
+        "S5"
+      ],
+      "ingredients": [
+        "½ lemon",
+        "Rice or pasta, to serve"
+      ]
+    }
+  ]
+}

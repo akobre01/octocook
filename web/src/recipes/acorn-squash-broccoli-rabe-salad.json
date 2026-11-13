@@ -1,0 +1,100 @@
+{
+  "name": "Roasted Acorn Squash & Broccoli Rabe Salad with Ricotta Salata",
+  "icon": "🎃",
+  "cookSteps": [
+    {
+      "id": "S0",
+      "description": "Preheat oven to 425°F",
+      "duration_min": 12,
+      "active": false,
+      "tools": [
+        "oven"
+      ],
+      "depends_on": [],
+      "ingredients": []
+    },
+    {
+      "id": "S1",
+      "description": "Prep and toss acorn squash with oil, salt, pepper",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "sheet_pan",
+        "cutting_board",
+        "chef_knife"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 small acorn squash (~1¼ lb), halved, seeded, and cut into 1-inch wedges (no need to peel)",
+        "7 tbsp extra-virgin olive oil, divided",
+        "½ tsp kosher salt, divided",
+        "Black pepper"
+      ]
+    },
+    {
+      "id": "S2",
+      "description": "Prep and toss broccoli rabe with oil, salt, pepper",
+      "duration_min": 4,
+      "active": true,
+      "tools": [
+        "sheet_pan",
+        "cutting_board",
+        "chef_knife"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 bunch (~12 oz) broccoli rabe, trimmed and cut into 2-inch lengths"
+      ]
+    },
+    {
+      "id": "S3",
+      "description": "Roast squash until golden underneath",
+      "duration_min": 20,
+      "active": false,
+      "tools": [
+        "oven",
+        "sheet_pan"
+      ],
+      "depends_on": [
+        "S0",
+        "S1"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S4",
+      "description": "Flip squash; add rabe sheet to oven; roast both",
+      "duration_min": 15,
+      "active": false,
+      "tools": [
+        "oven",
+        "sheet_pan"
+      ],
+      "depends_on": [
+        "S2",
+        "S3"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S5",
+      "description": "Toss squash, rabe, ricotta salata, pecans, cranberries, vinegar, oil, salt, pepper; add parsley",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "mixing_bowl"
+      ],
+      "depends_on": [
+        "S4"
+      ],
+      "ingredients": [
+        "3½ oz ricotta salata, crumbled (~¾ cup)",
+        "½ cup pecans, toasted",
+        "½ cup dried cranberries",
+        "2 tsp cider vinegar, plus more",
+        "Coarse salt",
+        "¼ cup chopped fresh parsley"
+      ]
+    }
+  ]
+}

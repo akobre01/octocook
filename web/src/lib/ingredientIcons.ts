@@ -14,6 +14,14 @@ const INGREDIENT_ICONS: [string, string][] = [
   ['pita', '🫓'],
   ['pastina', '🍝'],
   ['orzo', '🍝'],
+  ['pasta', '🍝'],
+  ['ricotta', '🧀'],
+  ['broccoli rabe', '🥬'],
+  ['caper', '🫒'],
+  ['pecan', '🥜'],
+  ['cranberr', '🍒'],
+  ['italian seasoning', '🌿'],
+  ['black pepper', '⚫'],
   ['scallion', '🌱'],
   ['cauliflower', '🥦'],
   ['pumpkin', '🎃'],
@@ -85,6 +93,7 @@ const INGREDIENT_ICONS: [string, string][] = [
   ['garlic', '🧄'],
   ['onion', '🧅'],
   ['tomato', '🍅'],
+  ['rice', '🍚'], // after vinegar: rice vinegar isn't rice
 ]
 
 export function ingredientIcon(phrase: string): string {

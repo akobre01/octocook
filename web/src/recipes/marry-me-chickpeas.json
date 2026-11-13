@@ -1,0 +1,105 @@
+{
+  "name": "Marry Me Chickpeas",
+  "icon": "💍",
+  "cookSteps": [
+    {
+      "id": "S0",
+      "description": "Mince onion and garlic",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "cutting_board",
+        "chef_knife"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 small yellow onion, minced",
+        "3 garlic cloves, minced"
+      ]
+    },
+    {
+      "id": "S1",
+      "description": "Sauté oil, onion, and garlic until fragrant",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "saute_pan",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S0"
+      ],
+      "ingredients": [
+        "1 tbsp olive oil"
+      ]
+    },
+    {
+      "id": "S2",
+      "description": "Add tomatoes, paste, and spices; sauté until fragrant",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "saute_pan",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S1"
+      ],
+      "ingredients": [
+        "½ cup sun-dried tomatoes",
+        "1½ tbsp tomato paste",
+        "1 tsp Italian seasoning",
+        "½ tsp red chili flakes",
+        "1 tsp salt"
+      ]
+    },
+    {
+      "id": "S3",
+      "description": "Stir in broth and coconut milk to form sauce",
+      "duration_min": 2,
+      "active": true,
+      "tools": [
+        "saute_pan",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S2"
+      ],
+      "ingredients": [
+        "¾ cup vegetable broth",
+        "1 cup coconut milk"
+      ]
+    },
+    {
+      "id": "S4",
+      "description": "Add chickpeas, cover, and cook",
+      "duration_min": 3,
+      "active": false,
+      "tools": [
+        "saute_pan",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S3"
+      ],
+      "ingredients": [
+        "30 oz canned chickpeas (2 cans), drained and rinsed"
+      ]
+    },
+    {
+      "id": "S5",
+      "description": "Finish with spinach or basil and serve",
+      "duration_min": 1,
+      "active": true,
+      "tools": [
+        "saute_pan"
+      ],
+      "depends_on": [
+        "S4"
+      ],
+      "ingredients": [
+        "1 handful spinach or basil, torn"
+      ]
+    }
+  ]
+}
