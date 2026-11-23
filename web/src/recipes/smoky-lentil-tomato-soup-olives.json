@@ -1,0 +1,120 @@
+{
+  "name": "Smokey Lentil and Tomato Soup with Olives",
+  "icon": "🫒",
+  "cookSteps": [
+    {
+      "id": "S0",
+      "description": "Slice onion, mince garlic, chop olives",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "chef_knife",
+        "cutting_board"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 yellow onion, thinly sliced",
+        "3 cloves garlic, minced",
+        "¾ cup (115 g) pitted Kalamata olives, roughly chopped"
+      ]
+    },
+    {
+      "id": "S1",
+      "description": "Sauté onion with oil and salt until translucent",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "stockpot",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S0"
+      ],
+      "ingredients": [
+        "1 tbsp olive oil",
+        "Salt"
+      ]
+    },
+    {
+      "id": "S2",
+      "description": "Add garlic and thyme; cook 30 seconds",
+      "duration_min": 1,
+      "active": true,
+      "tools": [
+        "stockpot",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S1"
+      ],
+      "ingredients": [
+        "1 tsp dried thyme"
+      ]
+    },
+    {
+      "id": "S3",
+      "description": "Add paprika, lentils, broth, salt, pepper; bring to boil",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "stockpot",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S2"
+      ],
+      "ingredients": [
+        "2 tbsp sweet smoked paprika (hot smoked works but is spicy; start with 1 tbsp)",
+        "1 cup (190 g) brown or green lentils",
+        "5 cups (1.2 L) vegetable broth",
+        "Freshly ground black pepper"
+      ]
+    },
+    {
+      "id": "S4",
+      "description": "Simmer covered until lentils are almost tender",
+      "duration_min": 25,
+      "active": false,
+      "tools": [
+        "stockpot",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S3"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S5",
+      "description": "Add tomatoes; return to boil then simmer until tender",
+      "duration_min": 20,
+      "active": false,
+      "tools": [
+        "stockpot",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S4"
+      ],
+      "ingredients": [
+        "1 (24-oz / 680 g) can stewed tomatoes, fire-roasted if you can find them"
+      ]
+    },
+    {
+      "id": "S6",
+      "description": "Stir in spinach and olives until spinach wilts",
+      "duration_min": 2,
+      "active": true,
+      "tools": [
+        "stockpot",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S5"
+      ],
+      "ingredients": [
+        "4 cups (80 g) loosely packed baby spinach or chopped spinach"
+      ]
+    }
+  ]
+}

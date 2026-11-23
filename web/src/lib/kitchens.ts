@@ -66,6 +66,8 @@ const DEFAULT: KitchenPreset = {
     // Common tools recipes name that aren't worth listing in inventory: each
     // has an obvious stand-in, so a recipe that mentions one still schedules.
     muffin_tin: [{ tool: 'muffin_pan', time_multiplier: 1.0, note: 'Use muffin pan' }],
+    springform_pan: [{ tool: 'baking_dish', time_multiplier: 1.0, note: 'Bake in a baking dish lined with parchment' }],
+    cake_pan: [{ tool: 'baking_dish', time_multiplier: 1.0, note: 'Bake in a baking dish lined with parchment' }],
     potato_masher: [{ tool: null, time_multiplier: 1.3, note: 'Mash with a fork' }],
     wire_rack: [{ tool: null, time_multiplier: 1.0, note: 'Cool on a trivet or the stovetop' }],
     refrigerator: [{ tool: null, time_multiplier: 1.0, note: 'Chill in the fridge' }],

@@ -68,6 +68,16 @@ muffin_tin:
     time_multiplier: 1.0
     note: "Use muffin pan"
 
+springform_pan:
+  - tool: baking_dish
+    time_multiplier: 1.0
+    note: "Bake in a baking dish lined with parchment"
+
+cake_pan:
+  - tool: baking_dish
+    time_multiplier: 1.0
+    note: "Bake in a baking dish lined with parchment"
+
 potato_masher:
   - tool: null
     time_multiplier: 1.3

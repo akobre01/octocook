@@ -1,0 +1,106 @@
+{
+  "name": "Napa Cabbage and Pomelo Salad with Coconut-Peanut Crunch",
+  "icon": "🍊",
+  "cookSteps": [
+    {
+      "id": "S0",
+      "description": "Whisk dressing ingredients with water until sugar dissolves",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "small_bowl",
+        "whisk"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "Zest and juice of 1 large lime (~3 tbsp juice)",
+        "½ fresh Thai red chile, finely chopped",
+        "1 garlic clove, grated",
+        "4 tsp soy sauce or tamari",
+        "3 tbsp brown sugar",
+        "½ tsp sea salt",
+        "1 tsp toasted sesame oil"
+      ]
+    },
+    {
+      "id": "S1",
+      "description": "Toast coconut, peanuts, and pepper flakes over low heat",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "small_pan",
+        "stove_burner"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "6 tbsp unsweetened shredded coconut",
+        "⅓ cup roasted peanuts, chopped",
+        "¼–½ tsp red pepper flakes"
+      ]
+    },
+    {
+      "id": "S2",
+      "description": "Stir sugar and salt into toasted crunch mixture",
+      "duration_min": 1,
+      "active": true,
+      "tools": [
+        "small_bowl"
+      ],
+      "depends_on": [
+        "S1"
+      ],
+      "ingredients": [
+        "2 tbsp brown sugar",
+        "1 tsp sea salt"
+      ]
+    },
+    {
+      "id": "S3",
+      "description": "Peel pomelo and tear segments into flesh pieces",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "chef_knife",
+        "cutting_board"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 large pomelo (~1 lb 7 oz / 650 g) or 2 ruby red grapefruit"
+      ]
+    },
+    {
+      "id": "S4",
+      "description": "Slice cabbage, shiso, and green onions",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "chef_knife",
+        "cutting_board"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 napa cabbage (~2¼ lb / 1 kg), finely sliced",
+        "10 shiso or perilla leaves, finely sliced (or mint)",
+        "2 green onions, finely sliced",
+        "Handful of cilantro leaves",
+        "Sea salt"
+      ]
+    },
+    {
+      "id": "S5",
+      "description": "Toss salad with dressing and half the crunch, top with rest",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "mixing_bowl"
+      ],
+      "depends_on": [
+        "S0",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "ingredients": []
+    }
+  ]
+}

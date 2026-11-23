@@ -1,0 +1,172 @@
+{
+  "name": "Carrot-Almond Polenta Cake with Lemon Drizzle",
+  "icon": "🥕",
+  "cookSteps": [
+    {
+      "id": "S0",
+      "description": "Preheat oven to 350°F (180°C)",
+      "duration_min": 12,
+      "active": false,
+      "tools": [
+        "oven"
+      ],
+      "depends_on": [],
+      "ingredients": []
+    },
+    {
+      "id": "S1",
+      "description": "Line bottom and grease side of springform pan",
+      "duration_min": 2,
+      "active": true,
+      "tools": [
+        "springform_pan"
+      ],
+      "depends_on": [],
+      "ingredients": []
+    },
+    {
+      "id": "S2",
+      "description": "Whisk dry ingredients together",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "mixing_bowl",
+        "whisk"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 cup plus 2 tbsp (160 g) polenta",
+        "1½ cups (175 g) almond meal",
+        "2 tsp baking powder",
+        "½ tsp baking soda",
+        "1 tsp sea salt",
+        "1 tsp ground cinnamon",
+        "½ tsp ground ginger",
+        "¼ tsp ground cardamom"
+      ]
+    },
+    {
+      "id": "S3",
+      "description": "Scrub and grate carrots",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "grater",
+        "cutting_board"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "10 oz (300 g) carrots, scrubbed and grated"
+      ]
+    },
+    {
+      "id": "S4",
+      "description": "Whisk wet ingredients until smooth, fold in carrot",
+      "duration_min": 4,
+      "active": true,
+      "tools": [
+        "mixing_bowl",
+        "whisk",
+        "zester"
+      ],
+      "depends_on": [
+        "S3"
+      ],
+      "ingredients": [
+        "7 tbsp (100 ml) olive oil",
+        "Zest of 1 lemon",
+        "1 cup (250 g) vegan yogurt, such as cashew or coconut",
+        "1 cup plus 2 tbsp (220 g) granulated sugar",
+        "1 tsp vanilla extract"
+      ]
+    },
+    {
+      "id": "S5",
+      "description": "Fold wet into dry, pour batter into pan",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "mixing_bowl",
+        "spatula",
+        "springform_pan"
+      ],
+      "depends_on": [
+        "S2",
+        "S4"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S6",
+      "description": "Bake cake until skewer comes out clean",
+      "duration_min": 52,
+      "active": false,
+      "tools": [
+        "oven",
+        "springform_pan"
+      ],
+      "depends_on": [
+        "S0",
+        "S5"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S7",
+      "description": "Whisk powdered sugar and lemon juice over medium-low heat",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "small_pan",
+        "whisk",
+        "stove_burner"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "½ cup (65 g) powdered sugar",
+        "Juice of 1 lemon (~¼ cup)"
+      ]
+    },
+    {
+      "id": "S8",
+      "description": "Cool lemon drizzle",
+      "duration_min": 15,
+      "active": false,
+      "tools": [
+        "small_pan"
+      ],
+      "depends_on": [
+        "S7"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S9",
+      "description": "Unclip pan, prick cake, spoon drizzle over hot cake",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "wire_rack",
+        "springform_pan"
+      ],
+      "depends_on": [
+        "S6",
+        "S8"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S10",
+      "description": "Cool cake completely before slicing",
+      "duration_min": 60,
+      "active": false,
+      "tools": [
+        "wire_rack"
+      ],
+      "depends_on": [
+        "S9"
+      ],
+      "ingredients": []
+    }
+  ]
+}

@@ -18,6 +18,8 @@ const TOOL_ICONS: Record<string, string> = {
   stockpot: '🍲',
   cast_iron_skillet: '🍳',
   baking_dish: '🍜',
+  springform_pan: '🍰',
+  cake_pan: '🍰',
   // mixers / blenders
   hand_mixer: '🥣',
   stand_mixer: '🥣',
