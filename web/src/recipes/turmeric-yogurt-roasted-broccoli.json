@@ -1,0 +1,125 @@
+{
+  "name": "Turmeric-Yogurt Roasted Broccoli",
+  "icon": "🥦",
+  "cookSteps": [
+    {
+      "id": "S0",
+      "description": "Preheat oven to 425°F",
+      "duration_min": 15,
+      "active": false,
+      "tools": [
+        "oven"
+      ],
+      "depends_on": [],
+      "ingredients": []
+    },
+    {
+      "id": "S1",
+      "description": "Grate garlic; stir yogurt, spices, garlic, salt, pepper, and olive oil into a marinade",
+      "duration_min": 4,
+      "active": true,
+      "tools": [
+        "mixing_bowl",
+        "grater"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1½ cups (375 g) plain or vegan coconut yogurt",
+        "1½ tsp ground coriander",
+        "1 tsp ground turmeric",
+        "½ tsp chile powder",
+        "2 garlic cloves, grated",
+        "½ tsp sea salt and black pepper",
+        "3 tbsp extra-virgin olive oil"
+      ]
+    },
+    {
+      "id": "S2",
+      "description": "Peel the woody outside of the stalks; halve each broccoli head lengthwise",
+      "duration_min": 6,
+      "active": true,
+      "tools": [
+        "peeler",
+        "chef_knife",
+        "cutting_board"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "4 small heads broccoli (~2¼ lb / 1 kg), preferably with stalks"
+      ]
+    },
+    {
+      "id": "S3",
+      "description": "Coat the broccoli halves all over in the marinade (hands work best)",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "mixing_bowl"
+      ],
+      "depends_on": [
+        "S1",
+        "S2"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S4",
+      "description": "Oil a sheet pan and lay the broccoli cut-side down; save leftover marinade",
+      "duration_min": 2,
+      "active": true,
+      "tools": [
+        "sheet_pan"
+      ],
+      "depends_on": [
+        "S3"
+      ],
+      "ingredients": [
+        "olive oil, for drizzling"
+      ]
+    },
+    {
+      "id": "S5",
+      "description": "Roast until browned and a fork slides into the stalks (check at 20 min)",
+      "duration_min": 22,
+      "active": false,
+      "tools": [
+        "oven",
+        "sheet_pan"
+      ],
+      "depends_on": [
+        "S0",
+        "S4"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S6",
+      "description": "Roughly chop toasted almonds; pick cilantro leaves",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "chef_knife",
+        "cutting_board"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "½ cup toasted almonds",
+        "Handful of cilantro leaves"
+      ]
+    },
+    {
+      "id": "S7",
+      "description": "Brush with reserved marinade; top with cilantro and almonds and serve",
+      "duration_min": 2,
+      "active": true,
+      "tools": [],
+      "depends_on": [
+        "S5",
+        "S6"
+      ],
+      "ingredients": [
+        "Green salad, rice, quinoa, or lentils, to serve"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "name": "Chana Masala",
+  "icon": "🍲",
+  "cookSteps": [
+    {
+      "id": "S0",
+      "description": "Rinse and soak dried chickpeas overnight",
+      "duration_min": 480,
+      "active": false,
+      "tools": [
+        "mixing_bowl"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1 cup dried chickpeas (chana), or 2 15-oz cans"
+      ]
+    },
+    {
+      "id": "S1",
+      "description": "Drain, rinse, and pressure cook chickpeas",
+      "duration_min": 25,
+      "active": false,
+      "tools": [
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S0"
+      ],
+      "ingredients": [
+        "1½ cups water, plus more for the gravy"
+      ]
+    },
+    {
+      "id": "S2",
+      "description": "Check chickpeas are soft and tender",
+      "duration_min": 2,
+      "active": true,
+      "tools": [],
+      "depends_on": [
+        "S1"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S3",
+      "description": "Chop onions, tomatoes, green chili, and cilantro",
+      "duration_min": 8,
+      "active": true,
+      "tools": [
+        "chef_knife",
+        "cutting_board"
+      ],
+      "depends_on": [],
+      "ingredients": [
+        "1½ cups onions, finely chopped (2 large)",
+        "1 green chili, slit (optional)",
+        "1½ cups tomatoes, finely chopped (3 large)",
+        "2 tbsp cilantro, finely chopped"
+      ]
+    },
+    {
+      "id": "S4",
+      "description": "Heat oil and bloom whole spices",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "dutch_oven",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S3"
+      ],
+      "ingredients": [
+        "2 tbsp oil",
+        "1 small bay leaf (optional)",
+        "1-inch cinnamon stick (optional)",
+        "2 cloves (optional)",
+        "2 green cardamoms (optional)"
+      ]
+    },
+    {
+      "id": "S5",
+      "description": "Saute onions and green chili until light golden",
+      "duration_min": 8,
+      "active": true,
+      "tools": [
+        "dutch_oven",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S4"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S6",
+      "description": "Add ginger garlic paste and saute 1 minute",
+      "duration_min": 2,
+      "active": true,
+      "tools": [
+        "dutch_oven",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S5"
+      ],
+      "ingredients": [
+        "¾–1 tbsp ginger garlic paste"
+      ]
+    },
+    {
+      "id": "S7",
+      "description": "Add tomatoes and salt; cook until thick and pulpy",
+      "duration_min": 8,
+      "active": true,
+      "tools": [
+        "dutch_oven",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S6"
+      ],
+      "ingredients": [
+        "¾ tsp salt, plus more to taste"
+      ]
+    },
+    {
+      "id": "S8",
+      "description": "Stir in dry spices and saute until fragrant",
+      "duration_min": 4,
+      "active": true,
+      "tools": [
+        "dutch_oven",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S7"
+      ],
+      "ingredients": [
+        "¼ tsp turmeric",
+        "1½ tsp Kashmiri red chili powder",
+        "1 tsp garam masala",
+        "2 tsp coriander powder",
+        "½ tsp cumin powder (optional)"
+      ]
+    },
+    {
+      "id": "S9",
+      "description": "Cool masala and blend to smooth paste (optional)",
+      "duration_min": 5,
+      "active": true,
+      "tools": [
+        "blender"
+      ],
+      "depends_on": [
+        "S8"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S10",
+      "description": "Add chickpeas and water; mix well and taste for salt",
+      "duration_min": 3,
+      "active": true,
+      "tools": [
+        "dutch_oven",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S9",
+        "S2"
+      ],
+      "ingredients": [
+        "1¾–2 cups water or chickpea cooking liquid"
+      ]
+    },
+    {
+      "id": "S11",
+      "description": "Cover and simmer for 15 minutes",
+      "duration_min": 15,
+      "active": false,
+      "tools": [
+        "dutch_oven",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S10"
+      ],
+      "ingredients": []
+    },
+    {
+      "id": "S12",
+      "description": "Stir in kasuri methi and amchur powder",
+      "duration_min": 2,
+      "active": true,
+      "tools": [
+        "dutch_oven",
+        "stove_burner"
+      ],
+      "depends_on": [
+        "S11"
+      ],
+      "ingredients": [
+        "1 tsp kasuri methi (dried fenugreek leaves, optional)",
+        "¼ tsp amchur (dried mango powder, optional)"
+      ]
+    },
+    {
+      "id": "S13",
+      "description": "Garnish with cilantro and serve",
+      "duration_min": 1,
+      "active": true,
+      "tools": [],
+      "depends_on": [
+        "S12"
+      ],
+      "ingredients": []
+    }
+  ]
+}
